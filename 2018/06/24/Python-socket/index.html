@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="Python socket 实现服务端和客户端数据传输（TCP）"><meta name="keywords" content="python, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="http://www.wxy.email/2018/06/24/Python-socket/">
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true,"latex":false};
+</script>
+
+    <title>Python socket 实现服务端和客户端数据传输（TCP） - 时光不写博客</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">时光不写博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">时光不写博客</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Python socket 实现服务端和客户端数据传输（TCP）
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-06-24
+        </span></div>
+    </header>
+
+    <div class="post-content"><p>TCP数据传输</p>
+<a id="more"></a>
+<ul>
+<li><strong>服务器端</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建一个socket对象</span></span><br><span class="line">socket_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">host = <span class="string">"127.0.0.1"</span></span><br><span class="line">port = <span class="number">9999</span></span><br><span class="line"><span class="comment">#绑定地址</span></span><br><span class="line">socket_server.bind((host, port))</span><br><span class="line"><span class="comment">#设置监听</span></span><br><span class="line">socket_server.listen(<span class="number">5</span>)</span><br><span class="line"><span class="comment"># socket_server.accept()返回一个元组, 元素1为客户端的socket对象, 元素2为客户端的地址(ip地址，端口号)</span></span><br><span class="line">client_socket, address = socket_server.accept()</span><br><span class="line"></span><br><span class="line"><span class="comment">#while循环是为了让对话持续</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment">#接收客户端的请求</span></span><br><span class="line">    recvmsg = client_socket.recv(<span class="number">1024</span>)</span><br><span class="line">    <span class="comment">#把接收到的数据进行解码</span></span><br><span class="line">    strData = recvmsg.decode(<span class="string">"utf-8"</span>)</span><br><span class="line">    <span class="comment">#设置退出条件</span></span><br><span class="line">    <span class="keyword">if</span> strData == <span class="string">'q'</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    print(<span class="string">"接收: %s"</span> % strData)</span><br><span class="line">    <span class="comment">#输入</span></span><br><span class="line">    msg = input(<span class="string">"发送: "</span>)</span><br><span class="line">    <span class="comment">#发送数据，需要进行编码</span></span><br><span class="line">    client_socket.send(msg.encode(<span class="string">"utf-8"</span>))</span><br><span class="line"><span class="comment">#关闭服务器端</span></span><br><span class="line">socket_server.close()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>客户端</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="comment">#创建一个socket对象</span></span><br><span class="line">client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line"></span><br><span class="line">host = <span class="string">"127.0.0.1"</span></span><br><span class="line">port = <span class="number">9999</span></span><br><span class="line"><span class="comment">#连接服务端</span></span><br><span class="line">client.connect((host, port))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    send_msg = input(<span class="string">"发送: "</span>)</span><br><span class="line">    <span class="comment">#设置退出条件</span></span><br><span class="line">    <span class="keyword">if</span> send_msg == <span class="string">"q"</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    send_msg = send_msg</span><br><span class="line">    <span class="comment">#发送数据，编码</span></span><br><span class="line">    client.send(send_msg.encode(<span class="string">"utf-8"</span>))</span><br><span class="line">    <span class="comment">#接收服务端返回的数据</span></span><br><span class="line">    msg = client.recv(<span class="number">1024</span>)</span><br><span class="line">    <span class="comment">#解码</span></span><br><span class="line">    print(<span class="string">"接收：%s"</span>, % msg.decode(<span class="string">"utf-8"</span>))</span><br><span class="line"><span class="comment">#关闭客户端</span></span><br><span class="line">client.close()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>流程图</strong></li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20190215170457219.png" alt="在这里插入图片描述"><br>图片来源：<a href="https://blog.csdn.net/slavik_/article/details/82430717" target="_blank" rel="noopener">https://blog.csdn.net/slavik_/article/details/82430717</a></p>
+
+      </div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/python/">python</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2018/06/25/Python-os文件操作/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Python os文件操作</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2018/06/23/python的内存管理机制/">
+        <span class="next-text nav-default">python的内存管理机制</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">
+
+  <span class="power-by">
+    <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 -
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+  <br>
+  <span class="power-by">
+    联系方式
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+  wxy148616@163.com
+  </span>
+
+  <span class="copyright-year">&copy;2018 - 2019<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">时光不写博客</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>

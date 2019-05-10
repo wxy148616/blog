@@ -3,6 +3,8 @@
   <head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="nt7ofDlUEAj-G2sNFlh0wBJYoWH1hdvum_-V5zOgHzg">
+<meta name="baidu-site-verification" content="XG5Sc98jMI">
 
 
 <meta http-equiv="Cache-Control" content="no-transform">
@@ -13,8 +15,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="hexo部署"><meta name="keywords" content="项目部署, hexo, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="http://www.wxy.email/2018/06/19/hexo部署/">
+<meta name="description" content="python之bisect模块, 有序列表插入数据"><meta name="keywords" content="python, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="http://www.wxy.email/2019/04/27/python-bisect/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -36,8 +38,14 @@
 <script>
   window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true,"latex":false};
 </script>
-
-    <title>hexo部署 - 时光不写博客</title>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2911390145109533",
+    enable_page_level_ads: true
+  });
+</script>
+    <title>python之bisect模块, 有序列表插入数据 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -82,46 +90,34 @@
         <div class="content-wrapper">
           <div id="content" class="content"><article class="post">
     <header class="post-header">
-      <h1 class="post-title">hexo部署
+      <h1 class="post-title">python之bisect模块, 有序列表插入数据
         </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2018-06-19
+          2019-04-27
         </span></div>
     </header>
 
-    <div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">文章目录</h2>
-    <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#部署到服务器"><span class="toc-text">部署到服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置nginx"><span class="toc-text">配置nginx</span></a></li></ol>
-    </div>
-  </div><div class="post-content"><p>本地搭建完成只是一个开始，想要真正的用起来当然少不了部署了。<br><a id="more"></a></p>
-<h3 id="部署到服务器"><a href="#部署到服务器" class="headerlink" title="部署到服务器"></a><strong>部署到服务器</strong></h3><ul>
-<li>安装<a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">hexo-deployer-git</a></li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+    <div class="post-content"><p>bisect是python的内置模块, 可以使用它来插入数据, 并且插入的数据不会影响列表的排序, <strong>但是原有列表需要是有序的, 并且不能是倒序</strong>.</p>
+<a id="more"></a>
+<hr>
 <ul>
-<li>修改_config.yml配置</li>
+<li>bisect.bisect(data, n), 查找并返回n插入的位置下标, 但并不会插入.</li>
 </ul>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repo:</span> <span class="string">仓库地址</span> <span class="string">repository</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">分支</span></span><br><span class="line"><span class="attr">  message:</span> <span class="string">提交信息</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data = [<span class="number">1</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>]</span><br><span class="line">data.sort()   </span><br><span class="line">bisect.bisect(data, <span class="number">6</span>)    <span class="comment"># 返回 3</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>生成站点文件并推送至远程库。</li>
+<li>bisect.insort(data, n), 插入n, 不会影响列表顺序.</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
-<p>前者清除站点文件，后者重新生成站点文件并将之推送到指定的库分支。</p>
-<h3 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a><strong>配置nginx</strong></h3><ul>
-<li>打开nginx配置文件，新增一个server</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">     listen 80;</span><br><span class="line">     server_name www.wxy.email;   域名</span><br><span class="line">     charset utf-8;</span><br><span class="line">     location / &#123;</span><br><span class="line">             root /home/blog;   服务器上的代码目录路径</span><br><span class="line">             index index.html;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bisect.insort(data, <span class="number">6</span>)</span><br><span class="line">print(data)     <span class="comment"># [1, 3, 5, 6, 7, 8]</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>重启nginx</li>
+<li>bisect.bisect_left()、bisect_right(), 这两个函数用来处理插入重复数值的情况，返回将会插入的位置.</li>
 </ul>
-<figure class="highlight plain"><figcaption><span>shell</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service nginx reload</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]</span><br><span class="line">bisect.bisect_left(data, <span class="number">6</span>)   <span class="comment">#返回 3</span></span><br><span class="line">bisect.bisect_reght(data, <span class="number">6</span>)   <span class="comment">#返回 4</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>这样就OK了，简单到意外…</li>
+<li>bisect.insort_left()、insort_right(), 对应bisect.bisect_left()、bisect_right(), 用来插入数据.</li>
 </ul>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bisect.insort_left(data, <span class="number">6</span>)</span><br><span class="line">print(data)   <span class="comment">#返回 [1, 3, 5, 6, 6, 7, 8]  元素`5`后的`6`是新插入的数据</span></span><br><span class="line">bisect.insort_reght(data, <span class="number">6</span>)</span><br><span class="line">print(data)   <span class="comment">#返回 [1, 3, 5, 6, 6, 6, 7, 8] 元素`7`前的`6`是新插入的数据</span></span><br><span class="line"><span class="comment">#insort_left从左侧插入, insort_reght从右侧插入</span></span><br></pre></td></tr></table></figure>
       </div>
       
       <div class="post-reward">
@@ -138,17 +134,16 @@
       </div>
   </div><footer class="post-footer">
         <div class="post-tags">
-            <a href="/tags/项目部署/">项目部署</a>
-            <a href="/tags/hexo/">hexo</a>
+            <a href="/tags/python/">python</a>
             </div>
         
-        <nav class="post-nav"><a class="prev" href="/2018/06/20/python简单操作文件/">
+        <nav class="post-nav"><a class="prev" href="/2019/05/05/Linux部署图片/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">python简单操作txt文件</span>
+        <span class="prev-text nav-default">Linux服务器Nginx部署图片</span>
         <span class="prev-text nav-mobile">上一篇</span>
       </a>
-    <a class="next" href="/2018/06/19/hello-world/">
-        <span class="next-text nav-default">先写第一篇：hexo快速入门</span>
+    <a class="next" href="/2019/03/24/Python-socket/">
+        <span class="next-text nav-default">Python socket 实现服务端和客户端数据传输（TCP）</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>

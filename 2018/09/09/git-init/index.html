@@ -15,8 +15,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="http://www.wxy.email/tags/hexo/">
+<meta name="description" content="Git本地项目上传到远程仓库"><meta name="keywords" content="项目部署, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="http://www.wxy.email/2018/09/09/git-init/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -45,8 +45,7 @@
     enable_page_level_ads: true
   });
 </script>
-    <title>hexo · 时光不写博客
-  </title>
+    <title>Git本地项目上传到远程仓库 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -89,30 +88,61 @@
 
       <main id="main" class="main">
         <div class="content-wrapper">
-          <div id="content" class="content"><section id="archive" class="archive"><div class="archive-title tag">
-          <h2 class="archive-name">hexo</h2>
-        </div>
-      <div class="archive-post">
-        <span class="archive-post-time">
-          2018-06-29
-          </span>
-        <span class="archive-post-title">
-          <a href="/2018/06/29/hexo部署/" class="archive-post-link">
-            hexo部署
-          </a>
-        </span>
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Git本地项目上传到远程仓库
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-09-09
+        </span></div>
+    </header>
+
+    <div class="post-content"><p>Git的使用</p>
+<a id="more"></a>
+<hr>
+<ul>
+<li>进入项目首目录</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git init   #初始化仓库</span><br><span class="line">git add .  </span><br><span class="line">git commit -m "提交"   # 提交代码</span><br><span class="line">git remote add xxx git@仓库地址</span><br></pre></td></tr></table></figure>
+<ul>
+<li>复制自己的公钥，添加到远程仓库</li>
+<li>push代码    </li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git push xxx master</span><br><span class="line">或者是</span><br><span class="line">git push -f xxx master</span><br></pre></td></tr></table></figure>
+
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2018-06-19
-          </span>
-        <span class="archive-post-title">
-          <a href="/2018/06/19/hello-world/" class="archive-post-link">
-            先写第一篇：hexo快速入门
-          </a>
-        </span>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
       </div>
-    </section><nav class="pagination"></nav></div></div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/项目部署/">项目部署</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2018/12/25/Python-os文件操作/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Python os文件操作</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2018/08/10/python栈的简单实现/">
+        <span class="next-text nav-default">python栈的简单实现</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">

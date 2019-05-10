@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang>
+  <head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="nt7ofDlUEAj-G2sNFlh0wBJYoWH1hdvum_-V5zOgHzg">
+<meta name="baidu-site-verification" content="XG5Sc98jMI">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="Python处理excel合并单元格"><meta name="keywords" content="python, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="http://www.wxy.email/2019/05/06/python处理合并单元格/">
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true,"latex":false};
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2911390145109533",
+    enable_page_level_ads: true
+  });
+</script>
+    <title>Python处理excel合并单元格 - 时光不写博客</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">时光不写博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">时光不写博客</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Python处理excel合并单元格
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-05-06
+        </span></div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#读取"><span class="toc-text">读取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写入"><span class="toc-text">写入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Django导出"><span class="toc-text">Django导出</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>可以使用xlrd，也可以使用openpyxl，但是openpyxl读取不了.xls格式的Excel，需要转成xlsx，有点麻烦，所以使用了xlrd。</p>
+<a id="more"></a>
+<hr>
+<h2 id="读取"><a href="#读取" class="headerlink" title="读取"></a><b>读取</b></h2><ul>
+<li><em>打开文件</em></li>
+</ul>
+<p>xlrd也遇到了一点问题，文件如果是xls文件直接打开，在提取合并单元格的时候会拿不到数据，需要加上 formatting_info=True，formatting_info=True的时候打开.xlsx文件会报错NotImplementedError: formatting_info=True not yet implemented，加个if就好了<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">workbook = xlrd.open_workbook(path)</span><br><span class="line"><span class="keyword">if</span> path.split(<span class="string">'.xl'</span>)[<span class="number">1</span>] == <span class="string">'s'</span>:</span><br><span class="line">    workbook = xlrd.open_workbook(path, formatting_info=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 获取sheet</span></span><br><span class="line">sheet = workbook.sheet_by_index(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><em>获取所有的合并单元格坐标</em></li>
+</ul>
+<p><img src="/2019/05/06/python处理合并单元格/excel.png" alt="突突突"><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取列数</span></span><br><span class="line">r_num = sheet.nrows</span><br><span class="line"><span class="comment"># 获取行数</span></span><br><span class="line">c_num = sheet.ncols</span><br><span class="line">merge = sheet.merged_cells</span><br><span class="line">print(merge)   <span class="comment"># [(1, 5, 0, 1), (1, 5, 1, 2)], 对应上面两个合并的单元格</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><em>组装数据</em></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">read_data =[]</span><br><span class="line"><span class="keyword">for</span> r <span class="keyword">in</span> range(r_num):</span><br><span class="line">    li = []</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> range(c_num):</span><br><span class="line">        <span class="comment"># 读取每个单元格里的数据，合并单元格只有单元格内的第一行第一列有数据，其余空间都为空</span></span><br><span class="line">        cell_value = sheet.row_values(r)[c]</span><br><span class="line">        <span class="comment"># 判断空数据是否在合并单元格的坐标中，如果在就把数据填充进去</span></span><br><span class="line">        <span class="keyword">if</span> cell_value <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> cell_value == <span class="string">''</span>:</span><br><span class="line">            <span class="keyword">for</span> (rlow, rhigh, clow, chigh) <span class="keyword">in</span> merge:</span><br><span class="line">                <span class="keyword">if</span> rlow &lt;= r &lt; rhigh:</span><br><span class="line">                    <span class="keyword">if</span> clow &lt;= c &lt; chigh:</span><br><span class="line">                        cell_value = sheet.cell_value(rlow, clow)</span><br><span class="line">        li.append(cell_value)</span><br><span class="line">    read_data.append(li)</span><br></pre></td></tr></table></figure>
+<h2 id="写入"><a href="#写入" class="headerlink" title="写入"></a><b>写入</b></h2><p>使用的是xlwt</p>
+<ul>
+<li><em>直接上代码</em></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">f = xlwt.Workbook()</span><br><span class="line">sheet1 = f.add_sheet(<span class="string">'sheet1'</span>, cell_overwrite_ok=<span class="literal">True</span>)</span><br><span class="line">headers = [<span class="string">'序号'</span>, <span class="string">"姓名"</span>, <span class="string">'列表'</span>, <span class="string">'1月'</span>, <span class="string">'2月'</span>, <span class="string">'3月'</span>, <span class="string">'4月'</span>, <span class="string">'5月'</span>]</span><br><span class="line">name = [<span class="string">'1-AAA'</span>, <span class="string">'2-BBB'</span>, <span class="string">'3-CCC'</span>, <span class="string">'4-DDD'</span>]</span><br><span class="line">status = [<span class="string">'累计应发数'</span>, <span class="string">'累计专项扣除-五险一金'</span>, <span class="string">'累计免税收入'</span>, <span class="string">'累计扣个税'</span>]</span><br><span class="line"><span class="comment"># 生成第一行header</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(headers)):</span><br><span class="line">    sheet1.write(<span class="number">0</span>,i,headers[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成序号、姓名单元格</span></span><br><span class="line">i, j = <span class="number">1</span>, <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> i &lt; <span class="number">10</span>*len(name) <span class="keyword">and</span> j &lt; len(name):</span><br><span class="line">    sheet1.write_merge(i,i+<span class="number">9</span>,<span class="number">0</span>,<span class="number">0</span>,name[j].split(<span class="string">'-'</span>)[<span class="number">0</span>])</span><br><span class="line">    sheet1.write_merge(i,i+<span class="number">9</span>,<span class="number">1</span>,<span class="number">1</span>,name[j].split(<span class="string">'-'</span>)[<span class="number">1</span>])</span><br><span class="line">    i += <span class="number">10</span></span><br><span class="line">    j += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#生成列表</span></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> i &lt; <span class="number">10</span>*len(column0):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,len(status)):</span><br><span class="line">        sheet1.write(j+i+<span class="number">1</span>,<span class="number">3</span>,status[j])</span><br><span class="line">    i += <span class="number">10</span></span><br><span class="line"><span class="comment"># 保存</span></span><br><span class="line">f.save(path)</span><br></pre></td></tr></table></figure>
+<h2 id="Django导出"><a href="#Django导出" class="headerlink" title="Django导出"></a><b>Django导出</b></h2><ul>
+<li><em>服务端代码</em></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">excel_stream = io.BytesIO()</span><br><span class="line"><span class="comment"># BytesIO流（在内存中读写）</span></span><br><span class="line">f.save(excel_stream)</span><br><span class="line">res = excel_stream.getvalue()</span><br><span class="line">excel_stream.close()</span><br><span class="line">response = HttpResponse(content_type=<span class="string">'application/vnd.ms-excel'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> parse</span><br><span class="line">file_name = str(path.name).split(<span class="string">'.xls'</span>)[<span class="number">0</span>] + <span class="string">'(计算后).xls'</span></span><br><span class="line">response[<span class="string">'Content-Disposition'</span>] = <span class="string">'attachment;filename='</span> + parse.quote(file_name)</span><br><span class="line">response.write(res)</span><br><span class="line"><span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+<ul>
+<li><em>前端</em></li>
+</ul>
+<p>写一个简单的form表单就行了</p>
+
+      </div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/python/">python</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2019/05/07/ab压力测试-入门/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">ab压力测试(入门)</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2019/05/05/Linux部署图片/">
+        <span class="next-text nav-default">Linux服务器Nginx部署图片</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">
+
+  <span class="power-by">
+    <a class="hexo-link" href="https://hexo.io/">Hexo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 -
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+  <br>
+  <span class="power-by">
+    联系方式
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+  wxy148616@163.com
+  </span>
+
+  <span class="copyright-year">&copy;2018 - 2019<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">时光不写博客</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>
