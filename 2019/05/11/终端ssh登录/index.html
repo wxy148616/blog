@@ -15,8 +15,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="ab压力测试(入门)"><meta name="keywords" content="项目部署, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="http://www.wxy.email/2019/05/07/ab压力测试-入门/">
+<meta name="description" content="终端配置ssh秘钥登录"><meta name="keywords" content="项目部署, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="http://www.wxy.email/2019/05/11/终端ssh登录/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -53,7 +53,7 @@
 </script>
 
 
-    <title>ab压力测试(入门) - 时光不写博客</title>
+    <title>终端配置ssh秘钥登录 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -98,30 +98,61 @@
         <div class="content-wrapper">
           <div id="content" class="content"><article class="post">
     <header class="post-header">
-      <h1 class="post-title">ab压力测试(入门)
+      <h1 class="post-title">终端配置ssh秘钥登录
         </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2019-05-07
-        </span><span class="post-visits" data-url="/2019/05/07/ab压力测试-入门/" data-title="ab压力测试(入门)">
+          2019-05-11
+        </span><span class="post-visits" data-url="/2019/05/11/终端ssh登录/" data-title="终端配置ssh秘钥登录">
           阅读次数 0
         </span>
         </div>
     </header>
 
-    <div class="post-content"><p>记录一下最近了解的压力测试工具 ab 全称: <a href="http://httpd.apache.org/docs/2.4/programs/ab.html" target="_blank" rel="noopener">apache bench</a></p>
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#远程服务端"><span class="toc-text">远程服务端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本地客户端"><span class="toc-text">本地客户端</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>首先生成秘钥</p>
 <a id="more"></a>
 <hr>
-<ul>
-<li>测试命令:<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ab -c 1000 -n 100 -p data.txt -T application/json -H "token:xxx" -w "http://127.0.0.1/test/" &gt;&gt; test.html</span><br></pre></td></tr></table></figure>
-</li>
+<h2 id="远程服务端"><a href="#远程服务端" class="headerlink" title="远程服务端"></a><b>远程服务端</b></h2><ul>
+<li><strong>生成秘钥</strong></li>
 </ul>
-<blockquote>
-<p>-c: 请求数量<br>-n: 请求并发量<br>-p: 请求参数文件<br>-T: Content-type<br>-H: 追加一个请求头<br>-w: 测试结果以html形式存储在test.html文件中, 不添加 -w 和 &gt;&gt; test.html 结果会打印在终端</p>
-</blockquote>
-<p> -p 的参数文件内的参数格式是由Content-type决定的</p>
-<p>参考: <a href="http://httpd.apache.org/docs/2.4/programs/ab.html" target="_blank" rel="noopener">http://httpd.apache.org/docs/2.4/programs/ab.html</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+<p>中间会让输入命名、密码、地址，可以直接回车键过去</p>
+<ul>
+<li><strong>重命名公钥，配置权限</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh</span><br><span class="line">mv id_rsa.pub authorized_keys</span><br><span class="line">chmod 600 authorized_keys   #修改公钥为只有属主有读写权限（安全考虑）</span><br><span class="line">chmod 700 ~/.ssh   #修改.SSH目录为只有属主有读、写、执行权限（安全考虑）</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>重启ssh</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/ssh restart</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>复制秘钥</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim id_rsa</span><br></pre></td></tr></table></figure>
+<p>复制<code>id_rsa</code>的内容粘贴到客户端</p>
+<h2 id="本地客户端"><a href="#本地客户端" class="headerlink" title="本地客户端"></a><b>本地客户端</b></h2><ul>
+<li><strong>把服务端复制的秘钥保存到一个文件中, 文件名不要有后缀</strong></li>
+</ul>
+<p>例：保存文件为<code>~/.ssh/server_rsa</code></p>
+<ul>
+<li><strong>修改保存的秘钥权限</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 server_rsa</span><br></pre></td></tr></table></figure>
+<p>到这一步就已经可以使用秘钥登录了，虽然有点麻烦</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p xx root@IP -i ~/.ssh/server_rsa</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>修改<code>ssh</code>的<code>config</code>配置文件，简化ssh登录</strong></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.ssh/config</span><br></pre></td></tr></table></figure>
+<p>把下面的代码复制到config中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host abc   # abc是自己命名的  </span><br><span class="line">HostName 服务器IP</span><br><span class="line">User 用户名</span><br><span class="line">Port 端口  # -p</span><br><span class="line">IdentityFile 保存的秘钥地址  # -i</span><br></pre></td></tr></table></figure></p>
+<p>保存config文件，直接<code>ssh abc</code>就可以免密登录了</p>
+<p>参考：<a href="https://segmentfault.com/a/1190000015362485" target="_blank" rel="noopener">https://segmentfault.com/a/1190000015362485</a></p>
 
       </div>
       
@@ -142,13 +173,13 @@
             <a href="/tags/项目部署/">项目部署</a>
             </div>
         
-        <nav class="post-nav"><a class="prev" href="/2019/05/08/git钩子/">
+        <nav class="post-nav"><a class="prev" href="/2019/05/12/python四舍五入/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">git钩子自动更新服务器代码</span>
+        <span class="prev-text nav-default">Python四舍五入保留两位小数</span>
         <span class="prev-text nav-mobile">上一篇</span>
       </a>
-    <a class="next" href="/2019/05/06/python处理合并单元格/">
-        <span class="next-text nav-default">Python处理excel合并单元格</span>
+    <a class="next" href="/2019/05/10/django-日志/">
+        <span class="next-text nav-default">Django-日志</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
