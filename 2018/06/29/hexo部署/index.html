@@ -15,7 +15,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="hexo部署"><meta name="keywords" content="项目部署, hexo, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<meta name="description" content="hexo部署"><meta name="keywords" content="hexo, 项目部署, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
 <link rel="canonical" href="http://www.wxy.email/2018/06/29/hexo部署/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
@@ -35,8 +35,14 @@
     s.parentNode.insertBefore(bp, s);
 })();
 </script>
-<script>
-  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true,"latex":false};
+<script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "nYUq0AjzAWMEkOJeQiaf73kX-gzGzoHsz",
+      appKey: "dnRxGn684oW8kObYDXKNk8OE"
+    });
+  </script><script>
+  window.config = {"leancloud":{"app_id":"nYUq0AjzAWMEkOJeQiaf73kX-gzGzoHsz","app_key":"dnRxGn684oW8kObYDXKNk8OE"},"toc":true,"fancybox":true,"pjax":true,"latex":false};
 </script>
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
@@ -45,6 +51,8 @@
     enable_page_level_ads: true
   });
 </script>
+
+
     <title>hexo部署 - 时光不写博客</title>
   </head>
 
@@ -96,7 +104,10 @@
       <div class="post-meta">
         <span class="post-time">
           2018-06-29
-        </span></div>
+        </span><span class="post-visits" data-url="/2018/06/29/hexo部署/" data-title="hexo部署">
+          阅读次数 0
+        </span>
+        </div>
     </header>
 
     <div class="post-toc" id="post-toc">
@@ -148,8 +159,8 @@
       </div>
   </div><footer class="post-footer">
         <div class="post-tags">
-            <a href="/tags/项目部署/">项目部署</a>
             <a href="/tags/hexo/">hexo</a>
+            <a href="/tags/项目部署/">项目部署</a>
             </div>
         
         <nav class="post-nav"><a class="prev" href="/2018/07/20/python简单操作文件/">
