@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LeetCode第28题：Implement strStr()]]></title>
+    <url>%2F2019%2F05%2F19%2FLeetCode-28%2F</url>
+    <content type="text"><![CDATA[题目 实现 strStr() 函数。给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)。如果不存在，则返回 -1。 示例 1:输入: haystack = “hello”, needle = “ll”输出: 2 示例 2:输入: haystack = “aaaaa”, needle = “bba”输出: -1代码12345678910111213class Solution(object): def strStr(self, haystack, needle): """ :type haystack: str :type needle: str :rtype: int """ if needle == "": return 0 if needle in haystack: return len(haystack.split(needle)[0]) else: return -1]]></content>
+      <tags>
+        <tag>LeetCode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode第14题：Longest Common Prefix]]></title>
+    <url>%2F2019%2F05%2F18%2FLeetCode-14%2F</url>
+    <content type="text"><![CDATA[题目 编写一个函数来查找字符串数组中的最长公共前缀。如果不存在公共前缀，返回空字符串 “”。 示例 1:输入: [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;]输出: &quot;fl&quot; 示例 2:输入: [&quot;dog&quot;,&quot;racecar&quot;,&quot;car&quot;]输出: &quot;&quot;解释: 输入不存在公共前缀。说明: 所有输入只包含小写字母 a-z 。 代码1234567891011121314151617181920212223242526272829class Solution(object): def longestCommonPrefix(self, strs): """ :type strs: List[str] :rtype: str """ res = '' # 排除特殊情况 if len(strs) == 0: return res if len(strs) == 1: return strs[0] min_length = len(strs[0]) # 找到最短的字符串，确定循环次数 for i in range(1, len(strs)): if len(strs[i]) &lt; min_length: min_length = len(strs[i]) for i in range(min_length): tmp_char = strs[0][i] # 用每个字符串的第i个元素和第0个字符串的第i个元素对比 for j in range(1, len(strs)): # 不等则清除tmp_char并结束 if strs[j][i] != tmp_char: tmp_char = "" if tmp_char == "": break res += tmp_char return res 自己写的太烂了，cp个范例。。。]]></content>
+      <tags>
+        <tag>LeetCode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode第1题：Two Sum]]></title>
+    <url>%2F2019%2F05%2F17%2FLeetCode-1%2F</url>
+    <content type="text"><![CDATA[题目 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。 示例 :输入: nums = [2, 7, 11, 15], target = 9解释: 因为nums[0] + nums[1] = 2 + 7 = 9输出: [0, 1] 代码12345678910111213class Solution(object): def twoSum(self, nums, target): """ :type nums: List[int] :type target: int :rtype: List[int] """ d = &#123;&#125; for i in range(len(nums)): if d.get(target - nums[i], None) == None: d[nums[i]] = i else: return (d[target - nums[i]], i)]]></content>
+      <tags>
+        <tag>LeetCode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[解决:Failed to add /run/systemd/ask-password to directory watch:No space left on device]]></title>
     <url>%2F2019%2F05%2F14%2F%E8%A7%A3%E5%86%B3No-space-left-on-device%2F</url>
     <content type="text"><![CDATA[今天运行了一下privoxy，蹦出来了：Failed to add /run/systemd/ask-password to directory watch: No space left on device df查了一下磁盘空间，完全够用，找了一下解决方法，做个记录 1234sudo -iecho 1048576 &gt; /proc/sys/fs/inotify/max_user_watchesexitsudo vim /etc/sysctl.conf 在sysctl.conf中加入： 1fs.inotify.max_user_watches=1048576 参考：https://askubuntu.com/questions/828779/failed-to-add-run-systemd-ask-password-to-directory-watch-no-space-left-on-dev]]></content>
