@@ -66,6 +66,15 @@
     tables.wrap('<div class="table-responsive">')
   };
 
+  window.onresize = function() {
+      var wi = document.body.clientWidth;
+      if (wi < 1200) {
+          document.getElementById("side_list").style.display = "none";
+      } else {
+          document.getElementById("side_list").style.display = "block";
+      }
+  };
+
   Even.prototype.scrollToc = function () {
     var SPACING = 20;
     var $toc = $('.post-toc');
