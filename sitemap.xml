@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.wxy.email/2019/05/08/git%E9%92%A9%E5%AD%90/</loc>
+    
+    <lastmod>2019-05-28T07:47:55.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wxy.email/2019/05/23/LeetCode-9/</loc>
+    
+    <lastmod>2019-05-28T07:38:52.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wxy.email/2019/05/22/LeetCode-7/</loc>
+    
+    <lastmod>2019-05-28T07:25:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wxy.email/2019/05/28/selenium/</loc>
+    
+    <lastmod>2019-05-28T07:10:15.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.wxy.email/2019/05/21/LeetCode-38/</loc>
     
     <lastmod>2019-05-22T12:19:35.000Z</lastmod>
@@ -79,14 +107,14 @@
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2019/04/27/python-bisect/</loc>
+    <loc>http://www.wxy.email/2018/08/10/python%E6%A0%88%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
     
     <lastmod>2019-05-13T08:36:14.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2018/08/10/python%E6%A0%88%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
+    <loc>http://www.wxy.email/2019/04/27/python-bisect/</loc>
     
     <lastmod>2019-05-13T08:36:14.000Z</lastmod>
     
@@ -152,13 +180,6 @@
     <loc>http://www.wxy.email/2019/01/26/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</loc>
     
     <lastmod>2019-05-10T12:00:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.wxy.email/2019/05/08/git%E9%92%A9%E5%AD%90/</loc>
-    
-    <lastmod>2019-05-10T11:59:02.000Z</lastmod>
     
   </url>
   
