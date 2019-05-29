@@ -98,13 +98,16 @@
       <div class="post-meta">
         <span class="post-time">
           2019-05-14
-        </span></div>
+        </span><span class="post-category">
+            <a href="/categories/Linux/">Linux</a>
+            </span>
+        </div>
     </header>
 
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">推荐文章（由hexo推荐插件驱动）</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">推荐文章（由hexo推荐插件驱动）</span></a></li></ol>
     </div>
   </div><div class="post-content"><p>今天运行了一下privoxy，蹦出来了：<code>Failed to add /run/systemd/ask-password to directory watch: No space left on device</code></p>
 <a id="more"></a>
@@ -113,8 +116,8 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo -i</span><br><span class="line">echo 1048576 &gt; /proc/sys/fs/inotify/max_user_watches</span><br><span class="line">exit</span><br><span class="line">sudo vim /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
 <p>在<code>sysctl.conf</code>中加入：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.inotify.max_user_watches=1048576</span><br></pre></td></tr></table></figure>
-<p>参考：<a href="https://askubuntu.com/questions/828779/failed-to-add-run-systemd-ask-password-to-directory-watch-no-space-left-on-dev" target="_blank" rel="noopener">https://askubuntu.com/questions/828779/failed-to-add-run-systemd-ask-password-to-directory-watch-no-space-left-on-dev</a></p>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo推荐插件</a>驱动）</span></h1><ul><li><a href="https://gis90.github.io/Linux/linux学习之基础篇-ls/">linux学习之基础篇-ls</a></li></ul></div>
+<p>参考：<a href="https://askubuntu.com/questions/828779/failed-to-add-run-systemd-ask-password-to-directory-watch-no-space-left-on-dev" rel="external nofollow noopener noreferrer" target="_blank">https://askubuntu.com/questions/828779/failed-to-add-run-systemd-ask-password-to-directory-watch-no-space-left-on-dev</a></p>
+<div><h3>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts" rel="external nofollow noopener noreferrer" target="_blank">hexo推荐插件</a>驱动）</span></h3><ul><li><a href="https://gis90.github.io/Linux/linux学习之基础篇-ls/" rel="external nofollow noopener noreferrer" target="_blank">linux学习之基础篇-ls</a></li></ul></div>
       </div>
       
       <div class="post-reward">

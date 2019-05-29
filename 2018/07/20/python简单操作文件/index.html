@@ -98,14 +98,17 @@
       <div class="post-meta">
         <span class="post-time">
           2018-07-20
-        </span></div>
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
+        </div>
     </header>
 
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#打开文件"><span class="toc-text">打开文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑文件"><span class="toc-text">编辑文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭文件"><span class="toc-text">关闭文件</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">推荐文章（由hexo推荐插件驱动）</span></a>
-    </li></div>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#打开文件"><span class="toc-text">打开文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑文件"><span class="toc-text">编辑文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭文件"><span class="toc-text">关闭文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">推荐文章（由hexo推荐插件驱动）</span></a></li></ol>
+    </div>
   </div><div class="post-content"><p>还是以最简单的例子开始，先来操作txt文件吧</p>
 <a id="more"></a>
 <hr>
@@ -120,7 +123,7 @@
 <h3 id="编辑文件"><a href="#编辑文件" class="headerlink" title="编辑文件"></a><b>编辑文件</b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">f.read()               <span class="comment"># 读取整个文件</span></span><br><span class="line">f.read(n)              <span class="comment"># 每次读取n个字节, 指针向后移动</span></span><br><span class="line">f.readline()           <span class="comment"># 每次读取一行, 指针向后移动</span></span><br><span class="line">f.readlines()          <span class="comment"># 读取整个文件, 把文件以行分割, 放入一个列表中</span></span><br><span class="line">f.write(<span class="string">"写入数据\n"</span>)   <span class="comment"># \n表示换行</span></span><br></pre></td></tr></table></figure>
 <p><b>注意:</b> 文件的大小不能确定的时候最好不要使用read()和readlines()直接读取, 当文件过大时会时程序崩溃, 可以使用read(n)指定每次读取的字节数.</p>
 <h3 id="关闭文件"><a href="#关闭文件" class="headerlink" title="关闭文件"></a><b>关闭文件</b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f.close()</span><br></pre></td></tr></table></figure>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo推荐插件</a>驱动）</span></h1><ul><li><a href="http://www.wxy.email/2018/12/25/Python-os文件操作/">Python os文件操作</a></li><li><a href="http://www.wxy.email/2019/03/24/Python-socket/">Python socket 实现服务端和客户端数据传输（TCP）</a></li><li><a href="http://www.wxy.email/2019/05/10/django-日志/">Django-日志</a></li></ul></div>
+<div><h3>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts" rel="external nofollow noopener noreferrer" target="_blank">hexo推荐插件</a>驱动）</span></h3><ul><li><a href="http://www.wxy.email/2018/12/25/Python-os文件操作/">Python os文件操作</a></li><li><a href="http://www.wxy.email/2019/03/24/Python-socket/">Python socket 实现服务端和客户端数据传输（TCP）</a></li><li><a href="http://www.wxy.email/2019/05/10/django-日志/">Django-日志</a></li></ul></div>
       </div>
       
       <div class="post-reward">

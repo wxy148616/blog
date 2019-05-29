@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="ab压力测试(入门)"><meta name="keywords" content="项目部署, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<meta name="description" content="ab压力测试(入门)"><meta name="keywords" content="test, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
 <link rel="canonical" href="http://www.wxy.email/2019/05/07/ab压力测试-入门/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
@@ -98,15 +98,18 @@
       <div class="post-meta">
         <span class="post-time">
           2019-05-07
-        </span></div>
+        </span><span class="post-category">
+            <a href="/categories/项目部署/">项目部署</a>
+            </span>
+        </div>
     </header>
 
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">推荐文章（由hexo推荐插件驱动）</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#undefined"><span class="toc-text">推荐文章（由hexo推荐插件驱动）</span></a></li></ol>
     </div>
-  </div><div class="post-content"><p>记录一下最近了解的压力测试工具 ab 全称: <a href="http://httpd.apache.org/docs/2.4/programs/ab.html" target="_blank" rel="noopener">apache bench</a></p>
+  </div><div class="post-content"><p>记录一下最近了解的压力测试工具 ab 全称: <a href="http://httpd.apache.org/docs/2.4/programs/ab.html" rel="external nofollow noopener noreferrer" target="_blank">apache bench</a></p>
 <a id="more"></a>
 <hr>
 <ul>
@@ -117,8 +120,8 @@
 <p>-c: 请求数量<br>-n: 请求并发量<br>-p: 请求参数文件<br>-T: Content-type<br>-H: 追加一个请求头<br>-w: 测试结果以html形式存储在test.html文件中, 不添加 -w 和 &gt;&gt; test.html 结果会打印在终端</p>
 </blockquote>
 <p> -p 的参数文件内的参数格式是由Content-type决定的</p>
-<p>参考: <a href="http://httpd.apache.org/docs/2.4/programs/ab.html" target="_blank" rel="noopener">http://httpd.apache.org/docs/2.4/programs/ab.html</a></p>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo推荐插件</a>驱动）</span></h1><ul><li><a href="http://www.wxy.email/2019/05/09/django-部署/">Django项目部署</a></li><li><a href="http://www.wxy.email/2018/09/09/git-init/">Git本地项目上传到远程仓库</a></li><li><a href="http://www.wxy.email/2019/05/08/git钩子/">git钩子自动更新服务器代码</a></li></ul></div>
+<p>参考: <a href="http://httpd.apache.org/docs/2.4/programs/ab.html" rel="external nofollow noopener noreferrer" target="_blank">http://httpd.apache.org/docs/2.4/programs/ab.html</a></p>
+<div><h3>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts" rel="external nofollow noopener noreferrer" target="_blank">hexo推荐插件</a>驱动）</span></h3><ul><li><a href="http://www.wxy.email/2019/05/09/django-部署/">Django项目部署</a></li><li><a href="http://www.wxy.email/2018/09/09/git-init/">Git本地项目上传到远程仓库</a></li><li><a href="http://www.wxy.email/2019/05/08/git钩子/">git钩子自动更新服务器代码</a></li></ul></div>
       </div>
       
       <div class="post-reward">
@@ -135,7 +138,7 @@
       </div>
   </div><footer class="post-footer">
         <div class="post-tags">
-            <a href="/tags/项目部署/">项目部署</a>
+            <a href="/tags/test/">test</a>
             </div>
         
         <nav class="post-nav"><a class="prev" href="/2019/05/08/git钩子/">
