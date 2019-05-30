@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.wxy.email/2018/12/25/Python-os%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</loc>
+    <loc>http://www.wxy.email/2019/05/29/LeetCode-20/</loc>
     
-    <lastmod>2019-05-29T09:54:37.000Z</lastmod>
+    <lastmod>2019-05-30T10:03:00.000Z</lastmod>
     
   </url>
   
@@ -16,7 +16,7 @@
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2019/04/27/python-bisect/</loc>
+    <loc>http://www.wxy.email/2018/12/25/Python-os%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</loc>
     
     <lastmod>2019-05-29T09:54:37.000Z</lastmod>
     
@@ -24,6 +24,13 @@
   
   <url>
     <loc>http://www.wxy.email/2019/05/28/selenium/</loc>
+    
+    <lastmod>2019-05-29T09:54:37.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wxy.email/2019/04/27/python-bisect/</loc>
     
     <lastmod>2019-05-29T09:54:37.000Z</lastmod>
     
