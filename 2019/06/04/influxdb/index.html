@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="default">
+  <head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="nt7ofDlUEAj-G2sNFlh0wBJYoWH1hdvum_-V5zOgHzg">
+<meta name="baidu-site-verification" content="XG5Sc98jMI">
+<meta name="wlhlauth" content="8d884ffcaa79c5165f113cd2349b52d7">
+<meta name="360-site-verification" content="577ecf1c5f95d421bb0482d93c7faa1e">
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="时序数据库"><meta name="keywords" content="python, InfluxDB, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="http://www.wxy.email/2019/06/04/influxdb/">
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":"","toc":true,"fancybox":true,"pjax":true,"latex":false};
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2911390145109533",
+    enable_page_level_ads: true
+  });
+</script>
+
+    <title>Python写入InfluxDB - 时光不写博客</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">时光不写博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><a href="/">
+        <li class="mobile-menu-item">首页
+          </li>
+      </a><a href="/archives/">
+        <li class="mobile-menu-item">归档
+          </li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类
+          </li>
+      </a></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">时光不写博客</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+          <a class="menu-item-link" href="/">
+            首页
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            归档
+            </a>
+        </li>
+      <li class="menu-item">
+          <a class="menu-item-link" href="/categories/">
+            分类
+            </a>
+        </li>
+      </ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Python写入InfluxDB
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-06-04
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用准备"><span class="toc-text">使用准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作"><span class="toc-text">操作</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><blockquote>
+<p>InfluxDB是一个开源的时序数据库，使用GO语言开发，特别适合用于处理和分析资源监控数据这种时序相关数据。而InfluxDB自带的各种特殊函数如求标准差，随机取样数据，统计数据变化比等，使数据统计和实时分析变得十分方便。</p>
+</blockquote>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><b>安装</b></h2><ul>
+<li>数据库安装<br>根据不同的系统安装方式不太一样, 具体参考<a href="https://docs.influxdata.com/influxdb/v1.7/introduction/installation/" rel="external nofollow noopener noreferrer" target="_blank">官网</a>, 这个官网提供的挺详细的。<br><b>如果有指定版本的requests, 注意一下requests版本, influxdb不支持旧版的requests库, 版本不支持安装时会有提示。</b></li>
+<li>Python安装操作库</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install influxdb</span><br><span class="line"></span><br><span class="line">pip install --upgrade influxdb             # 升级</span><br><span class="line">pip uninstall influxdb       # 卸载</span><br></pre></td></tr></table></figure>
+<h2 id="使用准备"><a href="#使用准备" class="headerlink" title="使用准备"></a><b>使用准备</b></h2><ul>
+<li>操作准备<br>需要先创建数据库，可以使用命令行进行创建</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database database_name;</span><br></pre></td></tr></table></figure>
+<p>也可以使用python命令直接创建</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line"><span class="comment"># 首先连接influxdb</span></span><br><span class="line">client = InfluxDBClient(host=<span class="string">'服务器IP'</span>, port=<span class="number">8086</span>, username=<span class="string">'myuser'</span>, password=<span class="string">'mypass'</span> ssl=<span class="literal">True</span>, verify_ssl=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 创建数据库</span></span><br><span class="line">client.create_database(<span class="string">'database_name'</span>)   </span><br><span class="line"><span class="comment"># 查询数据库</span></span><br><span class="line">client.get_list_database()</span><br></pre></td></tr></table></figure>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a><b>操作</b></h2><ul>
+<li>连接数据库</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line">client = InfluxDBClient(<span class="string">'服务器IP'</span>, <span class="string">'8086'</span>, <span class="string">'myuser'</span>, <span class="string">'mypass'</span>, <span class="string">'database_name'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>写入数据<br>InfluxDB的每条数据可以看成一个json数据（其实写入的时候就是个json数据），每条数据中包含了’measurement’，’time’，’tags’，’fields’</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>measurement</td>
+<td>相当于数据库中的表</td>
+</tr>
+<tr>
+<td>time</td>
+<td>数据的记录时间，是数据的主索引</td>
+</tr>
+<tr>
+<td>tags</td>
+<td>一个有索引的值</td>
+</tr>
+<tr>
+<td>fields</td>
+<td>没有索引的值</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">w_json = [&#123;</span><br><span class="line">    <span class="string">"measurement"</span>: <span class="string">'table_name'</span>,</span><br><span class="line">    <span class="string">"time"</span>: now_time,</span><br><span class="line">    <span class="string">"tags"</span>: &#123;</span><br><span class="line">        <span class="string">'name'</span>: <span class="string">'名字'</span>,</span><br><span class="line">        <span class="string">'categories'</span>: <span class="string">'类型'</span></span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">"fields"</span>: &#123;</span><br><span class="line">        <span class="string">'price'</span>: <span class="string">"价格"</span>,</span><br><span class="line">        <span class="string">'unit'</span>: <span class="string">"单位"</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">写入数据库</span><br><span class="line">client.write_points(w_json)</span><br></pre></td></tr></table></figure>
+
+      </div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/python/">python</a>
+            <a href="/tags/InfluxDB/">InfluxDB</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2019/06/04/ElementTree-tostring/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">from lxml import etree</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2019/06/02/aliyun/">
+        <span class="next-text nav-default">阿里云抢占式服务器一小时</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">
+  <span class="power-by">
+    联系方式
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+  wxy148616@163.com
+  </span><span class="copyright-year">&copy;2018 - 2019<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">时光不写博客</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+</body>
+</html>
