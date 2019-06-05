@@ -1,2 +1,6 @@
 User-agent: *
 Allow: /
+
+Sitemap: http://www.wxy.email/search.xml
+Sitemap: http://www.wxy.email/sitemap.xml
+Sitemap: http://www.wxy.email/baidusitemap.xml
