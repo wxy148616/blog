@@ -58,7 +58,7 @@
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2019/04/27/python-bisect/</loc>
+    <loc>http://www.wxy.email/2018/07/20/python%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6/</loc>
     
     <lastmod>2019-05-29T09:54:37.000Z</lastmod>
     
@@ -72,14 +72,14 @@
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2018/07/20/python%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6/</loc>
+    <loc>http://www.wxy.email/2019/05/28/selenium/</loc>
     
     <lastmod>2019-05-29T09:54:37.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2019/05/28/selenium/</loc>
+    <loc>http://www.wxy.email/2019/04/27/python-bisect/</loc>
     
     <lastmod>2019-05-29T09:54:37.000Z</lastmod>
     
@@ -93,14 +93,14 @@
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2019/05/13/python-list%E5%85%83%E7%B4%A0%E7%A7%BB%E5%8A%A8/</loc>
+    <loc>http://www.wxy.email/2019/01/26/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</loc>
     
     <lastmod>2019-05-29T09:54:36.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2019/05/11/%E7%BB%88%E7%AB%AFssh%E7%99%BB%E5%BD%95/</loc>
+    <loc>http://www.wxy.email/2019/03/24/Python-socket/</loc>
     
     <lastmod>2019-05-29T09:54:36.000Z</lastmod>
     
@@ -114,14 +114,7 @@
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2019/05/12/python%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5/</loc>
-    
-    <lastmod>2019-05-29T09:54:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.wxy.email/2019/05/05/Linux%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/</loc>
+    <loc>http://www.wxy.email/2019/05/13/python-list%E5%85%83%E7%B4%A0%E7%A7%BB%E5%8A%A8/</loc>
     
     <lastmod>2019-05-29T09:54:36.000Z</lastmod>
     
@@ -135,7 +128,7 @@
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2019/01/26/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</loc>
+    <loc>http://www.wxy.email/2019/05/11/%E7%BB%88%E7%AB%AFssh%E7%99%BB%E5%BD%95/</loc>
     
     <lastmod>2019-05-29T09:54:36.000Z</lastmod>
     
@@ -149,7 +142,14 @@
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2019/03/24/Python-socket/</loc>
+    <loc>http://www.wxy.email/2019/05/05/Linux%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/</loc>
+    
+    <lastmod>2019-05-29T09:54:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wxy.email/2019/05/12/python%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5/</loc>
     
     <lastmod>2019-05-29T09:54:36.000Z</lastmod>
     
@@ -170,13 +170,6 @@
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2018/06/29/hexo%E9%83%A8%E7%BD%B2/</loc>
-    
-    <lastmod>2019-05-29T09:52:05.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.wxy.email/2019/05/07/ab%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95-%E5%85%A5%E9%97%A8/</loc>
     
     <lastmod>2019-05-29T09:52:05.000Z</lastmod>
@@ -184,7 +177,7 @@
   </url>
   
   <url>
-    <loc>http://www.wxy.email/2019/05/08/git%E9%92%A9%E5%AD%90/</loc>
+    <loc>http://www.wxy.email/2018/06/29/hexo%E9%83%A8%E7%BD%B2/</loc>
     
     <lastmod>2019-05-29T09:52:05.000Z</lastmod>
     
@@ -192,6 +185,13 @@
   
   <url>
     <loc>http://www.wxy.email/2019/05/09/django-%E9%83%A8%E7%BD%B2/</loc>
+    
+    <lastmod>2019-05-29T09:52:05.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.wxy.email/2019/05/08/git%E9%92%A9%E5%AD%90/</loc>
     
     <lastmod>2019-05-29T09:52:05.000Z</lastmod>
     
