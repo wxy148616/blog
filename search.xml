@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>nginx配置https</title>
+      <link href="/2019/06/06/https-config/"/>
+      <url>/2019/06/06/https-config/</url>
+      
+        <content type="html"><![CDATA[<ul><li>首先修改原来的nginx配置，<b>nginx配置不会的看&gt;&gt;<a href="https://www.wxy.email/2019/01/26/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">这里</a></b></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">     listen 80;</span><br><span class="line">     # 添加</span><br><span class="line">     listen 443 ssl;</span><br><span class="line">     server_name www.wxy.email wxy.email;</span><br><span class="line">     </span><br><span class="line">     # 添加ssl证书配置</span><br><span class="line">     # ssl on;</span><br><span class="line">     ssl_certificate /home/lls/wxy.email.crt; </span><br><span class="line">     ssl_certificate_key /home/lls/wxy.email.key;</span><br><span class="line">     ssl_session_timeout 5m;</span><br><span class="line">     </span><br><span class="line">     </span><br><span class="line">     charset utf-8;</span><br><span class="line">     location / &#123;</span><br><span class="line">             root /home/blog/blog;</span><br><span class="line">             index index.html;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>kill杀死nginx进程，重启</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kill -9 pid</span><br><span class="line">service nginx start</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 项目部署 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 项目部署 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>from lxml import etree</title>
       <link href="/2019/06/04/ElementTree-tostring/"/>
       <url>/2019/06/04/ElementTree-tostring/</url>
