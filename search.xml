@@ -29,33 +29,6 @@
     
     
     <entry>
-      <title>Python写入InfluxDB</title>
-      <link href="/2019/06/04/influxdb/"/>
-      <url>/2019/06/04/influxdb/</url>
-      
-        <content type="html"><![CDATA[<blockquote><p>InfluxDB是一个开源的时序数据库，使用GO语言开发，特别适合用于处理和分析资源监控数据这种时序相关数据。而InfluxDB自带的各种特殊函数如求标准差，随机取样数据，统计数据变化比等，使数据统计和实时分析变得十分方便。</p></blockquote><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><b>安装</b></h2><ul><li>数据库安装<br>根据不同的系统安装方式不太一样, 具体参考<a href="https://docs.influxdata.com/influxdb/v1.7/introduction/installation/" rel="external nofollow noopener noreferrer" target="_blank">官网</a>, 这个官网提供的挺详细的。<br><b>如果有指定版本的requests, 注意一下requests版本, influxdb不支持旧版的requests库, 版本不支持安装时会有提示。</b></li><li>Python安装操作库</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install influxdb</span><br><span class="line"></span><br><span class="line">pip install --upgrade influxdb             # 升级</span><br><span class="line">pip uninstall influxdb       # 卸载</span><br></pre></td></tr></table></figure><h2 id="使用准备"><a href="#使用准备" class="headerlink" title="使用准备"></a><b>使用准备</b></h2><ul><li>操作准备<br>需要先创建数据库，可以使用命令行进行创建</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database database_name;</span><br></pre></td></tr></table></figure><p>也可以使用python命令直接创建</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line"><span class="comment"># 首先连接influxdb</span></span><br><span class="line">client = InfluxDBClient(host=<span class="string">'服务器IP'</span>, port=<span class="number">8086</span>, username=<span class="string">'myuser'</span>, password=<span class="string">'mypass'</span> ssl=<span class="literal">True</span>, verify_ssl=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 创建数据库</span></span><br><span class="line">client.create_database(<span class="string">'database_name'</span>)   </span><br><span class="line"><span class="comment"># 查询数据库</span></span><br><span class="line">client.get_list_database()</span><br></pre></td></tr></table></figure><h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a><b>操作</b></h2><ul><li>连接数据库</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line">client = InfluxDBClient(<span class="string">'服务器IP'</span>, <span class="string">'8086'</span>, <span class="string">'myuser'</span>, <span class="string">'mypass'</span>, <span class="string">'database_name'</span>)</span><br></pre></td></tr></table></figure><ul><li>写入数据<br>InfluxDB的每条数据可以看成一个json数据（其实写入的时候就是个json数据），每条数据中包含了’measurement’，’time’，’tags’，’fields’</li></ul><table><thead><tr><th>属性</th><th>含义</th></tr></thead><tbody><tr><td>measurement</td><td>相当于数据库中的表</td></tr><tr><td>time</td><td>数据的记录时间，是数据的主索引</td></tr><tr><td>tags</td><td>一个有索引的值</td></tr><tr><td>fields</td><td>没有索引的值</td></tr></tbody></table><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">w_json = [&#123;</span><br><span class="line">    <span class="string">"measurement"</span>: <span class="string">'table_name'</span>,</span><br><span class="line">    <span class="string">"time"</span>: now_time,</span><br><span class="line">    <span class="string">"tags"</span>: &#123;</span><br><span class="line">        <span class="string">'name'</span>: <span class="string">'名字'</span>,</span><br><span class="line">        <span class="string">'categories'</span>: <span class="string">'类型'</span></span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">"fields"</span>: &#123;</span><br><span class="line">        <span class="string">'price'</span>: <span class="string">"价格"</span>,</span><br><span class="line">        <span class="string">'unit'</span>: <span class="string">"单位"</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">写入数据库</span><br><span class="line">client.write_points(w_json)</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Python </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> python </tag>
-            
-            <tag> InfluxDB </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>from lxml import etree</title>
       <link href="/2019/06/04/ElementTree-tostring/"/>
       <url>/2019/06/04/ElementTree-tostring/</url>
@@ -83,23 +56,25 @@
     
     
     <entry>
-      <title>阿里云抢占式服务器一小时</title>
-      <link href="/2019/06/02/aliyun/"/>
-      <url>/2019/06/02/aliyun/</url>
+      <title>Python写入InfluxDB</title>
+      <link href="/2019/06/04/influxdb/"/>
+      <url>/2019/06/04/influxdb/</url>
       
-        <content type="html"><![CDATA[<p>IP: <code>47.106.250.36</code><br>username: <code>shiguangbuxieboke</code><br>密码: <code>Shiguangbuxieboke123</code><br>释放时间: <code>2019-06-02 12:50:00</code></p><p>登录示例: <code>ssh shiguangbuxieboke@47.106.250.36</code></p>]]></content>
+        <content type="html"><![CDATA[<blockquote><p>InfluxDB是一个开源的时序数据库，使用GO语言开发，特别适合用于处理和分析资源监控数据这种时序相关数据。而InfluxDB自带的各种特殊函数如求标准差，随机取样数据，统计数据变化比等，使数据统计和实时分析变得十分方便。</p></blockquote><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><b>安装</b></h2><ul><li>数据库安装<br>根据不同的系统安装方式不太一样, 具体参考<a href="https://docs.influxdata.com/influxdb/v1.7/introduction/installation/" rel="external nofollow noopener noreferrer" target="_blank">官网</a>, 这个官网提供的挺详细的。<br><b>如果有指定版本的requests, 注意一下requests版本, influxdb不支持旧版的requests库, 版本不支持安装时会有提示。</b></li><li>Python安装操作库</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install influxdb</span><br><span class="line"></span><br><span class="line">pip install --upgrade influxdb             # 升级</span><br><span class="line">pip uninstall influxdb       # 卸载</span><br></pre></td></tr></table></figure><h2 id="使用准备"><a href="#使用准备" class="headerlink" title="使用准备"></a><b>使用准备</b></h2><ul><li>操作准备<br>需要先创建数据库，可以使用命令行进行创建</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database database_name;</span><br></pre></td></tr></table></figure><p>也可以使用python命令直接创建</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line"><span class="comment"># 首先连接influxdb</span></span><br><span class="line">client = InfluxDBClient(host=<span class="string">'服务器IP'</span>, port=<span class="number">8086</span>, username=<span class="string">'myuser'</span>, password=<span class="string">'mypass'</span> ssl=<span class="literal">True</span>, verify_ssl=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 创建数据库</span></span><br><span class="line">client.create_database(<span class="string">'database_name'</span>)   </span><br><span class="line"><span class="comment"># 查询数据库</span></span><br><span class="line">client.get_list_database()</span><br></pre></td></tr></table></figure><h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a><b>操作</b></h2><ul><li>连接数据库</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line">client = InfluxDBClient(<span class="string">'服务器IP'</span>, <span class="string">'8086'</span>, <span class="string">'myuser'</span>, <span class="string">'mypass'</span>, <span class="string">'database_name'</span>)</span><br></pre></td></tr></table></figure><ul><li>写入数据<br>InfluxDB的每条数据可以看成一个json数据（其实写入的时候就是个json数据），每条数据中包含了’measurement’，’time’，’tags’，’fields’</li></ul><table><thead><tr><th>属性</th><th>含义</th></tr></thead><tbody><tr><td>measurement</td><td>相当于数据库中的表</td></tr><tr><td>time</td><td>数据的记录时间，是数据的主索引</td></tr><tr><td>tags</td><td>一个有索引的值</td></tr><tr><td>fields</td><td>没有索引的值</td></tr></tbody></table><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">w_json = [&#123;</span><br><span class="line">    <span class="string">"measurement"</span>: <span class="string">'table_name'</span>,</span><br><span class="line">    <span class="string">"time"</span>: now_time,</span><br><span class="line">    <span class="string">"tags"</span>: &#123;</span><br><span class="line">        <span class="string">'name'</span>: <span class="string">'名字'</span>,</span><br><span class="line">        <span class="string">'categories'</span>: <span class="string">'类型'</span></span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">"fields"</span>: &#123;</span><br><span class="line">        <span class="string">'price'</span>: <span class="string">"价格"</span>,</span><br><span class="line">        <span class="string">'unit'</span>: <span class="string">"单位"</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">写入数据库</span><br><span class="line">client.write_points(w_json)</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
           
-          <category> 福利 </category>
+          <category> Python </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 阿里云 </tag>
+            <tag> python </tag>
+            
+            <tag> InfluxDB </tag>
             
         </tags>
       
@@ -125,6 +100,31 @@
         <tags>
             
             <tag> IDE </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>阿里云抢占式服务器一小时</title>
+      <link href="/2019/06/02/aliyun/"/>
+      <url>/2019/06/02/aliyun/</url>
+      
+        <content type="html"><![CDATA[<p>IP: <code>47.106.250.36</code><br>username: <code>shiguangbuxieboke</code><br>密码: <code>Shiguangbuxieboke123</code><br>释放时间: <code>2019-06-02 12:50:00</code></p><p>登录示例: <code>ssh shiguangbuxieboke@47.106.250.36</code></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 福利 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 阿里云 </tag>
             
         </tags>
       
