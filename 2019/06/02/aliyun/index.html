@@ -68,8 +68,8 @@
                 for (var i = 0; i <= entry.length - 1; i++) {
                     var content = entry[i];
                     if (content.textContent.search(data) != -1) {
-                        frag.append("<a style='color:blanchedalmond' href='http://www.wxy.email"+content.getElementsByTagName('url')[0].textContent
-                            + "'>" + content.getElementsByTagName('title')[0].textContent + "</a><br>");
+                        frag.append("<a style='color:blanchedalmond; text-decoration: underline;' href='http://www.wxy.email"+content.getElementsByTagName('url')[0].textContent
+                            + "'><b>" + content.getElementsByTagName('title')[0].textContent + "</b></a><br>");
                     }
                 }
                 //最后得到的frag添加进HTML文档中
