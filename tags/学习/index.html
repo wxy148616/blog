@@ -91,6 +91,15 @@
     function disblock(){
         document.getElementById('pop_up').style.display='none';
     }
+    function enter_search() {
+        let event = window.event;
+        // console.log(event.keyCode);
+        // alert(event.KeyCode);
+        if (event.keyCode === 13) {
+            console.log(event.keyCode);
+            search();
+        }
+    }
     function Display(){
         setTimeout(() => {
             document.getElementById('pop_up').style.width = document.body.clientWidth + 'px';
