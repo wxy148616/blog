@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="http://www.wxy.email/archives/2018/09/">
+<meta name="description" content="使用Python代码进行转换"><meta name="keywords" content="python, 时光不写博客"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="http://www.wxy.email/2019/06/18/bytetostring/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,8 +114,7 @@
       Display();
     }
 </script>
-    <title>归档 - 时光不写博客
-  </title>
+    <title>\xe5\x8d\xa0\xe7\x94\xa8\xe3\x80\x82，16进制乱码转化为可读字符 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -172,25 +171,52 @@
 
       <main id="main" class="main">
         <div class="content-wrapper">
-          <div id="content" class="content"><section id="archive" class="archive"><div class="archive-title">
-          <span class="archive-post-counter">
-            目前共计 35 篇日志
-          </span>
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">\xe5\x8d\xa0\xe7\x94\xa8\xe3\x80\x82，16进制乱码转化为可读字符
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-06-18
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
         </div>
-      <div class="collection-title">
-            <h2 class="archive-year">2018</h2>
-          </div>
-        <div class="archive-post">
-        <span class="archive-post-time">
-          09-09
-          </span>
-        <span class="archive-post-title">
-          <a href="/2018/09/09/git-init/" class="archive-post-link">
-            Git本地项目上传到远程仓库
-          </a>
-        </span>
+    </header>
+
+    <div class="post-content"><p>在解析一些网页数据或者查看服务器日志的时候总会出现一些没法直接阅读的byte字符串，也没有找到在线的转码工具，那就自己写吧。</p>
+<ul>
+<li>其实超级简单。。。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'\xe5\x8d\xa0\xe7\x94\xa8\xe3\x80\x82'</span></span><br><span class="line"> </span><br><span class="line">print(s.strip().decode(<span class="string">'utf-8'</span>))</span><br><span class="line">print(s.strip().decode(<span class="string">'utf-8'</span>, <span class="string">'ignore'</span>))</span><br></pre></td></tr></table></figure>
+
       </div>
-    </section><nav class="pagination"></nav></div></div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/python/">python</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/06/06/https-config/">
+        <span class="next-text nav-default">nginx配置https</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">

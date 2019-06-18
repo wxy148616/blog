@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>\xe5\x8d\xa0\xe7\x94\xa8\xe3\x80\x82，16进制乱码转化为可读字符</title>
+      <link href="/2019/06/18/bytetostring/"/>
+      <url>/2019/06/18/bytetostring/</url>
+      
+        <content type="html"><![CDATA[<p>在解析一些网页数据或者查看服务器日志的时候总会出现一些没法直接阅读的byte字符串，也没有找到在线的转码工具，那就自己写吧。</p><ul><li>其实超级简单。。。</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">'\xe5\x8d\xa0\xe7\x94\xa8\xe3\x80\x82'</span></span><br><span class="line"> </span><br><span class="line">print(s.strip().decode(<span class="string">'utf-8'</span>))</span><br><span class="line">print(s.strip().decode(<span class="string">'utf-8'</span>, <span class="string">'ignore'</span>))</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>nginx配置https</title>
       <link href="/2019/06/06/https-config/"/>
       <url>/2019/06/06/https-config/</url>
@@ -21,33 +46,6 @@
         <tags>
             
             <tag> 项目部署 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>from lxml import etree</title>
-      <link href="/2019/06/04/ElementTree-tostring/"/>
-      <url>/2019/06/04/ElementTree-tostring/</url>
-      
-        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Python </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> python </tag>
-            
-            <tag> 爬虫 </tag>
             
         </tags>
       
@@ -83,23 +81,25 @@
     
     
     <entry>
-      <title>JetBrains系列汉化补丁</title>
-      <link href="/2019/06/02/JetBrains/"/>
-      <url>/2019/06/02/JetBrains/</url>
+      <title>from lxml import etree</title>
+      <link href="/2019/06/04/ElementTree-tostring/"/>
+      <url>/2019/06/04/ElementTree-tostring/</url>
       
-        <content type="html"><![CDATA[<ul><li>GitHub上的一个项目，操作起来超级简单，汉化的也算是很全面了</li></ul><ul><li>下载链接：<a href="https://github.com/pingfangx/jetbrains-in-chinese" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/pingfangx/jetbrains-in-chinese</a> </li></ul><p>原文链接：<a href="https://github.com/pingfangx/TranslatorX" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/pingfangx/TranslatorX</a></p>]]></content>
+        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
           
-          <category> 资源 </category>
+          <category> Python </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> IDE </tag>
+            <tag> python </tag>
+            
+            <tag> 爬虫 </tag>
             
         </tags>
       
@@ -125,6 +125,31 @@
         <tags>
             
             <tag> 阿里云 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>JetBrains系列汉化补丁</title>
+      <link href="/2019/06/02/JetBrains/"/>
+      <url>/2019/06/02/JetBrains/</url>
+      
+        <content type="html"><![CDATA[<ul><li>GitHub上的一个项目，操作起来超级简单，汉化的也算是很全面了</li></ul><ul><li>下载链接：<a href="https://github.com/pingfangx/jetbrains-in-chinese" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/pingfangx/jetbrains-in-chinese</a> </li></ul><p>原文链接：<a href="https://github.com/pingfangx/TranslatorX" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/pingfangx/TranslatorX</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 资源 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> IDE </tag>
             
         </tags>
       
