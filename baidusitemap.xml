@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.wxy.email/2019/05/30/%E8%B5%84%E6%BA%90/</loc>
+    <lastmod>2019-06-19</lastmod>
+  </url>  <url>
     <loc>https://www.wxy.email/2019/06/18/bytetostring/</loc>
     <lastmod>2019-06-18</lastmod>
   </url>  <url>
@@ -18,9 +21,6 @@
   </url>  <url>
     <loc>https://www.wxy.email/2019/06/02/aliyun/</loc>
     <lastmod>2019-06-02</lastmod>
-  </url>  <url>
-    <loc>https://www.wxy.email/2019/05/30/%E8%B5%84%E6%BA%90/</loc>
-    <lastmod>2019-05-31</lastmod>
   </url>  <url>
     <loc>https://www.wxy.email/2019/05/29/LeetCode-20/</loc>
     <lastmod>2019-05-30</lastmod>
