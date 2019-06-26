@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="default">
+  <head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="nt7ofDlUEAj-G2sNFlh0wBJYoWH1hdvum_-V5zOgHzg">
+<meta name="baidu-site-verification" content="XG5Sc98jMI">
+<meta name="wlhlauth" content="8d884ffcaa79c5165f113cd2349b52d7">
+<meta name="360-site-verification" content="577ecf1c5f95d421bb0482d93c7faa1e">
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="mac安装mysql-python遇到的坑"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/06/26/MySQL-python/">
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":"","toc":true,"fancybox":true,"pjax":true,"latex":false};
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2911390145109533",
+    enable_page_level_ads: true
+  });
+</script>
+
+<script>
+  // 搜索框
+    function search(){
+        $.ajax({
+            url:'../../search.xml',
+            type: 'GET',
+            dataType: 'xml',
+            timeout: 1000,
+            cache:false,
+            error: function(xml){
+                console.log('加载XML文档出错');
+            },
+            success: function(xml){
+                //建立一个代码片段
+                var root_xml=xml.documentElement;
+                var data=$('#search').val();
+                var entry=root_xml.getElementsByTagName("entry");
+                var frag=$("<ul/>");
+                for (var i = 0; i <= entry.length - 1; i++) {
+                    var content = entry[i];
+                    if (content.textContent.search(data) != -1) {
+                        frag.append("<a style='color:blanchedalmond; text-decoration: underline;' href='http://www.wxy.email"+content.getElementsByTagName('url')[0].textContent
+                            + "'><b>" + content.getElementsByTagName('title')[0].textContent + "</b></a><br>");
+                    }
+                }
+                //最后得到的frag添加进HTML文档中
+                $('#DisplayBox').empty();
+                Display();
+                frag.appendTo("#DisplayBox");
+                // alert(frag)
+            }
+        });
+    }
+    function RealTimeSearch(){
+        var input = document.getElementById('search').value;
+        if (input === "") {
+            $('#DisplayBox').empty();
+            return
+        }
+        search();
+    }
+    function disblock(){
+        document.getElementById('pop_up').style.display='none';
+    }
+    function enter_search() {
+        let event = window.event;
+        // console.log(event.keyCode);
+        // alert(event.KeyCode);
+        if (event.keyCode === 13) {
+            console.log(event.keyCode);
+            search();
+        }
+    }
+    function Display(){
+        setTimeout(() => {
+            document.getElementById('pop_up').style.width = document.body.clientWidth + 'px';
+            document.getElementById('pop_up').style.height = $(window).height() + 'px';
+            document.getElementById('pop_up').style.display='block';
+            document.getElementById('mobile-panel').style.transform='none';
+            document.getElementById('mobile-navbar').className = 'mobile-navbar';
+            // event.stopPropagation();
+        },1);
+    }
+    function TriggerSearch(){
+      Display();
+    }
+</script>
+    <title>_mysql.c:44:10:fatal error:'my_config.h' file not found - 时光不写博客</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">时光不写博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><li class="mobile-menu-item"><a href="/">
+                        首页
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/archives/">
+                        归档
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/categories/">
+                        分类
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><span></span>
+        </li></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">时光不写博客</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+            <a class="menu-item-link" href="/">
+                      首页
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/archives/">
+                      归档
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/categories/">
+                      分类
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <span></span>
+                </li></ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">_mysql.c:44:10:fatal error:'my_config.h' file not found
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-06-26
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的第一个问题"><span class="toc-text">遇到的第一个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决第一个问题"><span class="toc-text">解决第一个问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到第二个问题"><span class="toc-text">遇到第二个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决第二个问题"><span class="toc-text">解决第二个问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的第三个问题"><span class="toc-text">遇到的第三个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决第三个问题"><span class="toc-text">解决第三个问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发现第四个问题"><span class="toc-text">发现第四个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决第四个问题"><span class="toc-text">解决第四个问题</span></a></li></ol></li></ol>
+    </div>
+  </div><div class="post-content"><p><b> 注意：如果你用的是python3.x，直接去看第四个问题</b></p>
+<h2 id="遇到的第一个问题"><a href="#遇到的第一个问题" class="headerlink" title="遇到的第一个问题"></a><b>遇到的第一个问题</b></h2><ul>
+<li>正常来说直接执行pip安装，就是可以的，但是MySQL-python偏偏比较独特</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install MySQL-python</span><br></pre></td></tr></table></figure>
+<ul>
+<li>报错</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_mysql.c:44:10: fatal error: 'my_config.h' file not found</span><br><span class="line">    #include "my_config.h"</span><br><span class="line">             ^~~~~~~~~~~~~</span><br><span class="line">    1 error generated.</span><br><span class="line">    error: command 'cc' failed with exit status 1</span><br></pre></td></tr></table></figure>
+<h3 id="解决第一个问题"><a href="#解决第一个问题" class="headerlink" title="解决第一个问题"></a><b>解决第一个问题</b></h3><ul>
+<li>执行<code>brew install mysql-connector-c</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mysql-connector-c</span><br></pre></td></tr></table></figure>
+<ul>
+<li><b>如果这一步直接完成，那就可以继续<code>pip install MySQL-python</code>了</b>，应该会成功</li>
+<li>但是我在这一步执行失败了<br><br></li>
+</ul>
+<h2 id="遇到第二个问题"><a href="#遇到第二个问题" class="headerlink" title="遇到第二个问题"></a><b>遇到第二个问题</b></h2><ul>
+<li><code>brew install mysql-connector-c</code>报错</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Error: Cannot install mysql-connector-c because conflicting formulae are installed.</span><br><span class="line">  mysql: because both install MySQL client libraries</span><br><span class="line"></span><br><span class="line">Please `brew unlink mysql` before continuing.</span><br></pre></td></tr></table></figure>
+<h3 id="解决第二个问题"><a href="#解决第二个问题" class="headerlink" title="解决第二个问题"></a><b>解决第二个问题</b></h3><ul>
+<li>按照报错的提示，执行<code>brew unlink mysql</code></li>
+<li>没有发生什么意外，执行完毕，继续执行<code>brew install mysql-connector-c</code></li>
+<li>‘mysql-connector-c’安装成功</li>
+<li>执行<code>brew link --overwrite mysql</code>，重新连接mysql（这一步我没有做）</li>
+<li>然后再执行<code>pip install MySQL-python</code>，如果成功了就搞定了</li>
+<li>神奇的是，我在这一步又失败了<br><br></li>
+</ul>
+<h2 id="遇到的第三个问题"><a href="#遇到的第三个问题" class="headerlink" title="遇到的第三个问题"></a><b>遇到的第三个问题</b></h2><ul>
+<li>上面的步骤走完以后，执行<code>pip install MySQL-python</code>，报错</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Collecting mysql</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/06/ef/c4efbf2a51fb46aba9be03a973638d9539c9ca10a5259b2cbb1a66133b2e/mysql-0.0.1.tar.gz</span><br><span class="line">Collecting MySQL-python (from mysql)</span><br><span class="line">  Using cached https://files.pythonhosted.org/packages/a5/e9/51b544da85a36a68debe7a7091f068d802fc515a3a202652828c73453cad/MySQL-python-1.2.5.zip</span><br><span class="line">    Complete output from command python setup.py egg_info:</span><br><span class="line">    Traceback (most recent call last):</span><br><span class="line">      File "&lt;string&gt;", line 1, in &lt;module&gt;</span><br><span class="line">      File "/private/var/folders/zn/t8xxx4m149s9jqp1810ndrz80000gn/T/pip-install-oHMKPE/MySQL-python/setup.py", line 17, in &lt;module&gt;</span><br><span class="line">        metadata, options = get_config()</span><br><span class="line">      File "setup_posix.py", line 53, in get_config</span><br><span class="line">        libraries = [ dequote(i[2:]) for i in libs if i.startswith(compiler_flag("l")) ]</span><br><span class="line">      File "setup_posix.py", line 8, in dequote</span><br><span class="line">        if s[0] in "\"'" and s[0] == s[-1]:</span><br><span class="line">    IndexError: string index out of range</span><br></pre></td></tr></table></figure>
+<h3 id="解决第三个问题"><a href="#解决第三个问题" class="headerlink" title="解决第三个问题"></a><b>解决第三个问题</b></h3><ul>
+<li>修改mysql的配置文件<code>mysql_config</code>，<strong>修改前记得cp一下</strong><br>执行<code>mysql_config</code>，查看一下路径</li>
+<li>打开文件<code>vim mysql_config</code>，找到<code>libs=&quot;$libs -l &quot;</code>，改为<code>libs=&quot;$libs -lmysqlclient -lssl -lcrypto &quot;</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">libs="-L$pkglibdir"</span><br><span class="line"><span class="meta">#</span> libs="$libs -l "                              # 原来的</span><br><span class="line">libs="$libs -lmysqlclient -lssl -lcrypto "      # 更改后的</span><br><span class="line">embedded_libs="-L$pkglibdir"</span><br><span class="line">embedded_libs="$embedded_libs -l "</span><br></pre></td></tr></table></figure>
+<ul>
+<li>再来一遍<code>pip install MySQL-python</code></li>
+<li>终于成功了！可喜可贺！可喜可贺！</li>
+<li>小心翼翼的试一下，<code>import MySQLdb</code>，真的成功了<br><br></li>
+</ul>
+<h2 id="发现第四个问题"><a href="#发现第四个问题" class="headerlink" title="发现第四个问题"></a><b>发现第四个问题</b></h2><ul>
+<li>开始使用的时候，发现自己用的是<code>python2.x</code>的环境，换成<code>python3.x</code>继续用</li>
+<li>在<code>import MySQLdb</code>的时候又出问题了，<code>ModuleNotFoundError: No module named &#39;MySQLdb&#39;</code></li>
+<li>尝试使用<code>pip3 install MySQL-python</code>再安装一次，报错</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Collecting MySQL-python</span><br><span class="line">  Using cached https://files.pythonhosted.org/packages/a5/e9/51b544da85a36a68debe7a7091f068d802fc515a3a202652828c73453cad/MySQL-python-1.2.5.zip</span><br><span class="line">    Complete output from command python setup.py egg_info:</span><br><span class="line">    Traceback (most recent call last):</span><br><span class="line">      File "&lt;string&gt;", line 1, in &lt;module&gt;</span><br><span class="line">      File "/private/var/folders/07/v8slhf9x5zsbbd8_9cd5ztnh0000gp/T/pip-install-oh_74ez5/MySQL-python/setup.py", line 13, in &lt;module&gt;</span><br><span class="line">        from setup_posix import get_config</span><br><span class="line">      File "/private/var/folders/07/v8slhf9x5zsbbd8_9cd5ztnh0000gp/T/pip-install-oh_74ez5/MySQL-python/setup_posix.py", line 2, in &lt;module&gt;</span><br><span class="line">        from ConfigParser import SafeConfigParser</span><br><span class="line">    ModuleNotFoundError: No module named 'ConfigParser'</span><br><span class="line"></span><br><span class="line">    ----------------------------------------</span><br><span class="line">Command "python setup.py egg_info" failed with error code 1 in /private/var/folders/07/v8slhf9x5zsbbd8_9cd5ztnh0000gp/T/pip-install-oh_74ez5/MySQL-python/</span><br></pre></td></tr></table></figure>
+<h3 id="解决第四个问题"><a href="#解决第四个问题" class="headerlink" title="解决第四个问题"></a><b>解决第四个问题</b></h3><ul>
+<li>查到了原因，感到一阵阵的无语<blockquote>
+<p>In Python 3, ConfigParser has been renamed to configparser for PEP 8 compliance. It looks like the package you are installing does not support Python 3.<br>在Python3中，ConfigParser为了符合PEP8规范，已重命名为configparser。看起来你正在安装的软件包不支持Python3。</p>
+</blockquote>
+</li>
+<li>因为不支持python3，建议使用<code>pip install pymysql</code>，安装也没那么多套路</li>
+<li>其实也找到了解决方案<strong>（没有测试，我也不知道对不对，单纯的记录一下）</strong><br>方法一, 修改six模块为</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">import</span> configparser</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="keyword">from</span> six.moves <span class="keyword">import</span> configparser</span><br></pre></td></tr></table></figure>
+<p>  方法二</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/local/lib/python3.7/configparser.py /usr/local/lib/python3.7/ConfigParser.py</span><br></pre></td></tr></table></figure>
+
+      </div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/python安装mysqldb/">python安装mysqldb</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/06/25/nginx-rewrite/">
+        <span class="next-text nav-default">nginx配置重定向</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">
+  <span class="power-by">
+    联系方式
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+  wxy148616@163.com
+  </span><span class="copyright-year">&copy;2018 - 2019<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">时光不写代码</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+<div style="position: fixed; left: 0px; bottom: 10px;"><a href="http://background.wxy.email" rel="external nofollow noopener noreferrer" target="_blank">@Tab页</a></div>
+  </body>
+</html>
