@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>独立py文件调用Django models</title>
+      <link href="/2019/07/01/call-Django-models/"/>
+      <url>/2019/07/01/call-Django-models/</url>
+      
+        <content type="html"><![CDATA[<h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a><b>前提条件</b></h3><p>需要独立的文件和models、views在同一级目录，不然会报错</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django.core.exceptions.AppRegistryNotReady: Apps aren<span class="string">'t loaded yet.</span></span><br></pre></td></tr></table></figure><p>如果不在同一级目录，也可以自己调整，需要加上路径</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys.path.append(<span class="string">"../"</span>)</span><br></pre></td></tr></table></figure><h3 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a><b>调用方法</b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="comment"># sys.path.append("../")</span></span><br><span class="line">os.environ[<span class="string">'DJANGO_SETTINGS_MODULE'</span>] = <span class="string">'mysite.settings'</span> <span class="comment"># 配置文件</span></span><br><span class="line"><span class="keyword">import</span> django</span><br><span class="line">django.setup()</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> app.models.user <span class="keyword">import</span> User</span><br><span class="line">user = User.objects.filter(id=<span class="number">1</span>)</span><br><span class="line">print(user)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Django </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>_mysql.c:44:10:fatal error:&#39;my_config.h&#39; file not found</title>
       <link href="/2019/06/26/MySQL-python/"/>
       <url>/2019/06/26/MySQL-python/</url>
@@ -212,31 +237,6 @@
     
     
     <entry>
-      <title>JetBrains系列汉化补丁</title>
-      <link href="/2019/06/02/JetBrains/"/>
-      <url>/2019/06/02/JetBrains/</url>
-      
-        <content type="html"><![CDATA[<ul><li>GitHub上的一个项目，操作起来超级简单，汉化的也算是很全面了</li></ul><ul><li>下载链接：<a href="https://github.com/pingfangx/jetbrains-in-chinese" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/pingfangx/jetbrains-in-chinese</a> </li></ul><p>原文链接：<a href="https://github.com/pingfangx/TranslatorX" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/pingfangx/TranslatorX</a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 资源 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> IDE </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>阿里云抢占式服务器一小时</title>
       <link href="/2019/06/02/aliyun/"/>
       <url>/2019/06/02/aliyun/</url>
@@ -254,6 +254,31 @@
         <tags>
             
             <tag> 阿里云 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>JetBrains系列汉化补丁</title>
+      <link href="/2019/06/02/JetBrains/"/>
+      <url>/2019/06/02/JetBrains/</url>
+      
+        <content type="html"><![CDATA[<ul><li>GitHub上的一个项目，操作起来超级简单，汉化的也算是很全面了</li></ul><ul><li>下载链接：<a href="https://github.com/pingfangx/jetbrains-in-chinese" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/pingfangx/jetbrains-in-chinese</a> </li></ul><p>原文链接：<a href="https://github.com/pingfangx/TranslatorX" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/pingfangx/TranslatorX</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 资源 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> IDE </tag>
             
         </tags>
       
