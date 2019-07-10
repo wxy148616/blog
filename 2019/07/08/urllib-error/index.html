@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="个人博客，持续更新自己遇到的各种问题和解决方法，包括python后端，html前端等个人开发笔记"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/archives/">
+<meta name="description" content="python3使用urllib下载文件"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/07/08/urllib-error/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,8 +114,7 @@
       Display();
     }
 </script>
-    <title>归档 - 时光不写博客
-  </title>
+    <title>Python3下载文件：AttributeError:module 'urllib' has no attribute 'request' - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -172,119 +171,63 @@
 
       <main id="main" class="main">
         <div class="content-wrapper">
-          <div id="content" class="content"><section id="archive" class="archive"><div class="archive-title">
-          <span class="archive-post-counter">
-            目前共计 44 篇日志
-          </span>
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Python3下载文件：AttributeError:module 'urllib' has no attribute 'request'
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-07-08
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
         </div>
-      <div class="collection-title">
-            <h2 class="archive-year">2019</h2>
-          </div>
-        <div class="archive-post">
-        <span class="archive-post-time">
-          07-09
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/09/drf-error/" class="archive-post-link">
-            DRF This field may not be null, This field cannot be blank
-          </a>
-        </span>
+    </header>
+
+    <div class="post-content"><ul>
+<li>python3的urllib包有了一些更新，在使用的时候要注意一下</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line">urllib.request.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这样使用会报错</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: module <span class="string">'urllib'</span> has no attribute <span class="string">'request'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>因为在python3中<code>urllib.request</code>成为了一个独立的包, 所以在导入的时候要改为</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib.request <span class="keyword">as</span> ur</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line">ur.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure>
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          07-08
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/08/urllib-error/" class="archive-post-link">
-            Python3下载文件：AttributeError:module 'urllib' has no attribute 'request'
-          </a>
-        </span>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          07-07
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/07/alfred/" class="archive-post-link">
-            Alfred
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          07-02
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/02/js-parsing-table/" class="archive-post-link">
-            前端解析Excel：xlsx.core.min.js，处理不规范表格
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          07-01
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/01/call-Django-models/" class="archive-post-link">
-            独立py文件调用Django models
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          06-26
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/06/26/MySQL-python/" class="archive-post-link">
-            _mysql.c:44:10:fatal error:'my_config.h' file not found
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          06-25
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/06/25/nginx-rewrite/" class="archive-post-link">
-            nginx配置重定向
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          06-24
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/06/24/NewTab/" class="archive-post-link">
-            Python、HTML、JS简单项目：每日一词New Tab
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          06-21
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/06/21/git-reset/" class="archive-post-link">
-            git撤销commit
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          06-18
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/06/18/bytetostring/" class="archive-post-link">
-            \xe5\x8d\xa0\xe7\x94\xa8\xe3\x80\x82，16进制乱码转化为可读字符
-          </a>
-        </span>
-      </div>
-    </section><nav class="pagination"><a class="next" href="/archives/page/2/">
-        <span class="next-text">下一页</span>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/python/">python</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2019/07/09/drf-error/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">DRF This field may not be null, This field cannot be blank</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2019/07/07/alfred/">
+        <span class="next-text nav-default">Alfred</span>
+        <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
-    </nav></div></div>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">

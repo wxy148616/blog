@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.wxy.email/2019/07/07/alfred/</loc>
+    
+    <lastmod>2019-07-10T07:47:44.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.wxy.email/2019/07/09/drf-error/</loc>
+    
+    <lastmod>2019-07-10T05:46:03.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.wxy.email/2019/07/08/urllib-error/</loc>
+    
+    <lastmod>2019-07-08T03:36:15.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.wxy.email/2019/06/25/nginx-rewrite/</loc>
+    
+    <lastmod>2019-07-06T08:00:51.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2019/07/02/js-parsing-table/</loc>
     
     <lastmod>2019-07-02T11:49:00.000Z</lastmod>
@@ -9,14 +37,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/10/django-%E6%97%A5%E5%BF%97/</loc>
+    <loc>https://www.wxy.email/2019/05/09/django-%E9%83%A8%E7%BD%B2/</loc>
     
     <lastmod>2019-07-02T03:55:01.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/09/django-%E9%83%A8%E7%BD%B2/</loc>
+    <loc>https://www.wxy.email/2019/05/10/django-%E6%97%A5%E5%BF%97/</loc>
     
     <lastmod>2019-07-02T03:55:01.000Z</lastmod>
     
@@ -33,13 +61,6 @@
     <loc>https://www.wxy.email/2019/06/26/MySQL-python/</loc>
     
     <lastmod>2019-06-26T08:02:57.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.wxy.email/2019/06/25/nginx-rewrite/</loc>
-    
-    <lastmod>2019-06-25T08:41:03.000Z</lastmod>
     
   </url>
   
@@ -121,7 +142,7 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/04/27/python-bisect/</loc>
+    <loc>https://www.wxy.email/2018/12/25/Python-os%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</loc>
     
     <lastmod>2019-05-29T09:54:37.000Z</lastmod>
     
@@ -135,13 +156,6 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/28/selenium/</loc>
-    
-    <lastmod>2019-05-29T09:54:37.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.wxy.email/2018/07/20/python%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6/</loc>
     
     <lastmod>2019-05-29T09:54:37.000Z</lastmod>
@@ -149,14 +163,21 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2018/12/25/Python-os%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</loc>
+    <loc>https://www.wxy.email/2019/04/27/python-bisect/</loc>
     
     <lastmod>2019-05-29T09:54:37.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/12/python%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5/</loc>
+    <loc>https://www.wxy.email/2019/05/28/selenium/</loc>
+    
+    <lastmod>2019-05-29T09:54:37.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.wxy.email/2019/05/13/python-list%E5%85%83%E7%B4%A0%E7%A7%BB%E5%8A%A8/</loc>
     
     <lastmod>2019-05-29T09:54:36.000Z</lastmod>
     
@@ -170,35 +191,7 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/13/python-list%E5%85%83%E7%B4%A0%E7%A7%BB%E5%8A%A8/</loc>
-    
-    <lastmod>2019-05-29T09:54:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.wxy.email/2019/05/14/%E8%A7%A3%E5%86%B3No-space-left-on-device/</loc>
-    
-    <lastmod>2019-05-29T09:54:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.wxy.email/2019/05/05/Linux%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/</loc>
-    
-    <lastmod>2019-05-29T09:54:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.wxy.email/2018/08/10/python%E6%A0%88%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
-    
-    <lastmod>2019-05-29T09:54:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.wxy.email/2019/03/24/Python-socket/</loc>
     
     <lastmod>2019-05-29T09:54:36.000Z</lastmod>
     
@@ -212,7 +205,35 @@
   </url>
   
   <url>
+    <loc>https://www.wxy.email/2019/05/12/python%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5/</loc>
+    
+    <lastmod>2019-05-29T09:54:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.wxy.email/2019/05/05/Linux%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/</loc>
+    
+    <lastmod>2019-05-29T09:54:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2018/07/23/python%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6/</loc>
+    
+    <lastmod>2019-05-29T09:54:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.wxy.email/2019/03/24/Python-socket/</loc>
+    
+    <lastmod>2019-05-29T09:54:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.wxy.email/2018/08/10/python%E6%A0%88%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</loc>
     
     <lastmod>2019-05-29T09:54:36.000Z</lastmod>
     
@@ -254,14 +275,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/19/LeetCode-28/</loc>
+    <loc>https://www.wxy.email/2019/05/21/LeetCode-38/</loc>
     
     <lastmod>2019-05-29T09:50:09.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/21/LeetCode-38/</loc>
+    <loc>https://www.wxy.email/2019/05/19/LeetCode-28/</loc>
     
     <lastmod>2019-05-29T09:50:09.000Z</lastmod>
     
