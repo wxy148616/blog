@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.wxy.email/2019/07/18/influxdb-back/</loc>
+    
+    <lastmod>2019-07-18T12:45:18.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.wxy.email/2019/07/08/urllib-error/</loc>
+    
+    <lastmod>2019-07-16T09:04:13.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2019/07/07/alfred/</loc>
     
-    <lastmod>2019-07-10T07:47:44.000Z</lastmod>
+    <lastmod>2019-07-10T07:55:25.000Z</lastmod>
     
   </url>
   
@@ -12,13 +26,6 @@
     <loc>https://www.wxy.email/2019/07/09/drf-error/</loc>
     
     <lastmod>2019-07-10T05:46:03.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.wxy.email/2019/07/08/urllib-error/</loc>
-    
-    <lastmod>2019-07-08T03:36:15.000Z</lastmod>
     
   </url>
   
@@ -37,14 +44,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/09/django-%E9%83%A8%E7%BD%B2/</loc>
+    <loc>https://www.wxy.email/2019/05/10/django-%E6%97%A5%E5%BF%97/</loc>
     
     <lastmod>2019-07-02T03:55:01.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/10/django-%E6%97%A5%E5%BF%97/</loc>
+    <loc>https://www.wxy.email/2019/05/09/django-%E9%83%A8%E7%BD%B2/</loc>
     
     <lastmod>2019-07-02T03:55:01.000Z</lastmod>
     

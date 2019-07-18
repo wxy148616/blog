@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="个人博客，持续更新自己遇到的各种问题和解决方法，包括python后端，html前端等个人开发笔记"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/archives/2019/04/">
+<meta name="description" content="备份元数据-->备份数据库-->恢复元数据-->恢复数据库"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/07/18/influxdb-back/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,8 +114,7 @@
       Display();
     }
 </script>
-    <title>归档 - 时光不写博客
-  </title>
+    <title>influxdb备份和恢复数据 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -172,25 +171,76 @@
 
       <main id="main" class="main">
         <div class="content-wrapper">
-          <div id="content" class="content"><section id="archive" class="archive"><div class="archive-title">
-          <span class="archive-post-counter">
-            目前共计 45 篇日志
-          </span>
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">influxdb备份和恢复数据
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-07-18
+        </span><span class="post-category">
+            <a href="/categories/InfluxDB/">InfluxDB</a>
+            </span>
         </div>
-      <div class="collection-title">
-            <h2 class="archive-year">2019</h2>
-          </div>
-        <div class="archive-post">
-        <span class="archive-post-time">
-          04-27
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/04/27/python-bisect/" class="archive-post-link">
-            Python之bisect模块, 有序列表插入数据
-          </a>
-        </span>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#首先理一下步骤"><span class="toc-text">首先理一下步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作"><span class="toc-text">操作</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><h2 id="首先理一下步骤"><a href="#首先理一下步骤" class="headerlink" title="首先理一下步骤"></a><b>首先理一下步骤</b></h2><p><code>备份元数据--&gt;备份数据库--&gt;恢复元数据--&gt;恢复数据库</code></p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a><b>操作</b></h2><ul>
+<li>备份元数据</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">influxd backup 元数据存储位置</span><br><span class="line">influxd backup -host localhost:8088 元数据存储位置   # 远程备份</span><br></pre></td></tr></table></figure>
+<ul>
+<li>备份数据库</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">influxd backup -database database_name  数据存储位置</span><br><span class="line">influxd backup -database database_name -host localhost:8088 数据存储位置   # 远程备份</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>恢复元数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">influxd restore -metadir /var/lib/influxdb/meta/ 元数据存储位置</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>恢复数据库</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">influxd restore -database database_name -datadir /var/lib/influxdb/data 数据存储位置</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改权限</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R influxdb:influxdb /var/lib/influxdb</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重启influxdb<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service influxdb stop</span><br><span class="line">service influxdb start</span><br></pre></td></tr></table></figure></li>
+</ul>
+
       </div>
-    </section><nav class="pagination"></nav></div></div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/influxdb/">influxdb</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/07/09/drf-error/">
+        <span class="next-text nav-default">DRF This field may not be null, This field cannot be blank</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">

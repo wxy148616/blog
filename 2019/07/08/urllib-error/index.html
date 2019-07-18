@@ -185,7 +185,12 @@
         </div>
     </header>
 
-    <div class="post-content"><ul>
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#其他下载文件方法"><span class="toc-text">其他下载文件方法</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><ul>
 <li>python3的urllib包有了一些更新，在使用的时候要注意一下</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line">urllib.request.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure>
@@ -197,6 +202,8 @@
 <li>因为在python3中<code>urllib.request</code>成为了一个独立的包, 所以在导入的时候要改为</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib.request <span class="keyword">as</span> ur</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line">ur.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure>
+<h2 id="其他下载文件方法"><a href="#其他下载文件方法" class="headerlink" title="其他下载文件方法"></a>其他下载文件方法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">headers = &#123;<span class="string">'Content-Type'</span>: <span class="string">"application/json"</span>&#125;</span><br><span class="line">r = requests.request(<span class="string">"GET"</span>, url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"download_file.xls"</span>, <span class="string">"wb"</span>) <span class="keyword">as</span> code:</span><br><span class="line">    code.write(r.content)</span><br></pre></td></tr></table></figure>
+
       </div>
       
       <div class="post-reward">

@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>influxdb备份和恢复数据</title>
+      <link href="/2019/07/18/influxdb-back/"/>
+      <url>/2019/07/18/influxdb-back/</url>
+      
+        <content type="html"><![CDATA[<h2 id="首先理一下步骤"><a href="#首先理一下步骤" class="headerlink" title="首先理一下步骤"></a><b>首先理一下步骤</b></h2><p><code>备份元数据--&gt;备份数据库--&gt;恢复元数据--&gt;恢复数据库</code></p><h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a><b>操作</b></h2><ul><li>备份元数据</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">influxd backup 元数据存储位置</span><br><span class="line">influxd backup -host localhost:8088 元数据存储位置   # 远程备份</span><br></pre></td></tr></table></figure><ul><li>备份数据库</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">influxd backup -database database_name  数据存储位置</span><br><span class="line">influxd backup -database database_name -host localhost:8088 数据存储位置   # 远程备份</span><br></pre></td></tr></table></figure><ul><li><p>恢复元数据</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">influxd restore -metadir /var/lib/influxdb/meta/ 元数据存储位置</span><br></pre></td></tr></table></figure></li><li><p>恢复数据库</p></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">influxd restore -database database_name -datadir /var/lib/influxdb/data 数据存储位置</span><br></pre></td></tr></table></figure><ul><li>修改权限</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R influxdb:influxdb /var/lib/influxdb</span><br></pre></td></tr></table></figure><ul><li>重启influxdb<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service influxdb stop</span><br><span class="line">service influxdb start</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> InfluxDB </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> influxdb </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>DRF This field may not be null, This field cannot be blank</title>
       <link href="/2019/07/09/drf-error/"/>
       <url>/2019/07/09/drf-error/</url>
@@ -35,7 +60,7 @@
       <link href="/2019/07/08/urllib-error/"/>
       <url>/2019/07/08/urllib-error/</url>
       
-        <content type="html"><![CDATA[<ul><li>python3的urllib包有了一些更新，在使用的时候要注意一下</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line">urllib.request.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure><ul><li>这样使用会报错</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: module <span class="string">'urllib'</span> has no attribute <span class="string">'request'</span></span><br></pre></td></tr></table></figure><ul><li>因为在python3中<code>urllib.request</code>成为了一个独立的包, 所以在导入的时候要改为</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib.request <span class="keyword">as</span> ur</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line">ur.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<ul><li>python3的urllib包有了一些更新，在使用的时候要注意一下</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line">urllib.request.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure><ul><li>这样使用会报错</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: module <span class="string">'urllib'</span> has no attribute <span class="string">'request'</span></span><br></pre></td></tr></table></figure><ul><li>因为在python3中<code>urllib.request</code>成为了一个独立的包, 所以在导入的时候要改为</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib.request <span class="keyword">as</span> ur</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line">ur.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure><h2 id="其他下载文件方法"><a href="#其他下载文件方法" class="headerlink" title="其他下载文件方法"></a>其他下载文件方法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">headers = &#123;<span class="string">'Content-Type'</span>: <span class="string">"application/json"</span>&#125;</span><br><span class="line">r = requests.request(<span class="string">"GET"</span>, url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"download_file.xls"</span>, <span class="string">"wb"</span>) <span class="keyword">as</span> code:</span><br><span class="line">    code.write(r.content)</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -71,8 +96,6 @@
       
       
         <tags>
-            
-            <tag> 资源 </tag>
             
             <tag> 学习 </tag>
             
