@@ -200,11 +200,11 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">influxd backup -database database_name  数据存储位置</span><br><span class="line">influxd backup -database database_name -host localhost:8088 数据存储位置   # 远程备份</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>恢复元数据</p>
+<li>恢复元数据</li>
+</ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">influxd restore -metadir /var/lib/influxdb/meta/ 元数据存储位置</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>恢复数据库</p>
-</li>
+<ul>
+<li>恢复数据库</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">influxd restore -database database_name -datadir /var/lib/influxdb/data 数据存储位置</span><br></pre></td></tr></table></figure>
 <ul>
@@ -212,9 +212,9 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R influxdb:influxdb /var/lib/influxdb</span><br></pre></td></tr></table></figure>
 <ul>
-<li>重启influxdb<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service influxdb stop</span><br><span class="line">service influxdb start</span><br></pre></td></tr></table></figure></li>
+<li>重启influxdb</li>
 </ul>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service influxdb stop</span><br><span class="line">service influxdb start</span><br></pre></td></tr></table></figure>
       </div>
       
       <div class="post-reward">
