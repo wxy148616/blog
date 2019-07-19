@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="default">
+  <head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="nt7ofDlUEAj-G2sNFlh0wBJYoWH1hdvum_-V5zOgHzg">
+<meta name="baidu-site-verification" content="XG5Sc98jMI">
+<meta name="wlhlauth" content="8d884ffcaa79c5165f113cd2349b52d7">
+<meta name="360-site-verification" content="577ecf1c5f95d421bb0482d93c7faa1e">
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="写了个小插件，服务器部署的时候发现少了一些依赖，果断apt-get，然而失败了"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/07/19/dpkg-error/">
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":"","toc":true,"fancybox":true,"pjax":true,"latex":false};
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2911390145109533",
+    enable_page_level_ads: true
+  });
+</script>
+
+<script>
+  // 搜索框
+    function search(){
+        $.ajax({
+            url:'../../search.xml',
+            type: 'GET',
+            dataType: 'xml',
+            timeout: 1000,
+            cache:false,
+            error: function(xml){
+                console.log('加载XML文档出错');
+            },
+            success: function(xml){
+                //建立一个代码片段
+                var root_xml=xml.documentElement;
+                var data=$('#search').val();
+                var entry=root_xml.getElementsByTagName("entry");
+                var frag=$("<ul/>");
+                for (var i = 0; i <= entry.length - 1; i++) {
+                    var content = entry[i];
+                    if (content.textContent.search(data) != -1) {
+                        frag.append("<a style='color:blanchedalmond; text-decoration: underline;' href='http://www.wxy.email"+content.getElementsByTagName('url')[0].textContent
+                            + "'><b>" + content.getElementsByTagName('title')[0].textContent + "</b></a><br>");
+                    }
+                }
+                //最后得到的frag添加进HTML文档中
+                $('#DisplayBox').empty();
+                Display();
+                frag.appendTo("#DisplayBox");
+                // alert(frag)
+            }
+        });
+    }
+    function RealTimeSearch(){
+        var input = document.getElementById('search').value;
+        if (input === "") {
+            $('#DisplayBox').empty();
+            return
+        }
+        search();
+    }
+    function disblock(){
+        document.getElementById('pop_up').style.display='none';
+    }
+    function enter_search() {
+        let event = window.event;
+        // console.log(event.keyCode);
+        // alert(event.KeyCode);
+        if (event.keyCode === 13) {
+            console.log(event.keyCode);
+            search();
+        }
+    }
+    function Display(){
+        setTimeout(() => {
+            document.getElementById('pop_up').style.width = document.body.clientWidth + 'px';
+            document.getElementById('pop_up').style.height = $(window).height() + 'px';
+            document.getElementById('pop_up').style.display='block';
+            document.getElementById('mobile-panel').style.transform='none';
+            document.getElementById('mobile-navbar').className = 'mobile-navbar';
+            // event.stopPropagation();
+        },1);
+    }
+    function TriggerSearch(){
+      Display();
+    }
+</script>
+    <title>dpkg 被中断、sudo apt-get upgrade失败 - 时光不写博客</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">时光不写博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><li class="mobile-menu-item"><a href="/">
+                        首页
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/archives/">
+                        归档
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/categories/">
+                        分类
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><span></span>
+        </li></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">时光不写博客</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+            <a class="menu-item-link" href="/">
+                      首页
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/archives/">
+                      归档
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/categories/">
+                      分类
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <span></span>
+                </li></ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">dpkg 被中断、sudo apt-get upgrade失败
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-07-19
+        </span><span class="post-category">
+            <a href="/categories/Linux/">Linux</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-content"><ol>
+<li>写了个小插件，服务器部署的时候发现少了一些依赖，果断apt-get，然而失败了：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E: dpkg 被中断，您必须手工运行 ‘sudo dpkg --configure -a’ 解决此问题。</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>找到解决办法：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /var/lib/dpkg/updates/*</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>解决了么？并没有…。在<code>sudo apt-get upgrade</code>的时候失败了：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">您希望继续执行吗？ [Y/n] y</span><br><span class="line">正在预设定软件包 ...</span><br><span class="line">/tmp/console-setup.config.XTxu0f: 1: eval: Syntax error: Unterminated quoted string</span><br><span class="line">预设定 console-setup 失败，退出状态为 2</span><br><span class="line">/tmp/keyboard-configuration.config.lBbgUO: 1: eval: Syntax error: Unterminated quoted string</span><br><span class="line">预设定 keyboard-configuration 失败，退出状态为 2</span><br><span class="line">正在设置 install-info (6.1.0.dfsg.1-5) ...</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>继续找解决办法：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /var/lib/dpkg/info /var/lib/dpkg/info_old   # 将info文件夹更名</span><br><span class="line">sudo mkdir /var/lib/dpkg/info  # 再新建一个新的info文件夹</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get -f install  # **这一句如果有问题请看第5步**</span><br><span class="line">sudo mv /var/lib/dpkg/info/* /var/lib/dpkg/info_old   # 执行完上一步操作后会在新的info文件夹下生成一些文件，现将这些文件全部移到info_old文件夹下</span><br><span class="line">sudo rm -rf /var/lib/dpkg/info  # 把自己新建的info文件夹删掉</span><br><span class="line">sudo mv /var/lib/dpkg/info_old /var/lib/dpkg/info   # 把以前的info文件夹重新改回名字</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>在<code>sudo apt-get -f install</code>的时候又碰到了一次<code>E: dpkg 被中断，您必须手工运行 ‘sudo dpkg --configure -a’ 解决此问题。</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除一下updates，重新来</span><br><span class="line">sudo rm /var/lib/dpkg/updates/*</span><br><span class="line">sudo apt-get -f install</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>终于弄完了，再来<code>sudo apt-get upgrade</code>，然鹅，有失败了：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">...</span><br><span class="line">正在设置 keyboard-configuration (1.108ubuntu15.5) ...</span><br><span class="line">/var/lib/dpkg/info/keyboard-configuration.config: 1: eval: Syntax error: Unterminated quoted string</span><br><span class="line">dpkg: 处理软件包 keyboard-configuration (--configure)时出错：</span><br><span class="line"> 子进程 已安装 post-installation 脚本 返回错误状态 2</span><br><span class="line">dpkg: 依赖关系问题使得 console-setup-linux 的配置工作不能继续：</span><br><span class="line"> console-setup-linux 依赖于 keyboard-configuration (= 1.108ubuntu15.5)；然而：</span><br><span class="line">  软件包 keyboard-configuration 尚未配置。</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">dpkg: 依赖关系问题使得 ubuntu-minimal 的配置工作不能继续：</span><br><span class="line"> ubuntu-minimal 依赖于 console-setup；然而：</span><br><span class="line">  软件包 console-setup 尚未配�因为错误消息指示这是由于上一个问题导致的错误，没有写入 apport 报告。</span><br><span class="line">                                                                                                  因为错误消息指示这是由于上一个问题导致的错误，没有写入 apport 报告。</span><br><span class="line">                                  由于已经达到 MaxReports 限制，没有写入 apport 报告。</span><br><span class="line">                                                                                      �。</span><br><span class="line"></span><br><span class="line">dpkg: 处理软件包 ubuntu-minimal (--configure)时出错：</span><br><span class="line"> 依赖关系问题 - 仍未被配置</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">W: mdadm: /etc/mdadm/mdadm.conf defines no arrays.</span><br><span class="line">正在处理用于 libc-bin (2.23-0ubuntu11) 的触发器 ...</span><br><span class="line">在处理时有错误发生：</span><br><span class="line"> keyboard-configuration</span><br><span class="line"> console-setup-linux</span><br><span class="line"> console-setup</span><br><span class="line"> ubuntu-minimal</span><br><span class="line">E: Sub-process /usr/bin/dpkg returned an error code (1)</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>有点无奈，是我的操作有问题么？继续解决：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">再把第4步来一遍！！！</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>再来<code>sudo apt-get upgrade</code>：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">终于搞定了</span><br></pre></td></tr></table></figure>
+<ol start="9">
+<li>最后试一下：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-pip</span><br><span class="line"><span class="meta">#</span> 其实我就是为了安装一个pip</span><br></pre></td></tr></table></figure>
+<p> 参考：<br> <a href="https://blog.csdn.net/zjwson/article/details/78239265" rel="external nofollow noopener noreferrer" target="_blank">https://blog.csdn.net/zjwson/article/details/78239265</a><br> <a href="https://blog.csdn.net/ycl295644/article/details/44536297" rel="external nofollow noopener noreferrer" target="_blank">https://blog.csdn.net/ycl295644/article/details/44536297</a></p>
+
+      </div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/Linux/">Linux</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/07/19/ubuntu-messy-code/">
+        <span class="next-text nav-default">ubuntu 服务器中文乱码</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">
+  <span class="power-by">
+    联系方式
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+  wxy148616@163.com
+  </span><span class="copyright-year">&copy;2018 - 2019<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">时光不写代码</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+<div style="position: fixed; left: 0px; bottom: 10px;"><a href="http://background.wxy.email" rel="external nofollow noopener noreferrer" target="_blank">@Tab页</a></div>
+  </body>
+</html>
