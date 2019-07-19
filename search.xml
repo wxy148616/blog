@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>ubuntu 服务器中文乱码</title>
+      <link href="/2019/07/19/ubuntu-messy-code/"/>
+      <url>/2019/07/19/ubuntu-messy-code/</url>
+      
+        <content type="html"><![CDATA[<p>重新装了个Ubuntu16.04的系统，结果中文乱码，找了一圈的解决办法，个人觉得最好的一个办法，赶紧记录一下，<strong>本文严重抄袭自<a href="https://www.jb51.net/article/136574.htm" rel="external nofollow noopener noreferrer" target="_blank">站长之家</a>，如有侵权请联系删除，谢谢。</strong></p><ul><li><strong>检查是否已经安装了中文包支持</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -l | grep language-pack-zh-hans</span><br></pre></td></tr></table></figure><ul><li><strong>安装</strong></li></ul><p>如果没有安装，就安装，已经安装了就直接跳到下一步，原来的<code>language-pack-zh</code>已经更新为<code>language-pack-zh-hans</code>，所以这一步改了一下</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install language-pack-zh-hans</span><br></pre></td></tr></table></figure><ul><li><strong>配置语言环境变量</strong></li></ul><p>1.打开<code>/etc/environment</code></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/environment</span><br><span class="line">把下面代码添加进environment文件</span><br><span class="line">LANG="zh_CN.UTF-8"</span><br><span class="line">LANGUAGE="zh_CN:zh:en_US:en"</span><br></pre></td></tr></table></figure><p>2.打开<code>/var/lib/locales/supported.d/local</code>，文件不存在就创建文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /var/lib/locales/supported.d/local</span><br><span class="line">添加zh_CN.GB2312字符集</span><br><span class="line">en_US.UTF-8 UTF-8</span><br><span class="line">zh_CN.UTF-8 UTF-8</span><br><span class="line">zh_CN.GBK GBK</span><br><span class="line">zh_CN GB2312</span><br></pre></td></tr></table></figure><p>  3.保存文件，执行以下命令</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo locale-gen</span><br></pre></td></tr></table></figure><ul><li><strong>设置系统默认语言</strong></li></ul><p>打开<code>/etc/default/locale</code><br>    <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/default/locale</span><br></pre></td></tr></table></figure></p><p>修改为：<br>    <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LANG="zh_CN.UTF-8"</span><br><span class="line">LANGUAGE="zh_CN:zh:en_US:en" </span><br><span class="line">sudo reboot</span><br></pre></td></tr></table></figure></p><p>然后重新开启终端就搞定了</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+            <tag> ubuntu </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>influxdb备份和恢复数据</title>
       <link href="/2019/07/18/influxdb-back/"/>
       <url>/2019/07/18/influxdb-back/</url>
