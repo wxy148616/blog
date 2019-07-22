@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="个人博客，持续更新自己遇到的各种问题和解决方法，包括python后端，html前端等个人开发笔记"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/categories/Python/">
+<meta name="description" content="nginx+uwsgi下载大文件超时uwsgi_response_write_body_do:Brokenpipe"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/07/22/uwsgi-error/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,8 +114,7 @@
       Display();
     }
 </script>
-    <title>Python · 时光不写博客
-  </title>
+    <title>nginx+uwsgi:uwsgi_response_write_body_do - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -172,114 +171,63 @@
 
       <main id="main" class="main">
         <div class="content-wrapper">
-          <div id="content" class="content"><section id="archive" class="archive"><div class="archive-title category">
-          <h2 class="archive-name">Python</h2>
-        </div>
-      <div class="archive-post">
-        <span class="archive-post-time">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">nginx+uwsgi:uwsgi_response_write_body_do
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
           2019-07-22
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/22/uwsgi-error/" class="archive-post-link">
-            nginx+uwsgi:uwsgi_response_write_body_do
-          </a>
-        </span>
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决"><span class="toc-text">解决</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><ul>
+<li>使用Django下载Excel文件，发现文件比较大的时候会出现这个错误</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uwsgi_response_write_body_do(): Broken pipe [core/writer.c line <span class="number">429</span>]</span><br><span class="line">OSError: write error</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查了一些资料，整理一下原因，发现是因为超时了，导致客户端在获得完整响应之前已经断开了连接。</li>
+</ul>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><ul>
+<li>在nginx的配置中修改超时时间</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uwsgi_read_timeout 30;</span><br><span class="line">uwsgi_connect_timeout 30;</span><br></pre></td></tr></table></figure>
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-07-19
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/19/pip-error/" class="archive-post-link">
-            pipBUG：Traceback(most recent call last):File"/usr/bin/pip",line9
-          </a>
-        </span>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-07-09
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/09/drf-error/" class="archive-post-link">
-            DRF This field may not be null, This field cannot be blank
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-07-08
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/08/urllib-error/" class="archive-post-link">
-            Python3下载文件：AttributeError:module 'urllib' has no attribute 'request'
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-07-01
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/01/call-Django-models/" class="archive-post-link">
-            独立py文件调用Django models
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-06-26
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/06/26/MySQL-python/" class="archive-post-link">
-            _mysql.c:44:10:fatal error:'my_config.h' file not found
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-06-18
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/06/18/bytetostring/" class="archive-post-link">
-            \xe5\x8d\xa0\xe7\x94\xa8\xe3\x80\x82，16进制乱码转化为可读字符
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-06-04
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/06/04/ElementTree-tostring/" class="archive-post-link">
-            from lxml import etree
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-06-04
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/06/04/influxdb/" class="archive-post-link">
-            Python写入InfluxDB
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          2019-05-28
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/28/selenium/" class="archive-post-link">
-            selenium+PhantomJS+IP代理
-          </a>
-        </span>
-      </div>
-    </section><nav class="pagination"><a class="next" href="/categories/Python/page/2/">
-        <span class="next-text">下一页</span>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/Django/">Django</a>
+            <a href="/tags/Linux/">Linux</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/07/19/pip-error/">
+        <span class="next-text nav-default">pipBUG：Traceback(most recent call last):File"/usr/bin/pip",line9</span>
+        <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
-    </nav></div></div>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">

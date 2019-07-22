@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>nginx+uwsgi:uwsgi_response_write_body_do</title>
+      <link href="/2019/07/22/uwsgi-error/"/>
+      <url>/2019/07/22/uwsgi-error/</url>
+      
+        <content type="html"><![CDATA[<ul><li>使用Django下载Excel文件，发现文件比较大的时候会出现这个错误</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uwsgi_response_write_body_do(): Broken pipe [core/writer.c line <span class="number">429</span>]</span><br><span class="line">OSError: write error</span><br></pre></td></tr></table></figure><ul><li>查了一些资料，整理一下原因，发现是因为超时了，导致客户端在获得完整响应之前已经断开了连接。</li></ul><h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><ul><li>在nginx的配置中修改超时时间</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uwsgi_read_timeout 30;</span><br><span class="line">uwsgi_connect_timeout 30;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>pipBUG：Traceback(most recent call last):File&quot;/usr/bin/pip&quot;,line9</title>
       <link href="/2019/07/19/pip-error/"/>
       <url>/2019/07/19/pip-error/</url>
