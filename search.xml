@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>python字符串转字典</title>
+      <link href="/2019/08/01/stringtodict/"/>
+      <url>/2019/08/01/stringtodict/</url>
+      
+        <content type="html"><![CDATA[<h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a><b>方法一</b></h2><ul><li>最常见的一种，使用json进行转换</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line">s = &#123;<span class="string">"name"</span>: <span class="string">"张三"</span>&#125;</span><br><span class="line">print(json.loads(s))</span><br><span class="line">------</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'张三'</span>&#125;</span><br></pre></td></tr></table></figure><ul><li>但是这种方式有可能会出现问题，例如单引号的情况</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">"&#123;'name': '张三'&#125;"</span></span><br><span class="line">print(json.loads(s))</span><br><span class="line">------</span><br><span class="line"></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File <span class="string">"/usr/local/Cellar/python/3.7.3/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py"</span>, line <span class="number">348</span>, <span class="keyword">in</span> loads</span><br><span class="line">    <span class="keyword">return</span> _default_decoder.decode(s)</span><br><span class="line">  File <span class="string">"/usr/local/Cellar/python/3.7.3/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py"</span>, line <span class="number">337</span>, <span class="keyword">in</span> decode</span><br><span class="line">    obj, end = self.raw_decode(s, idx=_w(s, <span class="number">0</span>).end())</span><br><span class="line">  File <span class="string">"/usr/local/Cellar/python/3.7.3/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py"</span>, line <span class="number">353</span>, <span class="keyword">in</span> raw_decode</span><br><span class="line">    obj, end = self.scan_once(s, idx)</span><br><span class="line">json.decoder.JSONDecodeError: Expecting property name enclosed <span class="keyword">in</span> double quotes: line <span class="number">1</span> column <span class="number">2</span> (char <span class="number">1</span>)</span><br></pre></td></tr></table></figure><h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a><b>方法二</b></h2><ul><li>使用eval</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">"&#123;'name': '张三'&#125;"</span></span><br><span class="line">print(eval(s))</span><br><span class="line">------</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'张三'</span>&#125;</span><br></pre></td></tr></table></figure><h2 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a><b>方法三</b></h2><ul><li>使用ast.literal_eval</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ast</span><br><span class="line">s = <span class="string">"&#123;'name': '张三'&#125;"</span></span><br><span class="line">print(ast.literal_eval(s))</span><br><span class="line">------</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'张三'</span>&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>打印不合法的文件名</title>
       <link href="/2019/07/25/print-filename/"/>
       <url>/2019/07/25/print-filename/</url>
