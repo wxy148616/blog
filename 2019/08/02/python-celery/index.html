@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="default">
+  <head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="nt7ofDlUEAj-G2sNFlh0wBJYoWH1hdvum_-V5zOgHzg">
+<meta name="baidu-site-verification" content="XG5Sc98jMI">
+<meta name="wlhlauth" content="8d884ffcaa79c5165f113cd2349b52d7">
+<meta name="360-site-verification" content="577ecf1c5f95d421bb0482d93c7faa1e">
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="使用celery+redis"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/08/02/python-celery/">
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":"","toc":true,"fancybox":true,"pjax":true,"latex":false};
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2911390145109533",
+    enable_page_level_ads: true
+  });
+</script>
+
+<script>
+  // 搜索框
+    function search(){
+        $.ajax({
+            url:'../../search.xml',
+            type: 'GET',
+            dataType: 'xml',
+            timeout: 1000,
+            cache:false,
+            error: function(xml){
+                console.log('加载XML文档出错');
+            },
+            success: function(xml){
+                //建立一个代码片段
+                var root_xml=xml.documentElement;
+                var data=$('#search').val();
+                var entry=root_xml.getElementsByTagName("entry");
+                var frag=$("<ul/>");
+                for (var i = 0; i <= entry.length - 1; i++) {
+                    var content = entry[i];
+                    if (content.textContent.search(data) != -1) {
+                        frag.append("<a style='color:blanchedalmond; text-decoration: underline;' href='http://www.wxy.email"+content.getElementsByTagName('url')[0].textContent
+                            + "'><b>" + content.getElementsByTagName('title')[0].textContent + "</b></a><br>");
+                    }
+                }
+                //最后得到的frag添加进HTML文档中
+                $('#DisplayBox').empty();
+                Display();
+                frag.appendTo("#DisplayBox");
+                // alert(frag)
+            }
+        });
+    }
+    function RealTimeSearch(){
+        var input = document.getElementById('search').value;
+        if (input === "") {
+            $('#DisplayBox').empty();
+            return
+        }
+        search();
+    }
+    function disblock(){
+        document.getElementById('pop_up').style.display='none';
+    }
+    function enter_search() {
+        let event = window.event;
+        // console.log(event.keyCode);
+        // alert(event.KeyCode);
+        if (event.keyCode === 13) {
+            console.log(event.keyCode);
+            search();
+        }
+    }
+    function Display(){
+        setTimeout(() => {
+            document.getElementById('pop_up').style.width = document.body.clientWidth + 'px';
+            document.getElementById('pop_up').style.height = $(window).height() + 'px';
+            document.getElementById('pop_up').style.display='block';
+            document.getElementById('mobile-panel').style.transform='none';
+            document.getElementById('mobile-navbar').className = 'mobile-navbar';
+            // event.stopPropagation();
+        },1);
+    }
+    function TriggerSearch(){
+      Display();
+    }
+</script>
+    <title>Django配置celery定时任务 - 时光不写博客</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">时光不写博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><li class="mobile-menu-item"><a href="/">
+                        首页
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/archives/">
+                        归档
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/categories/">
+                        分类
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><span></span>
+        </li></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">时光不写博客</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+            <a class="menu-item-link" href="/">
+                      首页
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/archives/">
+                      归档
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/categories/">
+                      分类
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <span></span>
+                </li></ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Django配置celery定时任务
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-08-02
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装celery"><span class="toc-text">安装celery</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改Django的settings配置文件"><span class="toc-text">修改Django的settings配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用celery任务"><span class="toc-text">使用celery任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动celery"><span class="toc-text">启动celery</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><h2 id="安装celery"><a href="#安装celery" class="headerlink" title="安装celery"></a><b>安装celery</b></h2><ul>
+<li><strong>使用redis+celery的方式（使用的是阿里源，也可以选择不用）</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ -U <span class="string">"celery[redis]"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="修改Django的settings配置文件"><a href="#修改Django的settings配置文件" class="headerlink" title="修改Django的settings配置文件"></a><b>修改Django的settings配置文件</b></h2><ul>
+<li><strong>添加celery文件</strong><br>在app同级目录下添加一个文件夹，例：service_celery<br>在文件夹中添加celery.py文件，内容如下：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import, unicode_literals</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line"></span><br><span class="line"><span class="comment"># set the default Django settings module for the 'celery' program.</span></span><br><span class="line"></span><br><span class="line">os.environ.setdefault(<span class="string">'DJANGO_SETTINGS_MODULE'</span>, <span class="string">'settings'</span>)</span><br><span class="line"></span><br><span class="line">app = Celery(<span class="string">'bank_service'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Using a string here means the worker doesn't have to serialize</span></span><br><span class="line"><span class="comment"># the configuration object to child processes.</span></span><br><span class="line"><span class="comment"># - namespace='CELERY' means all celery-related configuration keys</span></span><br><span class="line"><span class="comment">#   should have a `CELERY_` prefix.</span></span><br><span class="line">app.config_from_object(<span class="string">'django.conf:settings'</span>, namespace=<span class="string">'CELERY'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load task modules from all registered Django app configs.</span></span><br><span class="line">app.autodiscover_tasks()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.task(bind=True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">debug_task</span><span class="params">(self)</span>:</span></span><br><span class="line">    print(<span class="string">'Request: &#123;0!r&#125;'</span>.format(self.request))</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>配置settings文件，在settings.py中添加：</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import djcelery</span></span><br><span class="line"><span class="comment"># djcelery.setup_loader()</span></span><br><span class="line"></span><br><span class="line">CACHES = &#123;</span><br><span class="line">    <span class="string">"default"</span>: &#123;</span><br><span class="line">        <span class="string">"BACKEND"</span>: <span class="string">"django_redis.cache.RedisCache"</span>,</span><br><span class="line">        <span class="string">"LOCATION"</span>: <span class="string">"redis://127.0.0.1:6379/1"</span>,</span><br><span class="line">        <span class="string">"OPTIONS"</span>: &#123;</span><br><span class="line">           <span class="string">"CLIENT_CLASS"</span>: <span class="string">"django_redis.client.DefaultClient"</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">REDIS_URL = CACHES[<span class="string">'default'</span>][<span class="string">'LOCATION'</span>]</span><br><span class="line">CELERY_BROKER_URL = REDIS_URL</span><br><span class="line">BROKER_URL = REDIS_URL</span><br></pre></td></tr></table></figure>
+<h2 id="使用celery任务"><a href="#使用celery任务" class="headerlink" title="使用celery任务"></a><b>使用celery任务</b></h2><ul>
+<li><strong>创建异步任务</strong><br>在app同级目录下添加一个文件夹，例：service_tasks<br>在文件夹中添加tasks.py文件，内容如下：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> service_celery.celery <span class="keyword">import</span> app</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="meta">@app.task(bind=True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_num</span><span class="params">(self, a, b)</span>:</span></span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line">    c = a+b</span><br><span class="line">    print(c)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>调用异步任务</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> service_tasks.tasks <span class="keyword">import</span> add_num</span><br><span class="line">a, b = <span class="number">1</span>, <span class="number">2</span></span><br><span class="line">add_num.delay(a, b)</span><br><span class="line">print(<span class="string">"success"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="启动celery"><a href="#启动celery" class="headerlink" title="启动celery"></a><b>启动celery</b></h2><ul>
+<li><strong>启动</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ../venv_bank/bin/celery是我本地celery的路径，也可以直接使用celery</span></span><br><span class="line"><span class="comment"># worker后的都是一些配置方面的，也可以去掉</span></span><br><span class="line">../venv_bank/bin/celery -A bank_service worker --loglevel=info  --max-tasks-per-child <span class="number">500</span> --autoscale=<span class="number">8</span>,<span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+      </div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/python/">python</a>
+            <a href="/tags/Django/">Django</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/08/01/stringtodict/">
+        <span class="next-text nav-default">python字符串转字典</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">
+  <span class="power-by">
+    联系方式
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+  wxy148616@163.com
+  </span><span class="copyright-year">&copy;2018 - 2019<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">时光不写代码</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+<div style="position: fixed; left: 0px; bottom: 10px;"><a href="http://background.wxy.email" rel="external nofollow noopener noreferrer" target="_blank">@Tab页</a></div>
+  </body>
+</html>
