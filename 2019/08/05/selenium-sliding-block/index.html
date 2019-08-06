@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="default">
+  <head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="nt7ofDlUEAj-G2sNFlh0wBJYoWH1hdvum_-V5zOgHzg">
+<meta name="baidu-site-verification" content="XG5Sc98jMI">
+<meta name="wlhlauth" content="8d884ffcaa79c5165f113cd2349b52d7">
+<meta name="360-site-verification" content="577ecf1c5f95d421bb0482d93c7faa1e">
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="selenium+chromedriver自动进行滑块验证登录"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/08/05/selenium-sliding-block/">
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":"","toc":true,"fancybox":true,"pjax":true,"latex":false};
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2911390145109533",
+    enable_page_level_ads: true
+  });
+</script>
+
+<script>
+  // 搜索框
+    function search(){
+        $.ajax({
+            url:'../../search.xml',
+            type: 'GET',
+            dataType: 'xml',
+            timeout: 1000,
+            cache:false,
+            error: function(xml){
+                console.log('加载XML文档出错');
+            },
+            success: function(xml){
+                //建立一个代码片段
+                var root_xml=xml.documentElement;
+                var data=$('#search').val();
+                var entry=root_xml.getElementsByTagName("entry");
+                var frag=$("<ul/>");
+                for (var i = 0; i <= entry.length - 1; i++) {
+                    var content = entry[i];
+                    if (content.textContent.search(data) != -1) {
+                        frag.append("<a style='color:blanchedalmond; text-decoration: underline;' href='http://www.wxy.email"+content.getElementsByTagName('url')[0].textContent
+                            + "'><b>" + content.getElementsByTagName('title')[0].textContent + "</b></a><br>");
+                    }
+                }
+                //最后得到的frag添加进HTML文档中
+                $('#DisplayBox').empty();
+                Display();
+                frag.appendTo("#DisplayBox");
+                // alert(frag)
+            }
+        });
+    }
+    function RealTimeSearch(){
+        var input = document.getElementById('search').value;
+        if (input === "") {
+            $('#DisplayBox').empty();
+            return
+        }
+        search();
+    }
+    function disblock(){
+        document.getElementById('pop_up').style.display='none';
+    }
+    function enter_search() {
+        let event = window.event;
+        // console.log(event.keyCode);
+        // alert(event.KeyCode);
+        if (event.keyCode === 13) {
+            console.log(event.keyCode);
+            search();
+        }
+    }
+    function Display(){
+        setTimeout(() => {
+            document.getElementById('pop_up').style.width = document.body.clientWidth + 'px';
+            document.getElementById('pop_up').style.height = $(window).height() + 'px';
+            document.getElementById('pop_up').style.display='block';
+            document.getElementById('mobile-panel').style.transform='none';
+            document.getElementById('mobile-navbar').className = 'mobile-navbar';
+            // event.stopPropagation();
+        },1);
+    }
+    function TriggerSearch(){
+      Display();
+    }
+</script>
+    <title>selenium+chromedriver普通滑块验证 - 时光不写博客</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">时光不写博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><li class="mobile-menu-item"><a href="/">
+                        首页
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/archives/">
+                        归档
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/categories/">
+                        分类
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><span></span>
+        </li></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">时光不写博客</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+            <a class="menu-item-link" href="/">
+                      首页
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/archives/">
+                      归档
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/categories/">
+                      分类
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <span></span>
+                </li></ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">selenium+chromedriver普通滑块验证
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-08-05
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目标"><span class="toc-text">目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过程"><span class="toc-text">过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-text">解决方法</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a><b>目标</b></h2><ul>
+<li>使用selenium实现自动登录<br><img src="/2019/08/05/selenium-sliding-block/滑块1.png" alt="img"></li>
+<li>整理一下思路<br><code>拿到账号密码输入框的id</code> –&gt; <code>填写账号</code> –&gt; <code>填写密码</code> –&gt; <code>出现滑块</code> –&gt; <code>滑过滑块</code> –&gt; <code>点击登录</code></li>
+</ul>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a><b>过程</b></h2><ul>
+<li>拿到输入框id的过程就不再介绍了，需要注意的点就是’iframe’这个元素，例：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">""</span> <span class="attr">frameborder</span>=<span class="string">"0"</span> <span class="attr">id</span>=<span class="string">"iframe_id"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"user_name"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"password"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"login"</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在iframe标签中的数据是无法直接拿到，需要进行一次切换才能得到数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 切换到iframe中</span></span><br><span class="line">driver.switch_to_frame(<span class="string">"iframe_id"</span>)</span><br><span class="line"><span class="comment"># 清除账号框</span></span><br><span class="line">driver.find_element_by_id(<span class="string">"user_name"</span>).clear()</span><br><span class="line"><span class="comment"># 填写账号</span></span><br><span class="line">driver.find_element_by_id(<span class="string">"user_name"</span>).send_keys(username)</span><br><span class="line"><span class="comment"># 填写密码</span></span><br><span class="line">driver.find_element_by_id(<span class="string">"TPL_username_1"</span>).clear().send_keys(password)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在填写密码的时候出现了滑块验证，先不要着急做滑块，暂时睡一会<code>time.sleep(5)</code>，然后手动去拉滑块，惊喜来了</li>
+<li>可能是某宝的技术比较高端，<b>不管你怎么拉都是会失败的</b>，简直神奇，查了一下原因是因为使用了某种js方式检测到了当前页面是使用selenium打开的，所以认定为爬虫，不可能放你过去的</li>
+</ul>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a><b>解决方法</b></h2><ul>
+<li>需要修改chromedriver文件中的内容</li>
+</ul>
+<p>把’cdc_asdjflasutopfhvcZLmcfl’修改为相同字符数量的任意字符即可，要在root模式下执行，不然文件会毁损，记得备份。<br>详情参考：<a href="https://stackoverflow.com/questions/33225947/can-a-website-detect-when-you-are-using-selenium-with-chromedriver" rel="external nofollow noopener noreferrer" target="_blank">stackoverflow-selenium-with-chromedriver</a></p>
+<ul>
+<li>问题解决，开始自动滑块操作，正常可以去拿滑块的id进行操作，但是我想使用一个奇怪的方式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 滑块验证</span></span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.action_chains <span class="keyword">import</span> ActionChains</span><br><span class="line"></span><br><span class="line"><span class="comment"># 滑块验证，假设拿不到滑块的id</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">the_slider_validation</span><span class="params">(driver)</span>:</span></span><br><span class="line">    builder = ActionChains(driver)</span><br><span class="line">    <span class="comment"># 拿到登录的button</span></span><br><span class="line">    l = driver.find_element_by_id(<span class="string">"login"</span>)</span><br><span class="line">    <span class="comment"># 清除之前的action</span></span><br><span class="line">    builder.reset_actions()</span><br><span class="line">    <span class="comment"># 计算滑块移动的轨迹，  300为移动距离</span></span><br><span class="line">    track = move_mouse(<span class="number">300</span>)</span><br><span class="line">    <span class="comment"># 移动到登录button上35像素位置（就是滑块所在位置），根据登录button进行定位滑块</span></span><br><span class="line">    builder.move_to_element_with_offset(l, <span class="number">0</span>, <span class="number">-35</span>)</span><br><span class="line">    <span class="comment"># 点击左键，不释放</span></span><br><span class="line">    builder.click_and_hold()</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br><span class="line">    <span class="comment"># 开始生成移动轨迹</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> track:</span><br><span class="line">        builder.move_by_offset(xoffset=i, yoffset=<span class="number">0</span>)</span><br><span class="line">        builder.reset_actions()</span><br><span class="line">    time.sleep(<span class="number">0.1</span>)</span><br><span class="line">    <span class="comment"># 释放左键，执行for中的操作</span></span><br><span class="line">    builder.release().perform()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 鼠标移动</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">move_mouse</span><span class="params">(distance)</span>:</span></span><br><span class="line">    remaining_dist = distance</span><br><span class="line">    moves = []</span><br><span class="line">    a = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 加速度，速度越来越快...</span></span><br><span class="line">    <span class="keyword">while</span> remaining_dist &gt; <span class="number">0</span>:</span><br><span class="line">        span = random.randint(<span class="number">15</span>, <span class="number">20</span>)</span><br><span class="line">        a += span</span><br><span class="line">        moves.append(a)</span><br><span class="line">        remaining_dist -= span</span><br><span class="line">        <span class="keyword">if</span> sum(moves[:<span class="number">-1</span>]) &gt; <span class="number">300</span>:</span><br><span class="line">            print(sum(moves))</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> moves</span><br></pre></td></tr></table></figure>
+<ul>
+<li>验证通过，点击登录，或者是失败进行重试</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(<span class="string">"login"</span>).click()</span><br></pre></td></tr></table></figure>
+
+      </div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/python/">python</a>
+            <a href="/tags/爬虫/">爬虫</a>
+            <a href="/tags/selenium/">selenium</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/08/02/python-celery/">
+        <span class="next-text nav-default">Django配置celery定时任务</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">
+  <span class="power-by">
+    联系方式
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+  wxy148616@163.com
+  </span><span class="copyright-year">&copy;2018 - 2019<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">时光不写代码</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+<div style="position: fixed; left: 0px; bottom: 10px;"><a href="http://background.wxy.email" rel="external nofollow noopener noreferrer" target="_blank">@Tab页</a></div>
+  </body>
+</html>

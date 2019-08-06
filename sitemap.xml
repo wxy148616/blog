@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.wxy.email/2019/08/05/selenium-sliding-block/</loc>
+    
+    <lastmod>2019-08-06T09:50:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2019/08/02/python-celery/</loc>
     
     <lastmod>2019-08-02T13:21:02.000Z</lastmod>
@@ -93,14 +100,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/10/django-%E6%97%A5%E5%BF%97/</loc>
+    <loc>https://www.wxy.email/2019/05/09/django-%E9%83%A8%E7%BD%B2/</loc>
     
     <lastmod>2019-07-02T03:55:01.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/09/django-%E9%83%A8%E7%BD%B2/</loc>
+    <loc>https://www.wxy.email/2019/05/10/django-%E6%97%A5%E5%BF%97/</loc>
     
     <lastmod>2019-07-02T03:55:01.000Z</lastmod>
     
