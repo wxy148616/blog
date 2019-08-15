@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="时序数据库"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/2019/06/04/influxdb/">
+<meta name="description" content="Serializer和ModelSerializer的区别,处理一个外键字段出现两次校验"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/08/15/python-modelserializer/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,7 +114,7 @@
       Display();
     }
 </script>
-    <title>Python写入InfluxDB - 时光不写博客</title>
+    <title>Serializer和ModelSerializer - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -173,12 +173,12 @@
         <div class="content-wrapper">
           <div id="content" class="content"><article class="post">
     <header class="post-header">
-      <h1 class="post-title">Python写入InfluxDB
+      <h1 class="post-title">Serializer和ModelSerializer
         </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2019-06-04
+          2019-08-15
         </span><span class="post-category">
             <a href="/categories/Python/">Python</a>
             </span>
@@ -188,56 +188,24 @@
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用准备"><span class="toc-text">使用准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作"><span class="toc-text">操作</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ModelSerializer"><span class="toc-text">ModelSerializer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Serializer"><span class="toc-text">Serializer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li></ol>
     </div>
-  </div><div class="post-content"><blockquote>
-<p>InfluxDB是一个开源的时序数据库，使用GO语言开发，特别适合用于处理和分析资源监控数据这种时序相关数据。而InfluxDB自带的各种特殊函数如求标准差，随机取样数据，统计数据变化比等，使数据统计和实时分析变得十分方便。</p>
-</blockquote>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><b>安装</b></h2><ul>
-<li>数据库安装<br>根据不同的系统安装方式不太一样, 具体参考<a href="https://docs.influxdata.com/influxdb/v1.7/introduction/installation/" rel="external nofollow noopener noreferrer" target="_blank">官网</a>, 这个官网提供的挺详细的。<br><b>如果有指定版本的requests, 注意一下requests版本, influxdb不支持旧版的requests库, 版本不支持安装时会有提示。</b></li>
-<li>Python安装操作库</li>
+  </div><div class="post-content"><h2 id="ModelSerializer"><a href="#ModelSerializer" class="headerlink" title="ModelSerializer"></a><b>ModelSerializer</b></h2><ul>
+<li>先使用<code>ModelSerializer</code>测试一下结果，例：</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install influxdb</span><br><span class="line"></span><br><span class="line">pip install --upgrade influxdb             # 升级</span><br><span class="line">pip uninstall influxdb       # 卸载</span><br></pre></td></tr></table></figure>
-<h2 id="使用准备"><a href="#使用准备" class="headerlink" title="使用准备"></a><b>使用准备</b></h2><ul>
-<li>操作准备<br>需要先创建数据库，可以使用命令行进行创建</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database database_name;</span><br></pre></td></tr></table></figure>
-<p>也可以使用python命令直接创建</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line"><span class="comment"># 首先连接influxdb</span></span><br><span class="line">client = InfluxDBClient(host=<span class="string">'服务器IP'</span>, port=<span class="number">8086</span>, username=<span class="string">'myuser'</span>, password=<span class="string">'mypass'</span> ssl=<span class="literal">True</span>, verify_ssl=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 创建数据库</span></span><br><span class="line">client.create_database(<span class="string">'database_name'</span>)   </span><br><span class="line"><span class="comment"># 查询数据库</span></span><br><span class="line">client.get_list_database()</span><br></pre></td></tr></table></figure>
-<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a><b>操作</b></h2><ul>
-<li>连接数据库</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line">client = InfluxDBClient(<span class="string">'服务器IP'</span>, <span class="string">'8086'</span>, <span class="string">'myuser'</span>, <span class="string">'mypass'</span>, <span class="string">'database_name'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># models.py</span></span><br><span class="line"><span class="comment">######</span></span><br><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> Model, CharField, BooleanField, ForeignKey</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestModel</span><span class="params">(User)</span>:</span></span><br><span class="line">    name = CharField(max_length=<span class="number">64</span>, name=<span class="string">'name'</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestModel</span><span class="params">(Model)</span>:</span></span><br><span class="line">    status = BooleanField(default=<span class="literal">False</span>, name=<span class="string">'status'</span>)</span><br><span class="line">    user = ForeignKey(User, db_column=<span class="string">"user_id"</span>, name=<span class="string">'user'</span>, on_delete=CASCADE,</span><br><span class="line">                             related_name=<span class="string">"user_test"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">######</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># seriailzer.py</span></span><br><span class="line"><span class="comment">######</span></span><br><span class="line"><span class="keyword">from</span> models <span class="keyword">import</span> TestModel</span><br><span class="line"><span class="keyword">from</span> rest_framework.serializers <span class="keyword">import</span> ModelSerializer, IntegerField, Serializer</span><br><span class="line"><span class="keyword">from</span> rest_framework.serializers <span class="keyword">import</span> SerializerMethodField</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestSerializer</span><span class="params">(ModelSerializer)</span>:</span></span><br><span class="line">    user = IntegerField(required=<span class="literal">False</span>)</span><br><span class="line">    status = SerializerMethodField()</span><br><span class="line">    </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = TestModel</span><br><span class="line">        fields = (<span class="string">"id"</span>, <span class="string">"status"</span>, <span class="string">"uesr"</span>)</span><br></pre></td></tr></table></figure>
 <ul>
-<li>写入数据<br>InfluxDB的每条数据可以看成一个json数据（其实写入的时候就是个json数据），每条数据中包含了’measurement’，’time’，’tags’，’fields’</li>
+<li>把外键user设置为了非必填，但是现在去调用post接口就会发现user依然是必填的，会提示</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>measurement</td>
-<td>相当于数据库中的表</td>
-</tr>
-<tr>
-<td>time</td>
-<td>数据的记录时间，是数据的主索引</td>
-</tr>
-<tr>
-<td>tags</td>
-<td>一个有索引的值</td>
-</tr>
-<tr>
-<td>fields</td>
-<td>没有索引的值</td>
-</tr>
-</tbody>
-</table>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">w_json = [&#123;</span><br><span class="line">    <span class="string">"measurement"</span>: <span class="string">'table_name'</span>,</span><br><span class="line">    <span class="string">"time"</span>: now_time,</span><br><span class="line">    <span class="string">"tags"</span>: &#123;</span><br><span class="line">        <span class="string">'name'</span>: <span class="string">'名字'</span>,</span><br><span class="line">        <span class="string">'categories'</span>: <span class="string">'类型'</span></span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">"fields"</span>: &#123;</span><br><span class="line">        <span class="string">'price'</span>: <span class="string">"价格"</span>,</span><br><span class="line">        <span class="string">'unit'</span>: <span class="string">"单位"</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">写入数据库</span><br><span class="line">client.write_points(w_json)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"detail"</span>: <span class="string">"This field is required."</span>,</span><br><span class="line">    <span class="string">"sub_detail"</span>: &#123;</span><br><span class="line">        <span class="string">"user"</span>: [</span><br><span class="line">            <span class="string">"This field is required."</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Serializer"><a href="#Serializer" class="headerlink" title="Serializer"></a><b>Serializer</b></h2><ul>
+<li>再使用<code>Serializer</code>测试一下结果。</li>
+<li>代码就不在贴了，直接把serializer.py文件中的<code>class TestSerializer(ModelSerializer):</code>改为<code>class TestSerializer(Serializer):</code>就可以了</li>
+<li>这时就会发现再次调用接口就不会再出现问题了</li>
+</ul>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a><b>区别</b></h2><ul>
+<li><code>ModelSerializer</code>类和<code>Serializer</code>类大致一样，不过添加了一些功能，可以更加便捷的去校验<code>model</code>中的数据.<br><code>ModelSerializer</code>会基于 <code>model</code> 自动创建一些字段<br><code>ModelSerializer</code>会自动生成一些验证，比如 <code>unique_together</code> 验证<br><code>ModelSerializer</code>包含简单的默认的 <code>create()</code> 和 <code>update()</code></li>
+</ul>
 
       </div>
       
@@ -256,16 +224,11 @@
   </div><footer class="post-footer">
         <div class="post-tags">
             <a href="/tags/python/">python</a>
-            <a href="/tags/InfluxDB/">InfluxDB</a>
+            <a href="/tags/Django/">Django</a>
             </div>
         
-        <nav class="post-nav"><a class="prev" href="/2019/06/06/https-config/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">nginx配置https</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
-    <a class="next" href="/2019/06/04/ElementTree-tostring/">
-        <span class="next-text nav-default">from lxml import etree</span>
+        <nav class="post-nav"><a class="next" href="/2019/08/12/python-methodfield/">
+        <span class="next-text nav-default">Django-SerializerMethodField</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
