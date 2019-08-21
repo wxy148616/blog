@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>python压缩文件,Django下载zip文件</title>
+      <link href="/2019/08/21/python-zip/"/>
+      <url>/2019/08/21/python-zip/</url>
+      
+        <content type="html"><![CDATA[<h2 id="python压缩文件"><a href="#python压缩文件" class="headerlink" title="python压缩文件"></a><b>python压缩文件</b></h2><ul><li>使用<code>zipfile</code></li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_zip</span><span class="params">(zip_path, save_path)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    # zip_path 要压缩文件的路径</span></span><br><span class="line"><span class="string">    # save_path 文件压缩后保存的路径</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    local_path = os.path.join(zip_path, <span class="string">"x.xls"</span>)</span><br><span class="line">    zip = zipfile.ZipFile(save_path, <span class="string">"w"</span>)  <span class="comment">#  zipfile.ZIP_DEFLATED</span></span><br><span class="line">    zip.write(local_path, <span class="string">'x.xls'</span>)</span><br><span class="line">    zip.close()</span><br><span class="line"></span><br><span class="line">convert_zip(zip_path, save_path)</span><br></pre></td></tr></table></figure><h2 id="Django下载zip文件"><a href="#Django下载zip文件" class="headerlink" title="Django下载zip文件"></a><b>Django下载zip文件</b></h2><ul><li>Django使用临时文件夹tempfile下载其他文件,并压缩为zip文件返回给前端</li><li>使用<code>BytesIO()</code>和<code>tempfile</code>下载</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">contract_download</span><span class="params">(download_urls)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    downloads_urls 要批量下载并且压缩的文件</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="comment"># 创建BytesIO</span></span><br><span class="line">    s = io.BytesIO()</span><br><span class="line">    <span class="comment"># 创建一个临时文件夹用来保存下载的文件</span></span><br><span class="line">    temp = tempfile.TemporaryDirectory()</span><br><span class="line">    <span class="comment"># 使用BytesIO生成压缩文件</span></span><br><span class="line">    zip = zipfile.ZipFile(s, <span class="string">'w'</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> download_urls:</span><br><span class="line">        f_name = <span class="string">"&#123;&#125;.pdf"</span>.format(i[<span class="string">'name'</span>])</span><br><span class="line">        local_path = os.path.join(temp.name, f_name)</span><br><span class="line">        <span class="comment"># 下载文件</span></span><br><span class="line">        ur.urlretrieve(i[<span class="string">'download_url'</span>], local_path)</span><br><span class="line">        <span class="comment"># 把下载文件的写入压缩文件</span></span><br><span class="line">        zip.write(local_path, f_name)</span><br><span class="line">    <span class="comment"># 关闭文件</span></span><br><span class="line">    zip.close()</span><br><span class="line">    <span class="comment"># 指针回到初始位置，没有这一句前端得到的zip文件会损坏</span></span><br><span class="line">    s.seek(<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># 用FileWrapper类来迭代器化一下文件对象，实例化出一个经过更适合大文件下载场景的文件对象，实现原理相当与把内容一点点从文件中读取，放到内存，下载下来，直到完成整个下载过程。这样内存就不会担心你一下子占用它那么多空间了。</span></span><br><span class="line">    wrapper = FileWrapper(s)</span><br><span class="line">    response = HttpResponse(wrapper, content_type=<span class="string">'application/zip'</span>)</span><br><span class="line">    response[<span class="string">'Content-Disposition'</span>] = <span class="string">'attachment; filename=&#123;&#125;.zip'</span>.format(datetime.datetime.now().strftime(<span class="string">"%Y-%m-%d"</span>))</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">download_urls = [&#123;<span class="string">"name"</span>:<span class="string">"pdf1"</span>,<span class="string">"download_url"</span>: <span class="string">"http://xxx.pdf"</span>&#125;, &#123;<span class="string">"name"</span>:<span class="string">"pdf2"</span>, <span class="string">"download_url"</span>: <span class="string">"http://xxx2.pdf"</span>&#125;]</span><br><span class="line">contract_download(download_urls)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> Django </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Django object.get_or_create()</title>
       <link href="/2019/08/20/python-get-or-create/"/>
       <url>/2019/08/20/python-get-or-create/</url>

@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="Django使用get_or_create()优化代码"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/2019/08/20/python-get-or-create/">
+<meta name="description" content="python使用zipfile压缩文件,Django使用临时文件夹tempfile下载其他文件,并压缩为zip文件返回给前端"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/08/21/python-zip/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,7 +114,7 @@
       Display();
     }
 </script>
-    <title>Django object.get_or_create() - 时光不写博客</title>
+    <title>python压缩文件,Django下载zip文件 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -173,12 +173,12 @@
         <div class="content-wrapper">
           <div id="content" class="content"><article class="post">
     <header class="post-header">
-      <h1 class="post-title">Django object.get_or_create()
+      <h1 class="post-title">python压缩文件,Django下载zip文件
         </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2019-08-20
+          2019-08-21
         </span><span class="post-category">
             <a href="/categories/Python/">Python</a>
             </span>
@@ -188,25 +188,17 @@
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用get-or-create"><span class="toc-text">使用get_or_create()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于get-or-create"><span class="toc-text">关于get_or_create()</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#说明"><span class="toc-text">说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数"><span class="toc-text">参数</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#python压缩文件"><span class="toc-text">python压缩文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Django下载zip文件"><span class="toc-text">Django下载zip文件</span></a></li></ol>
     </div>
-  </div><div class="post-content"><h2 id="使用get-or-create"><a href="#使用get-or-create" class="headerlink" title="使用get_or_create()"></a><b>使用get_or_create()</b></h2><ul>
-<li>使用方式</li>
+  </div><div class="post-content"><h2 id="python压缩文件"><a href="#python压缩文件" class="headerlink" title="python压缩文件"></a><b>python压缩文件</b></h2><ul>
+<li>使用<code>zipfile</code></li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">user, b = User.objects.get_or_create(u_id=<span class="number">1</span>, name=<span class="string">"张三"</span>, defaults=&#123;<span class="string">'address'</span>:<span class="string">'上海'</span>&#125;)</span><br><span class="line">print(user)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>等同于</li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_zip</span><span class="params">(zip_path, save_path)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    # zip_path 要压缩文件的路径</span></span><br><span class="line"><span class="string">    # save_path 文件压缩后保存的路径</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    local_path = os.path.join(zip_path, <span class="string">"x.xls"</span>)</span><br><span class="line">    zip = zipfile.ZipFile(save_path, <span class="string">"w"</span>)  <span class="comment">#  zipfile.ZIP_DEFLATED</span></span><br><span class="line">    zip.write(local_path, <span class="string">'x.xls'</span>)</span><br><span class="line">    zip.close()</span><br><span class="line"></span><br><span class="line">convert_zip(zip_path, save_path)</span><br></pre></td></tr></table></figure>
+<h2 id="Django下载zip文件"><a href="#Django下载zip文件" class="headerlink" title="Django下载zip文件"></a><b>Django下载zip文件</b></h2><ul>
+<li>Django使用临时文件夹tempfile下载其他文件,并压缩为zip文件返回给前端</li>
+<li>使用<code>BytesIO()</code>和<code>tempfile</code>下载</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">users = User.objects.get(u_id=<span class="number">1</span>, name=<span class="string">"张三"</span>)</span><br><span class="line"><span class="keyword">if</span> user:</span><br><span class="line">    print(user)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    user = User.objects.create(u_id=<span class="number">1</span>, name=<span class="string">"张三"</span>, address=<span class="string">"上海"</span>)</span><br><span class="line">    print(user)</span><br></pre></td></tr></table></figure>
-<h2 id="关于get-or-create"><a href="#关于get-or-create" class="headerlink" title="关于get_or_create()"></a><b>关于get_or_create()</b></h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
-<li><code>get_or_create</code>顾名思义，查询或者创建一条数据，首先是执行的时候首先会去查询有没有这个值，如果有就返回，没有就创建。</li>
-<li><code>get_or_create</code>会返回一个tuple,第一个值是查到或者创建的数据，第二个值是一个布尔，表示是否执行了创建操作。</li>
-<li>在进行查询的时候和使用<code>get</code>查询类似，当查到超过一条数据的时候会触发<code>MultipleObjectsReturned</code>。</li>
-<li>创建的时候也和使用<code>create</code>创建类似。</li>
-<li><code>如果你正在使用MySQL，请确保使用READ COMMITTED 隔离级别而不是默认的REPEATABLE READ，否则你将会遇到get_or_create 引发IntegrityError 但对象在接下来的get() 调用中并不存在的情况</code>。<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3></li>
-<li><code>**kwargs</code>，数据的查询条件。</li>
-<li><code>defaults</code>，如果没有查到数据，创建数据时提供的填充数据。</li>
-</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">contract_download</span><span class="params">(download_urls)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    downloads_urls 要批量下载并且压缩的文件</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="comment"># 创建BytesIO</span></span><br><span class="line">    s = io.BytesIO()</span><br><span class="line">    <span class="comment"># 创建一个临时文件夹用来保存下载的文件</span></span><br><span class="line">    temp = tempfile.TemporaryDirectory()</span><br><span class="line">    <span class="comment"># 使用BytesIO生成压缩文件</span></span><br><span class="line">    zip = zipfile.ZipFile(s, <span class="string">'w'</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> download_urls:</span><br><span class="line">        f_name = <span class="string">"&#123;&#125;.pdf"</span>.format(i[<span class="string">'name'</span>])</span><br><span class="line">        local_path = os.path.join(temp.name, f_name)</span><br><span class="line">        <span class="comment"># 下载文件</span></span><br><span class="line">        ur.urlretrieve(i[<span class="string">'download_url'</span>], local_path)</span><br><span class="line">        <span class="comment"># 把下载文件的写入压缩文件</span></span><br><span class="line">        zip.write(local_path, f_name)</span><br><span class="line">    <span class="comment"># 关闭文件</span></span><br><span class="line">    zip.close()</span><br><span class="line">    <span class="comment"># 指针回到初始位置，没有这一句前端得到的zip文件会损坏</span></span><br><span class="line">    s.seek(<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># 用FileWrapper类来迭代器化一下文件对象，实例化出一个经过更适合大文件下载场景的文件对象，实现原理相当与把内容一点点从文件中读取，放到内存，下载下来，直到完成整个下载过程。这样内存就不会担心你一下子占用它那么多空间了。</span></span><br><span class="line">    wrapper = FileWrapper(s)</span><br><span class="line">    response = HttpResponse(wrapper, content_type=<span class="string">'application/zip'</span>)</span><br><span class="line">    response[<span class="string">'Content-Disposition'</span>] = <span class="string">'attachment; filename=&#123;&#125;.zip'</span>.format(datetime.datetime.now().strftime(<span class="string">"%Y-%m-%d"</span>))</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">download_urls = [&#123;<span class="string">"name"</span>:<span class="string">"pdf1"</span>,<span class="string">"download_url"</span>: <span class="string">"http://xxx.pdf"</span>&#125;, &#123;<span class="string">"name"</span>:<span class="string">"pdf2"</span>, <span class="string">"download_url"</span>: <span class="string">"http://xxx2.pdf"</span>&#125;]</span><br><span class="line">contract_download(download_urls)</span><br></pre></td></tr></table></figure>
 
       </div>
       
@@ -228,13 +220,8 @@
             <a href="/tags/Django/">Django</a>
             </div>
         
-        <nav class="post-nav"><a class="prev" href="/2019/08/21/python-zip/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">python压缩文件,Django下载zip文件</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
-    <a class="next" href="/2019/08/15/python-modelserializer/">
-        <span class="next-text nav-default">Serializer和ModelSerializer</span>
+        <nav class="post-nav"><a class="next" href="/2019/08/20/python-get-or-create/">
+        <span class="next-text nav-default">Django object.get_or_create()</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
