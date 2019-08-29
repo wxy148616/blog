@@ -194,6 +194,7 @@
 <li>使用selenium实现自动登录<br><img src="/2019/08/05/selenium-sliding-block/滑块1.png" alt="img"></li>
 <li>整理一下思路<br><code>拿到账号密码输入框的id</code> –&gt; <code>填写账号</code> –&gt; <code>填写密码</code> –&gt; <code>出现滑块</code> –&gt; <code>滑过滑块</code> –&gt; <code>点击登录</code></li>
 </ul>
+<hr>
 <h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a><b>过程</b></h2><ul>
 <li>拿到输入框id的过程就不再介绍了，需要注意的点就是’iframe’这个元素，例：</li>
 </ul>
@@ -204,6 +205,7 @@
 <li>在填写密码的时候出现了滑块验证，先不要着急做滑块，暂时睡一会<code>time.sleep(5)</code>，然后手动去拉滑块，惊喜来了</li>
 <li>可能是某宝的技术比较高端，<b>不管你怎么拉都是会失败的</b>，简直神奇，查了一下原因是因为使用了某种js方式检测到了当前页面是使用selenium打开的，所以认定为爬虫，不可能放你过去的</li>
 </ul>
+<hr>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a><b>解决方法</b></h2><ul>
 <li>需要修改chromedriver文件中的内容</li>
 </ul>

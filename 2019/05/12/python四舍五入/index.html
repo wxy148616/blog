@@ -205,6 +205,7 @@
 <li>失败三：使用<code>Decimal()</code></li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> Decimal</span><br><span class="line">a = <span class="number">1.335</span></span><br><span class="line">print(Decimal(a).quantize(Decimal(<span class="string">'0.00'</span>)))   <span class="comment">#输出1.33</span></span><br></pre></td></tr></table></figure>
+<hr>
 <h2 id="解决问题："><a href="#解决问题：" class="headerlink" title="解决问题："></a><b>解决问题：</b></h2><ul>
 <li>a+0.001</li>
 </ul>

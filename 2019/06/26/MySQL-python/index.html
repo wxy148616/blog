@@ -191,6 +191,7 @@
       <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的第一个问题"><span class="toc-text">遇到的第一个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决第一个问题"><span class="toc-text">解决第一个问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到第二个问题"><span class="toc-text">遇到第二个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决第二个问题"><span class="toc-text">解决第二个问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#遇到的第三个问题"><span class="toc-text">遇到的第三个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决第三个问题"><span class="toc-text">解决第三个问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发现第四个问题"><span class="toc-text">发现第四个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决第四个问题"><span class="toc-text">解决第四个问题</span></a></li></ol></li></ol>
     </div>
   </div><div class="post-content"><p><b> <span style="color:black">注意：如果你用的是python3.x，直接去看第四个问题<span></span></span></b></p>
+<hr>
 <h2 id="遇到的第一个问题"><a href="#遇到的第一个问题" class="headerlink" title="遇到的第一个问题"></a><b>遇到的第一个问题</b></h2><ul>
 <li>正常来说直接执行pip安装，就是可以的，但是MySQL-python偏偏比较独特</li>
 </ul>
@@ -207,6 +208,7 @@
 <li><b>如果这一步直接完成，那就可以继续<code>pip install MySQL-python</code>了</b>，应该会成功</li>
 <li>但是我在这一步执行失败了<br><br></li>
 </ul>
+<hr>
 <h2 id="遇到第二个问题"><a href="#遇到第二个问题" class="headerlink" title="遇到第二个问题"></a><b>遇到第二个问题</b></h2><ul>
 <li><code>brew install mysql-connector-c</code>报错</li>
 </ul>
@@ -219,6 +221,7 @@
 <li>然后再执行<code>pip install MySQL-python</code>，如果成功了就搞定了</li>
 <li>神奇的是，我在这一步又失败了<br><br></li>
 </ul>
+<hr>
 <h2 id="遇到的第三个问题"><a href="#遇到的第三个问题" class="headerlink" title="遇到的第三个问题"></a><b>遇到的第三个问题</b></h2><ul>
 <li>上面的步骤走完以后，执行<code>pip install MySQL-python</code>，报错</li>
 </ul>
@@ -233,6 +236,7 @@
 <li>终于成功了！可喜可贺！可喜可贺！</li>
 <li>小心翼翼的试一下，<code>import MySQLdb</code>，真的成功了<br><br></li>
 </ul>
+<hr>
 <h2 id="发现第四个问题"><a href="#发现第四个问题" class="headerlink" title="发现第四个问题"></a><b>发现第四个问题</b></h2><ul>
 <li>开始使用的时候，发现自己用的是<code>python2.x</code>的环境，换成<code>python3.x</code>继续用</li>
 <li>在<code>import MySQLdb</code>的时候又出问题了，<code>ModuleNotFoundError: No module named &#39;MySQLdb&#39;</code></li>

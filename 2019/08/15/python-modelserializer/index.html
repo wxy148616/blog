@@ -198,11 +198,13 @@
 <li>把外键user设置为了非必填，但是现在去调用post接口就会发现user依然是必填的，会提示</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"detail"</span>: <span class="string">"This field is required."</span>,</span><br><span class="line">    <span class="string">"sub_detail"</span>: &#123;</span><br><span class="line">        <span class="string">"user"</span>: [</span><br><span class="line">            <span class="string">"This field is required."</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
 <h2 id="Serializer"><a href="#Serializer" class="headerlink" title="Serializer"></a><b>Serializer</b></h2><ul>
 <li>再使用<code>Serializer</code>测试一下结果。</li>
 <li>代码就不在贴了，直接把serializer.py文件中的<code>class TestSerializer(ModelSerializer):</code>改为<code>class TestSerializer(Serializer):</code>就可以了</li>
 <li>这时就会发现再次调用接口就不会再出现问题了</li>
 </ul>
+<hr>
 <h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a><b>区别</b></h2><ul>
 <li><code>ModelSerializer</code>类和<code>Serializer</code>类大致一样，不过添加了一些功能，可以更加便捷的去校验<code>model</code>中的数据.<br><code>ModelSerializer</code>会基于 <code>model</code> 自动创建一些字段<br><code>ModelSerializer</code>会自动生成一些验证，比如 <code>unique_together</code> 验证<br><code>ModelSerializer</code>包含简单的默认的 <code>create()</code> 和 <code>update()</code></li>
 </ul>

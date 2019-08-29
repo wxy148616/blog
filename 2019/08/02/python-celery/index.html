@@ -194,6 +194,7 @@
 <li><strong>使用redis+celery的方式（使用的是阿里源，也可以选择不用）</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ -U <span class="string">"celery[redis]"</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<hr>
 <h2 id="修改Django的settings配置文件"><a href="#修改Django的settings配置文件" class="headerlink" title="修改Django的settings配置文件"></a><b>修改Django的settings配置文件</b></h2><ul>
 <li><strong>添加celery文件</strong><br>在app同级目录下添加一个文件夹，例：service_celery<br>在文件夹中添加celery.py文件，内容如下：</li>
 </ul>
@@ -202,6 +203,7 @@
 <li><strong>配置settings文件，在settings.py中添加：</strong></li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import djcelery</span></span><br><span class="line"><span class="comment"># djcelery.setup_loader()</span></span><br><span class="line"></span><br><span class="line">CACHES = &#123;</span><br><span class="line">    <span class="string">"default"</span>: &#123;</span><br><span class="line">        <span class="string">"BACKEND"</span>: <span class="string">"django_redis.cache.RedisCache"</span>,</span><br><span class="line">        <span class="string">"LOCATION"</span>: <span class="string">"redis://127.0.0.1:6379/1"</span>,</span><br><span class="line">        <span class="string">"OPTIONS"</span>: &#123;</span><br><span class="line">           <span class="string">"CLIENT_CLASS"</span>: <span class="string">"django_redis.client.DefaultClient"</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">REDIS_URL = CACHES[<span class="string">'default'</span>][<span class="string">'LOCATION'</span>]</span><br><span class="line">CELERY_BROKER_URL = REDIS_URL</span><br><span class="line">BROKER_URL = REDIS_URL</span><br></pre></td></tr></table></figure>
+<hr>
 <h2 id="使用celery任务"><a href="#使用celery任务" class="headerlink" title="使用celery任务"></a><b>使用celery任务</b></h2><ul>
 <li><strong>创建异步任务</strong><br>在app同级目录下添加一个文件夹，例：service_tasks<br>在文件夹中添加tasks.py文件，内容如下：</li>
 </ul>
@@ -210,6 +212,7 @@
 <li><strong>调用异步任务</strong></li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> service_tasks.tasks <span class="keyword">import</span> add_num</span><br><span class="line">a, b = <span class="number">1</span>, <span class="number">2</span></span><br><span class="line">add_num.delay(a, b)</span><br><span class="line">print(<span class="string">"success"</span>)</span><br></pre></td></tr></table></figure>
+<hr>
 <h2 id="启动celery"><a href="#启动celery" class="headerlink" title="启动celery"></a><b>启动celery</b></h2><ul>
 <li><strong>启动</strong></li>
 </ul>
