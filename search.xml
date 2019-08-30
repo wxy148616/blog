@@ -166,7 +166,7 @@
     
     
     <entry>
-      <title>Django配置celery定时任务</title>
+      <title>Django配置celery任务</title>
       <link href="/2019/08/02/python-celery/"/>
       <url>/2019/08/02/python-celery/</url>
       
