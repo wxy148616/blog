@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="django在migrate的时候报错语法错（django.db.migrations.exceptions.MigrationSchemaMissing: Unable to create the django_migrations table ((1064, You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(6) NOT NULL)' at line 1))）"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/2019/09/04/django-migrate-error/">
+<meta name="description" content="mysql使用source恢复单个表时表被删除"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/09/05/mysql-source-error/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,7 +114,7 @@
       Display();
     }
 </script>
-    <title>django migrate 报错（You have an error in your SQL syntax） - 时光不写博客</title>
+    <title>mysql备份单个表恢复失败 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -182,14 +182,14 @@
         <div class="content-wrapper">
           <div id="content" class="content"><article class="post">
     <header class="post-header">
-      <h1 class="post-title">django migrate 报错（You have an error in your SQL syntax）
+      <h1 class="post-title">mysql备份单个表恢复失败
         </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2019-09-04
+          2019-09-05
         </span><span class="post-category">
-            <a href="/categories/Python/">Python</a>
+            <a href="/categories/mysql/">mysql</a>
             </span>
         </div>
     </header>
@@ -197,17 +197,31 @@
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#django-migrate-报错"><span class="toc-text">django migrate 报错</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决"><span class="toc-text">解决</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#更换Django的版本"><span class="toc-text">更换Django的版本</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#备份数据库"><span class="toc-text">备份数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#恢复数据库"><span class="toc-text">恢复数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决"><span class="toc-text">解决</span></a></li></ol>
     </div>
-  </div><div class="post-content"><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a><span style="color:black"><b>问题</b></span></h2><h3 id="django-migrate-报错"><a href="#django-migrate-报错" class="headerlink" title="django migrate 报错"></a><b>django migrate 报错</b></h3><ul>
-<li>在本地执行的时候发现没问题，到了服务器就不行了，报错</li>
+  </div><div class="post-content"><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a><span style="color:black"><b>问题</b></span></h2><h3 id="备份数据库"><a href="#备份数据库" class="headerlink" title="备份数据库"></a><b>备份数据库</b></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot  -p database_name tab1 &gt; test.sql;   # 远程加 -h</span><br></pre></td></tr></table></figure>
+<h3 id="恢复数据库"><a href="#恢复数据库" class="headerlink" title="恢复数据库"></a><b>恢复数据库</b></h3><ul>
+<li>使用的是source，进入数据库以后</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Operations to perform:</span><br><span class="line">  Apply all migrations: bank_detections</span><br><span class="line">Running migrations:</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"/var/www/bank_detection/venv_bank/lib/python3.5/site-packages/django/db/backends/utils.py"</span>, line <span class="number">82</span>, <span class="keyword">in</span> _execute</span><br><span class="line">    <span class="keyword">return</span> self.cursor.execute(sql)</span><br><span class="line">  File <span class="string">"/var/www/bank_detection/venv_bank/lib/python3.5/site-packages/django/db/backends/mysql/base.py"</span>, line <span class="number">71</span>, <span class="keyword">in</span> execute</span><br><span class="line">    <span class="keyword">return</span> self.cursor.execute(query, args)</span><br><span class="line">  File <span class="string">"/var/www/bank_detection/venv_bank/lib/python3.5/site-packages/MySQLdb/cursors.py"</span>, line <span class="number">206</span>, <span class="keyword">in</span> execute</span><br><span class="line">    res = self._query(query)</span><br><span class="line">  File <span class="string">"/var/www/bank_detection/venv_bank/lib/python3.5/site-packages/MySQLdb/cursors.py"</span>, line <span class="number">312</span>, <span class="keyword">in</span> _query</span><br><span class="line">    db.query(q)</span><br><span class="line">  File <span class="string">"/var/www/bank_detection/venv_bank/lib/python3.5/site-packages/MySQLdb/connections.py"</span>, line <span class="number">224</span>, <span class="keyword">in</span> query</span><br><span class="line">    _mysql.connection.query(self, query)</span><br><span class="line">MySQLdb._exceptions.ProgrammingError: (<span class="number">1064</span>, <span class="string">"You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(6) NOT NULL)' at line 1"</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> database_name;</span><br><span class="line">source test.sql;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>但是失败了，报错，并且tab1表也被删除了</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1146 (42S02): Table &apos;database_name.tab1&apos; doesn&apos;t exist</span><br><span class="line">ERROR 1146 (42S02): Table &apos;database_name.tab1&apos; doesn&apos;t exist</span><br></pre></td></tr></table></figure>
+<ul>
+<li><span style="color:black"><b>注</b></span>：原来是有这个表的，但是在执行source以后表就被删除了</li>
+</ul>
 <hr>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a><span style="color:black"><b>解决</b></span></h2><h3 id="更换Django的版本"><a href="#更换Django的版本" class="headerlink" title="更换Django的版本"></a><b>更换Django的版本</b></h3><ul>
-<li><b>MySQL5.5并不支持Django2.1生成的这种SQL语句，更换Django的版本或者是换MySQL的版本<b></b></b></li>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a><span style="color:black"><b>解决</b></span></h2><ul>
+<li>找了好久都没找到原因，看了一下导出的sql文件，发现是先删除表再创建，然后插入数据，猜测是因为创建的时候失败了，导致没有了表。</li>
+<li>sql文件开头有这样一段：</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install mysqlclient==1.4.2</span><br><span class="line">pip install Django==2.0.5</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for tab1</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`tab1`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`tab1`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_bin <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`phone`</span> <span class="built_in">varchar</span>(<span class="number">11</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_bin <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`address`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_bin <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`create_at`</span> datetime(<span class="number">6</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> AUTO_INCREMENT=<span class="number">15982</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8mb4 <span class="keyword">COLLATE</span>=utf8mb4_bin;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Records of tab1</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>既然创建失败了，那就不去删除了，直接用自己原来的数据表（但是用保证表的结构是一致的）。</li>
+<li>修改sql文件，把上面的两句删掉。</li>
+<li>再执行source，成功！</li>
+</ul>
 <hr>
 
       </div>
@@ -226,17 +240,11 @@
       </div>
   </div><footer class="post-footer">
         <div class="post-tags">
-            <a href="/tags/python/">python</a>
-            <a href="/tags/Django/">Django</a>
+            <a href="/tags/mysql/">mysql</a>
             </div>
         
-        <nav class="post-nav"><a class="prev" href="/2019/09/05/mysql-source-error/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">mysql备份单个表恢复失败</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
-    <a class="next" href="/2019/08/22/linux-alias/">
-        <span class="next-text nav-default">linux配置别名alias</span>
+        <nav class="post-nav"><a class="next" href="/2019/09/04/django-migrate-error/">
+        <span class="next-text nav-default">django migrate 报错（You have an error in your SQL syntax）</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
