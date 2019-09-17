@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="个人博客，持续更新自己遇到的各种问题和解决方法，包括python后端，html前端等个人开发笔记"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/archives/2019/page/5/">
+<meta name="description" content="mac卸载应用后处理残留文件,以PyCharm为例"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/09/16/mac-uninstall-app/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,8 +114,7 @@
       Display();
     }
 </script>
-    <title>归档 - 时光不写博客
-  </title>
+    <title>mac彻底卸载应用 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -181,118 +180,63 @@
 
       <main id="main" class="main">
         <div class="content-wrapper">
-          <div id="content" class="content"><section id="archive" class="archive"><div class="collection-title">
-            <h2 class="archive-year">2019</h2>
-          </div>
-        <div class="archive-post">
-        <span class="archive-post-time">
-          05-14
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/14/解决No-space-left-on-device/" class="archive-post-link">
-            解决:Failed to add /run/systemd/ask-password to directory watch:No space left on device
-          </a>
-        </span>
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">mac彻底卸载应用
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-09-16
+        </span><span class="post-category">
+            <a href="/categories/mac/">mac</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#卸载应用"><span class="toc-text">卸载应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#清除残留数据"><span class="toc-text">清除残留数据</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><h2 id="卸载应用"><a href="#卸载应用" class="headerlink" title="卸载应用"></a><span style="color:black"><b>卸载应用</b></span></h2><ul>
+<li>以PyCharm为例</li>
+<li>打开访达，找到PyCharm应用，移到废纸篓；</li>
+</ul>
+<hr>
+<h2 id="清除残留数据"><a href="#清除残留数据" class="headerlink" title="清除残留数据"></a><span style="color:black"><b>清除残留数据</b></span></h2><ul>
+<li>清理缓存，参数，日志相关配置文件，示例文件名：PyCharm2019.2</li>
+<li>打开终端依次执行下列命令</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd ~/Library/Preferences/           </span><br><span class="line">rm -rf PyCharm2019.2/         </span><br><span class="line">cd ~/Library/Logs</span><br><span class="line">rm -rf PyCharm2019.2/</span><br><span class="line">cd ~/Library/Application\ Support/</span><br><span class="line">rm -rf PyCharm2019.2/</span><br><span class="line">cd ~/Library/Caches/</span><br><span class="line">rm -rf PyCharm2019.2/</span><br></pre></td></tr></table></figure>
+<hr>
+
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-13
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/13/python-list元素移动/" class="archive-post-link">
-            Python list元素移动
-          </a>
-        </span>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-12
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/12/python四舍五入/" class="archive-post-link">
-            Python四舍五入保留两位小数
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-11
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/11/终端ssh登录/" class="archive-post-link">
-            终端配置ssh秘钥登录
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-10
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/10/django-日志/" class="archive-post-link">
-            Django-日志
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-09
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/09/django-部署/" class="archive-post-link">
-            Django项目部署
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-08
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/08/git钩子/" class="archive-post-link">
-            git钩子自动更新服务器代码
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-07
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/07/ab压力测试-入门/" class="archive-post-link">
-            ab压力测试(入门)
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-06
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/06/python处理合并单元格/" class="archive-post-link">
-            Python处理excel合并单元格
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-05
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/05/Linux部署图片/" class="archive-post-link">
-            Linux服务器Nginx部署图片
-          </a>
-        </span>
-      </div>
-    </section><nav class="pagination"><a class="prev" href="/archives/2019/page/4/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
-    <a class="next" href="/archives/2019/page/6/">
-        <span class="next-text">下一页</span>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/mac/">mac</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/09/05/mysql-source-error/">
+        <span class="next-text nav-default">mysql备份单个表恢复失败</span>
+        <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
-    </nav></div></div>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.wxy.email/2019/09/16/mac-uninstall-app/</loc>
+    
+    <lastmod>2019-09-17T09:26:41.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2019/05/28/selenium/</loc>
     
     <lastmod>2019-09-09T09:01:36.000Z</lastmod>
@@ -128,14 +135,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
+    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
     
     <lastmod>2019-08-29T11:32:10.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
+    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
     
     <lastmod>2019-08-29T11:32:10.000Z</lastmod>
     
