@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>sublime text3 for mac安装,配置Python3环境</title>
+      <link href="/2019/09/22/sublime/"/>
+      <url>/2019/09/22/sublime/</url>
+      
+        <content type="html"><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><span style="color:black"><b>安装</b></span></h2><h3 id="安装sublime-Text3"><a href="#安装sublime-Text3" class="headerlink" title="安装sublime Text3"></a><b>安装sublime Text3</b></h3><ul><li>安装就不多说了,有钱去<a href="https://www.sublimetext.com/" rel="external nofollow noopener noreferrer" target="_blank">官网</a>,没钱去百度,实在找不到可以联系下面的邮箱<h3 id="安装中文包插件"><a href="#安装中文包插件" class="headerlink" title="安装中文包插件"></a><b>安装中文包插件</b></h3></li><li>首先需要安装<code>package control</code></li><li>使用快捷键<code>Shift+Ctrl+p</code>,会出现一个输入框, 输入<code>package control</code>, 会出现一系列的选项,选择<code>Package Control:Install Package</code>,</li><li>下边框会出现<code>Loading [  ==]</code>的字样, 随后会出现一个输入框,就可以自己安装插件了.</li><li>输入中文包插件<code>localized</code>, 会出现一些选项,不出意外第一个就是的,名字为<code>LocalizedMenu</code>,点击安装就可以了.</li></ul><hr><h2 id="配置Python3环境"><a href="#配置Python3环境" class="headerlink" title="配置Python3环境"></a><span style="color:black"><b>配置Python3环境</b></span></h2><h3 id="新增编译环境"><a href="#新增编译环境" class="headerlink" title="新增编译环境"></a><b>新增编译环境</b></h3><ul><li>点击<code>Tools(工具) --&gt; Build System(编译系统) --&gt; New Build System(新建编译系统)</code></li><li>会出现一个文件名为<code>untitled.sublime-build</code>,更改文件内容.</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="string">"cmd"</span>: [<span class="string">"/Users/root/Desktop/MyProject/my_venv/bin/python3"</span>, <span class="string">"-u"</span>, <span class="string">"$file"</span>],</span><br><span class="line"><span class="string">"file_regex"</span>: <span class="string">"^[ ]*File \"(...*?)\", line ([0-9]*)"</span>,</span><br><span class="line"><span class="string">"selector"</span>: <span class="string">"source.python"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>保存文件, 更名为<code>Python3.sublime-build</code>.</li><li><span style="color:black"><b>注意</b></span>: 文件中的路径为自己的Python3路径<h3 id="使用新增的Python环境"><a href="#使用新增的Python环境" class="headerlink" title="使用新增的Python环境"></a><b>使用新增的Python环境</b></h3></li><li>选择环境: <code>Tools(工具) --&gt; Build System(编译系统) --&gt; Python3(就是自己刚刚新增的那个)</code></li></ul><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工具 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 汉化 </tag>
+            
+            <tag> 开发工具 </tag>
+            
+            <tag> 工具 </tag>
+            
+            <tag> mac </tag>
+            
+            <tag> sublime </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>mac彻底卸载应用</title>
       <link href="/2019/09/16/mac-uninstall-app/"/>
       <url>/2019/09/16/mac-uninstall-app/</url>
@@ -504,14 +537,14 @@
       
       <categories>
           
-          <category> 资源 </category>
+          <category> 工具 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 学习 </tag>
+            <tag> 工具 </tag>
             
             <tag> Alfred </tag>
             
@@ -791,14 +824,18 @@
       
       <categories>
           
-          <category> 资源 </category>
+          <category> 工具 </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> IDE </tag>
+            <tag> 汉化 </tag>
+            
+            <tag> 开发工具 </tag>
+            
+            <tag> 工具 </tag>
             
         </tags>
       
