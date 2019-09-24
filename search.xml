@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Python列表统计重复元素</title>
+      <link href="/2019/09/23/list-repeat/"/>
+      <url>/2019/09/23/list-repeat/</url>
+      
+        <content type="html"><![CDATA[<h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a><span style="color:black"><b>方法一</b></span></h2><h3 id="使用list的内置方法list-count"><a href="#使用list的内置方法list-count" class="headerlink" title="使用list的内置方法list.count()"></a><b>使用list的内置方法<code>list.count()</code></b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">l = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">sl = set(l)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> sl:</span><br><span class="line">    <span class="keyword">if</span> l.count(i) &gt; <span class="number">1</span>:</span><br><span class="line">        print(<span class="string">"元素&#123;&#125;,重复&#123;&#125;次"</span>.format(i, l.count(i)))</span><br></pre></td></tr></table></figure><hr><h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a><span style="color:black"><b>方法二</b></span></h2><h3 id="使用python内置方法collections的Count-模块"><a href="#使用python内置方法collections的Count-模块" class="headerlink" title="使用python内置方法collections的Count()模块"></a><b>使用python内置方法<code>collections的Count()</code>模块</b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line">l = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">cl = Counter(l)</span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> cl.items():</span><br><span class="line">    <span class="keyword">if</span> v &gt; <span class="number">1</span>:</span><br><span class="line">        print(<span class="string">"元素&#123;&#125;, 重复&#123;&#125;次"</span>.format(k, v))</span><br></pre></td></tr></table></figure><hr><h2 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a><span style="color:black"><b>方法三</b></span></h2><h3 id="使用for循环"><a href="#使用for循环" class="headerlink" title="使用for循环"></a><b>使用<code>for循环</code></b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">l = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">sl = set(l)</span><br><span class="line">d = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> sl:</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> l:</span><br><span class="line">        <span class="keyword">if</span> i == s:</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            d[s] = count</span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> d.items():</span><br><span class="line">    <span class="keyword">if</span> v &gt; <span class="number">1</span>:</span><br><span class="line">        print(<span class="string">"元素&#123;&#125;, 重复&#123;&#125;次"</span>.format(k, v))</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>sublime text3 for mac安装,配置Python3环境</title>
       <link href="/2019/09/22/sublime/"/>
       <url>/2019/09/22/sublime/</url>
@@ -761,33 +786,6 @@
     
     
     <entry>
-      <title>from lxml import etree</title>
-      <link href="/2019/06/04/ElementTree-tostring/"/>
-      <url>/2019/06/04/ElementTree-tostring/</url>
-      
-        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><hr><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><hr><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><hr><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Python </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> python </tag>
-            
-            <tag> 爬虫 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Python写入InfluxDB</title>
       <link href="/2019/06/04/influxdb/"/>
       <url>/2019/06/04/influxdb/</url>
@@ -807,6 +805,33 @@
             <tag> python </tag>
             
             <tag> InfluxDB </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>from lxml import etree</title>
+      <link href="/2019/06/04/ElementTree-tostring/"/>
+      <url>/2019/06/04/ElementTree-tostring/</url>
+      
+        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><hr><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><hr><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><hr><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> 爬虫 </tag>
             
         </tags>
       

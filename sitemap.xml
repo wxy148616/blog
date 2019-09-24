@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.wxy.email/2019/09/23/list-repeat/</loc>
+    
+    <lastmod>2019-09-24T13:12:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2019/09/22/sublime/</loc>
     
     <lastmod>2019-09-23T10:02:27.000Z</lastmod>
@@ -149,14 +156,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
+    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
     
     <lastmod>2019-08-29T11:32:10.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
+    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
     
     <lastmod>2019-08-29T11:32:10.000Z</lastmod>
     

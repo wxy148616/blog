@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="个人博客，持续更新自己遇到的各种问题和解决方法，包括python后端，html前端等个人开发笔记"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/archives/page/2/">
+<meta name="description" content="Python列表查找重复元素的几种方法"><meta name="keywords" content="Python博客,数据分析,LeetCode题解"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/09/23/list-repeat/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,8 +114,7 @@
       Display();
     }
 </script>
-    <title>归档 - 时光不写博客
-  </title>
+    <title>Python列表统计重复元素 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -181,118 +180,56 @@
 
       <main id="main" class="main">
         <div class="content-wrapper">
-          <div id="content" class="content"><section id="archive" class="archive"><div class="collection-title">
-            <h2 class="archive-year">2019</h2>
-          </div>
-        <div class="archive-post">
-        <span class="archive-post-time">
-          08-05
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/08/05/selenium-sliding-block/" class="archive-post-link">
-            selenium+chromedriver普通滑块验证
-          </a>
-        </span>
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Python列表统计重复元素
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-09-23
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方法一"><span class="toc-text">方法一</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用list的内置方法list-count"><span class="toc-text">使用list的内置方法list.count()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法二"><span class="toc-text">方法二</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用python内置方法collections的Count-模块"><span class="toc-text">使用python内置方法collections的Count()模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法三"><span class="toc-text">方法三</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用for循环"><span class="toc-text">使用for循环</span></a></li></ol></li></ol>
+    </div>
+  </div><div class="post-content"><h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a><span style="color:black"><b>方法一</b></span></h2><h3 id="使用list的内置方法list-count"><a href="#使用list的内置方法list-count" class="headerlink" title="使用list的内置方法list.count()"></a><b>使用list的内置方法<code>list.count()</code></b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">l = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">sl = set(l)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> sl:</span><br><span class="line">    <span class="keyword">if</span> l.count(i) &gt; <span class="number">1</span>:</span><br><span class="line">        print(<span class="string">"元素&#123;&#125;,重复&#123;&#125;次"</span>.format(i, l.count(i)))</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a><span style="color:black"><b>方法二</b></span></h2><h3 id="使用python内置方法collections的Count-模块"><a href="#使用python内置方法collections的Count-模块" class="headerlink" title="使用python内置方法collections的Count()模块"></a><b>使用python内置方法<code>collections的Count()</code>模块</b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line">l = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">cl = Counter(l)</span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> cl.items():</span><br><span class="line">    <span class="keyword">if</span> v &gt; <span class="number">1</span>:</span><br><span class="line">        print(<span class="string">"元素&#123;&#125;, 重复&#123;&#125;次"</span>.format(k, v))</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a><span style="color:black"><b>方法三</b></span></h2><h3 id="使用for循环"><a href="#使用for循环" class="headerlink" title="使用for循环"></a><b>使用<code>for循环</code></b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">l = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">sl = set(l)</span><br><span class="line">d = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> sl:</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> l:</span><br><span class="line">        <span class="keyword">if</span> i == s:</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            d[s] = count</span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> d.items():</span><br><span class="line">    <span class="keyword">if</span> v &gt; <span class="number">1</span>:</span><br><span class="line">        print(<span class="string">"元素&#123;&#125;, 重复&#123;&#125;次"</span>.format(k, v))</span><br></pre></td></tr></table></figure>
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          08-02
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/08/02/python-celery/" class="archive-post-link">
-            Django配置celery任务
-          </a>
-        </span>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          08-01
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/08/01/stringtodict/" class="archive-post-link">
-            python字符串转字典
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          07-25
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/25/print-filename/" class="archive-post-link">
-            打印不合法的文件名
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          07-22
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/22/uwsgi-error/" class="archive-post-link">
-            nginx+uwsgi:uwsgi_response_write_body_do
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          07-19
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/19/pip-error/" class="archive-post-link">
-            pipBUG：Traceback(most recent call last):File"/usr/bin/pip",line9
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          07-19
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/19/dpkg-error/" class="archive-post-link">
-            dpkg 被中断、sudo apt-get upgrade失败
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          07-19
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/19/ubuntu-messy-code/" class="archive-post-link">
-            ubuntu 服务器中文乱码
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          07-18
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/18/influxdb-back/" class="archive-post-link">
-            influxdb备份和恢复数据
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          07-09
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/07/09/drf-error/" class="archive-post-link">
-            DRF This field may not be null, This field cannot be blank
-          </a>
-        </span>
-      </div>
-    </section><nav class="pagination"><a class="prev" href="/archives/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
-    <a class="next" href="/archives/page/3/">
-        <span class="next-text">下一页</span>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/python/">python</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/09/22/sublime/">
+        <span class="next-text nav-default">sublime text3 for mac安装,配置Python3环境</span>
+        <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
-    </nav></div></div>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">
