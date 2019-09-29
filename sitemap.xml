@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.wxy.email/2019/09/28/wordpress/</loc>
+    
+    <lastmod>2019-09-29T07:19:25.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2019/09/28/Linux-LNMP/</loc>
     
     <lastmod>2019-09-29T03:06:46.000Z</lastmod>
@@ -219,14 +226,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/06/25/nginx-rewrite/</loc>
+    <loc>https://www.wxy.email/2019/08/12/python-methodfield/</loc>
     
     <lastmod>2019-08-29T11:32:09.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/08/12/python-methodfield/</loc>
+    <loc>https://www.wxy.email/2019/06/25/nginx-rewrite/</loc>
     
     <lastmod>2019-08-29T11:32:09.000Z</lastmod>
     
