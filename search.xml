@@ -22,9 +22,9 @@
             
             <tag> Linux </tag>
             
-            <tag> WordPress </tag>
-            
             <tag> 建站 </tag>
+            
+            <tag> WordPress </tag>
             
         </tags>
       
@@ -550,9 +550,9 @@
             
             <tag> Linux </tag>
             
-            <tag> ubuntu </tag>
-            
             <tag> 建站 </tag>
+            
+            <tag> ubuntu </tag>
             
         </tags>
       
@@ -617,7 +617,7 @@
       <link href="/2019/07/08/urllib-error/"/>
       <url>/2019/07/08/urllib-error/</url>
       
-        <content type="html"><![CDATA[<ul><li>python3的urllib包有了一些更新，在使用的时候要注意一下</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line">urllib.request.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure><ul><li>这样使用会报错</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: module <span class="string">'urllib'</span> has no attribute <span class="string">'request'</span></span><br></pre></td></tr></table></figure><ul><li>因为在python3中<code>urllib.request</code>成为了一个独立的包, 所以在导入的时候要改为</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib.request <span class="keyword">as</span> ur</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line">ur.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure><h2 id="其他下载文件方法"><a href="#其他下载文件方法" class="headerlink" title="其他下载文件方法"></a>其他下载文件方法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">headers = &#123;<span class="string">'Content-Type'</span>: <span class="string">"application/json"</span>&#125;</span><br><span class="line">r = requests.request(<span class="string">"GET"</span>, url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"download_file.xls"</span>, <span class="string">"wb"</span>) <span class="keyword">as</span> code:</span><br><span class="line">    code.write(r.content)</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<ul><li>python3的urllib包有了一些更新，在使用的时候要注意一下</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line">urllib.request.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure><ul><li>这样使用会报错</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: module <span class="string">'urllib'</span> has no attribute <span class="string">'request'</span></span><br></pre></td></tr></table></figure><ul><li>因为在python3中<code>urllib.request</code>成为了一个独立的包, 所以在导入的时候要改为</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> urllib.request <span class="keyword">as</span> ur</span><br><span class="line">url = <span class="string">""</span></span><br><span class="line">file = <span class="string">"&#123;&#125;.pdf"</span>.format(<span class="string">'download_file'</span>)</span><br><span class="line">save_path = os.path.join(<span class="string">'/Users/Desktop/'</span>, file)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加headers</span></span><br><span class="line">headers = [</span><br><span class="line">        (<span class="string">'Content-Type'</span>, <span class="string">'application/x-www-form-urlencoded'</span>),</span><br><span class="line">        (<span class="string">"user-agent"</span>, <span class="string">"212313132131514654"</span>)</span><br><span class="line">    ]</span><br><span class="line">opener = ur.build_opener()</span><br><span class="line">opener.addheaders = headers</span><br><span class="line">ur.install_opener(opener)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载保存</span></span><br><span class="line">ur.urlretrieve(url, save_path)</span><br></pre></td></tr></table></figure><h2 id="其他下载文件方法"><a href="#其他下载文件方法" class="headerlink" title="其他下载文件方法"></a>其他下载文件方法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">headers = &#123;<span class="string">'Content-Type'</span>: <span class="string">"application/json"</span>&#125;</span><br><span class="line">r = requests.request(<span class="string">"GET"</span>, url, headers=headers)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"download_file.xls"</span>, <span class="string">"wb"</span>) <span class="keyword">as</span> code:</span><br><span class="line">    code.write(r.content)</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -696,7 +696,7 @@
       <link href="/2019/07/01/call-Django-models/"/>
       <url>/2019/07/01/call-Django-models/</url>
       
-        <content type="html"><![CDATA[<h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a><b>前提条件</b></h3><p>需要独立的文件和models、views在同一级目录，不然会报错</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django.core.exceptions.AppRegistryNotReady: Apps aren<span class="string">'t loaded yet.</span></span><br></pre></td></tr></table></figure><p>如果不在同一级目录，也可以自己调整，需要加上路径</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys.path.append(<span class="string">"../"</span>)</span><br></pre></td></tr></table></figure><h3 id="调用方法"><a href="#调用方法" class="headerlink" title="调用方法"></a><b>调用方法</b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="comment"># sys.path.append("../")</span></span><br><span class="line">os.environ[<span class="string">'DJANGO_SETTINGS_MODULE'</span>] = <span class="string">'mysite.settings'</span> <span class="comment"># 配置文件</span></span><br><span class="line"><span class="keyword">import</span> django</span><br><span class="line">django.setup()</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> app.models.user <span class="keyword">import</span> User</span><br><span class="line">user = User.objects.filter(id=<span class="number">1</span>)</span><br><span class="line">print(user)</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a><b>前提条件</b></h3><p>需要独立的文件和models、views在同一级目录，不然会报错</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django.core.exceptions.AppRegistryNotReady: Apps aren<span class="string">'t loaded yet.</span></span><br></pre></td></tr></table></figure><p>如果不在同一级目录，也可以自己调整，需要加上路径</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys.path.append(<span class="string">"../"</span>)</span><br></pre></td></tr></table></figure><h3 id="调用方法p"><a href="#调用方法p" class="headerlink" title="调用方法p"></a><b>调用方法p</b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="comment"># sys.path.append("../")</span></span><br><span class="line">os.environ[<span class="string">'DJANGO_SETTINGS_MODULE'</span>] = <span class="string">'mysite.settings'</span> <span class="comment"># 配置文件</span></span><br><span class="line"><span class="keyword">import</span> django</span><br><span class="line">django.setup()</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> app.models.user <span class="keyword">import</span> User</span><br><span class="line">user = User.objects.filter(id=<span class="number">1</span>)</span><br><span class="line">print(user)</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -758,9 +758,9 @@
       
         <tags>
             
-            <tag> 项目部署 </tag>
-            
             <tag> 建站 </tag>
+            
+            <tag> 项目部署 </tag>
             
         </tags>
       
@@ -873,33 +873,6 @@
     
     
     <entry>
-      <title>from lxml import etree</title>
-      <link href="/2019/06/04/ElementTree-tostring/"/>
-      <url>/2019/06/04/ElementTree-tostring/</url>
-      
-        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><hr><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><hr><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><hr><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Python </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> python </tag>
-            
-            <tag> 爬虫 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Python写入InfluxDB</title>
       <link href="/2019/06/04/influxdb/"/>
       <url>/2019/06/04/influxdb/</url>
@@ -919,6 +892,33 @@
             <tag> python </tag>
             
             <tag> InfluxDB </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>from lxml import etree</title>
+      <link href="/2019/06/04/ElementTree-tostring/"/>
+      <url>/2019/06/04/ElementTree-tostring/</url>
+      
+        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><hr><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><hr><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><hr><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> 爬虫 </tag>
             
         </tags>
       
@@ -1434,9 +1434,9 @@
       
         <tags>
             
-            <tag> 项目部署 </tag>
-            
             <tag> 建站 </tag>
+            
+            <tag> 项目部署 </tag>
             
         </tags>
       
@@ -1511,9 +1511,9 @@
       
         <tags>
             
-            <tag> 项目部署 </tag>
-            
             <tag> 建站 </tag>
+            
+            <tag> 项目部署 </tag>
             
         </tags>
       
@@ -1665,11 +1665,11 @@
       
         <tags>
             
+            <tag> 建站 </tag>
+            
             <tag> 项目部署 </tag>
             
             <tag> hexo </tag>
-            
-            <tag> 建站 </tag>
             
         </tags>
       
@@ -1694,9 +1694,9 @@
       
         <tags>
             
-            <tag> hexo </tag>
-            
             <tag> 建站 </tag>
+            
+            <tag> hexo </tag>
             
         </tags>
       
@@ -1708,9 +1708,9 @@
     
     
     <entry>
-      <title>分类</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -1719,9 +1719,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>分类</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
