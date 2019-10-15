@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="个人博客，持续更新自己遇到的各种问题和解决方法，包括python，html等个人开发笔记"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/archives/">
+<meta name="description" content="Django ORM使用filter对日期数据进行月份筛选的时候查不到数据"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/10/14/django-filter-month/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,8 +114,7 @@
       Display();
     }
 </script>
-    <title>归档 - 时光不写博客
-  </title>
+    <title>django filter筛选月份没有数据 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -181,119 +180,90 @@
 
       <main id="main" class="main">
         <div class="content-wrapper">
-          <div id="content" class="content"><section id="archive" class="archive"><div class="archive-title">
-          <span class="archive-post-counter">
-            目前共计 66 篇日志
-          </span>
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">django filter筛选月份没有数据
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-10-14
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
         </div>
-      <div class="collection-title">
-            <h2 class="archive-year">2019</h2>
-          </div>
-        <div class="archive-post">
-        <span class="archive-post-time">
-          10-14
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/10/14/django-filter-month/" class="archive-post-link">
-            django filter筛选月份没有数据
-          </a>
-        </span>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#时间筛选方式"><span class="toc-text">时间筛选方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#直接使用-year、-month、-day、-week-day"><span class="toc-text">直接使用__year、__month、__day、__week_day</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用lt、gt范围"><span class="toc-text">使用lt、gt范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-range范围"><span class="toc-text">使用__range范围</span></a></li></ol></li></ol>
+    </div>
+  </div><div class="post-content"><h2 id="时间筛选方式"><a href="#时间筛选方式" class="headerlink" title="时间筛选方式"></a><span style="color:black"><b>时间筛选方式</b></span></h2><h3 id="直接使用-year、-month、-day、-week-day"><a href="#直接使用-year、-month、-day、-week-day" class="headerlink" title="直接使用__year、__month、__day、__week_day"></a><b>直接使用<code>__year、__month、__day、__week_day</code></b></h3><ul>
+<li>年</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__year=<span class="number">2019</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>月</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__month=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>日</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__day=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>星期几</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__week_day=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在使用<code>start_time__month</code>进行筛选的时候可能会查不到数据，所以为了保险起见，还是多了解几种查询方式比较好。</li>
+</ul>
+<h3 id="使用lt、gt范围"><a href="#使用lt、gt范围" class="headerlink" title="使用lt、gt范围"></a><b>使用<strong>lt、</strong>gt范围</b></h3><ul>
+<li>大于</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line">now = datetime.datetime.now()</span><br><span class="line">User.object.filter(start_time__gt=now)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>大于等于</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__gte=now)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>小于</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__lt=now)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>小于等于</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__lte=now)</span><br></pre></td></tr></table></figure>
+<h3 id="使用-range范围"><a href="#使用-range范围" class="headerlink" title="使用__range范围"></a><b>使用__range范围</b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> calendar</span><br><span class="line">now = datetime.datetime.now()</span><br><span class="line"><span class="comment"># 获取一个月的总天数</span></span><br><span class="line">days = calendar.monthrange(now.year, now.month)[<span class="number">1</span>]</span><br><span class="line">start_ = datetime.date(now.year, now.month, <span class="number">1</span>)</span><br><span class="line">end_ = datetime.date(now.year, now.month, days)</span><br><span class="line"></span><br><span class="line">User.object.filter(start_time__range=(start_, end_))</span><br></pre></td></tr></table></figure>
+<hr>
+
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          09-28
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/09/28/wordpress/" class="archive-post-link">
-            Linux服务器安装WordPress
-          </a>
-        </span>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          09-28
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/09/28/Linux-LNMP/" class="archive-post-link">
-            Linux一键安装LNMP环境
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          09-26
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/09/26/bbr/" class="archive-post-link">
-            为服务器开启BBR加速
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          09-23
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/09/23/list-repeat/" class="archive-post-link">
-            Python列表统计重复元素
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          09-22
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/09/22/sublime/" class="archive-post-link">
-            sublime text3 for mac安装,配置Python3环境
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          09-16
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/09/16/mac-uninstall-app/" class="archive-post-link">
-            mac彻底卸载应用
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          09-05
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/09/05/mysql-source-error/" class="archive-post-link">
-            mysql备份单个表恢复失败
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          09-04
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/09/04/django-migrate-error/" class="archive-post-link">
-            django migrate 报错（You have an error in your SQL syntax）
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          08-22
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/08/22/linux-alias/" class="archive-post-link">
-            linux配置别名alias
-          </a>
-        </span>
-      </div>
-    </section><nav class="pagination"><a class="next" href="/archives/page/2/">
-        <span class="next-text">下一页</span>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/python/">python</a>
+            <a href="/tags/Django/">Django</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/09/28/wordpress/">
+        <span class="next-text nav-default">Linux服务器安装WordPress</span>
+        <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
-    </nav></div></div>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">

@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>django filter筛选月份没有数据</title>
+      <link href="/2019/10/14/django-filter-month/"/>
+      <url>/2019/10/14/django-filter-month/</url>
+      
+        <content type="html"><![CDATA[<h2 id="时间筛选方式"><a href="#时间筛选方式" class="headerlink" title="时间筛选方式"></a><span style="color:black"><b>时间筛选方式</b></span></h2><h3 id="直接使用-year、-month、-day、-week-day"><a href="#直接使用-year、-month、-day、-week-day" class="headerlink" title="直接使用__year、__month、__day、__week_day"></a><b>直接使用<code>__year、__month、__day、__week_day</code></b></h3><ul><li>年</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__year=<span class="number">2019</span>)</span><br></pre></td></tr></table></figure><ul><li>月</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__month=<span class="number">10</span>)</span><br></pre></td></tr></table></figure><ul><li>日</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__day=<span class="number">10</span>)</span><br></pre></td></tr></table></figure><ul><li>星期几</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__week_day=<span class="number">1</span>)</span><br></pre></td></tr></table></figure><ul><li>在使用<code>start_time__month</code>进行筛选的时候可能会查不到数据，所以为了保险起见，还是多了解几种查询方式比较好。</li></ul><h3 id="使用lt、gt范围"><a href="#使用lt、gt范围" class="headerlink" title="使用lt、gt范围"></a><b>使用<strong>lt、</strong>gt范围</b></h3><ul><li>大于</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line">now = datetime.datetime.now()</span><br><span class="line">User.object.filter(start_time__gt=now)</span><br></pre></td></tr></table></figure><ul><li>大于等于</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__gte=now)</span><br></pre></td></tr></table></figure><ul><li>小于</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__lt=now)</span><br></pre></td></tr></table></figure><ul><li>小于等于</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__lte=now)</span><br></pre></td></tr></table></figure><h3 id="使用-range范围"><a href="#使用-range范围" class="headerlink" title="使用__range范围"></a><b>使用__range范围</b></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> calendar</span><br><span class="line">now = datetime.datetime.now()</span><br><span class="line"><span class="comment"># 获取一个月的总天数</span></span><br><span class="line">days = calendar.monthrange(now.year, now.month)[<span class="number">1</span>]</span><br><span class="line">start_ = datetime.date(now.year, now.month, <span class="number">1</span>)</span><br><span class="line">end_ = datetime.date(now.year, now.month, days)</span><br><span class="line"></span><br><span class="line">User.object.filter(start_time__range=(start_, end_))</span><br></pre></td></tr></table></figure><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> Django </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Linux服务器安装WordPress</title>
       <link href="/2019/09/28/wordpress/"/>
       <url>/2019/09/28/wordpress/</url>
@@ -1330,9 +1357,9 @@
             
             <tag> python </tag>
             
-            <tag> 项目部署 </tag>
-            
             <tag> Django </tag>
+            
+            <tag> 项目部署 </tag>
             
         </tags>
       
