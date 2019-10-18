@@ -197,9 +197,20 @@
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#时间筛选方式"><span class="toc-text">时间筛选方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#直接使用-year、-month、-day、-week-day"><span class="toc-text">直接使用__year、__month、__day、__week_day</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用lt、gt范围"><span class="toc-text">使用lt、gt范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-range范围"><span class="toc-text">使用__range范围</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#处理方法"><span class="toc-text">处理方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间筛选方式"><span class="toc-text">时间筛选方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#直接使用-year、-month、-day、-week-day"><span class="toc-text">直接使用__year、__month、__day、__week_day</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用lt、gt范围"><span class="toc-text">使用lt、gt范围</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-range范围"><span class="toc-text">使用__range范围</span></a></li></ol></li></ol>
     </div>
-  </div><div class="post-content"><h2 id="时间筛选方式"><a href="#时间筛选方式" class="headerlink" title="时间筛选方式"></a><span style="color:black"><b>时间筛选方式</b></span></h2><h3 id="直接使用-year、-month、-day、-week-day"><a href="#直接使用-year、-month、-day、-week-day" class="headerlink" title="直接使用__year、__month、__day、__week_day"></a><b>直接使用<code>__year、__month、__day、__week_day</code></b></h3><ul>
+  </div><div class="post-content"><h2 id="处理方法"><a href="#处理方法" class="headerlink" title="处理方法"></a><span style="color:black"><b>处理方法</b></span></h2><ul>
+<li>原因<a href="https://dev.mysql.com/doc/refman/5.6/en/time-zone-support.html#time-zone-installation" rel="external nofollow noopener noreferrer" target="_blank">MySQL官网</a>有解释<blockquote>
+<p>MySQL安装过程会创建时区表，但默认是不加载的，需要自己手动加载。<br>加载时区信息不一定是一次性操作，因为该信息会偶尔更改。发生此类更改时，使用旧规则的应用程序将过时，您可能会发现有必要重新加载时区表，以使MySQL服务器使用的信息保持最新。</p>
+</blockquote>
+</li>
+<li>解决方法</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root -p mysql</span><br></pre></td></tr></table></figure>
+<ul>
+<li>为了保险起见，还是多了解几种查询方式比较好。</li>
+</ul>
+<h2 id="时间筛选方式"><a href="#时间筛选方式" class="headerlink" title="时间筛选方式"></a><span style="color:black"><b>时间筛选方式</b></span></h2><h3 id="直接使用-year、-month、-day、-week-day"><a href="#直接使用-year、-month、-day、-week-day" class="headerlink" title="直接使用__year、__month、__day、__week_day"></a><b>直接使用<code>__year、__month、__day、__week_day</code></b></h3><ul>
 <li>年</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__year=<span class="number">2019</span>)</span><br></pre></td></tr></table></figure>
@@ -215,9 +226,6 @@
 <li>星期几</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.object.filter(start_time__week_day=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>在使用<code>start_time__month</code>进行筛选的时候可能会查不到数据，所以为了保险起见，还是多了解几种查询方式比较好。</li>
-</ul>
 <h3 id="使用lt、gt范围"><a href="#使用lt、gt范围" class="headerlink" title="使用lt、gt范围"></a><b>使用<strong>lt、</strong>gt范围</b></h3><ul>
 <li>大于</li>
 </ul>
@@ -255,6 +263,7 @@
         <div class="post-tags">
             <a href="/tags/python/">python</a>
             <a href="/tags/Django/">Django</a>
+            <a href="/tags/mysql/">mysql</a>
             </div>
         
         <nav class="post-nav"><a class="next" href="/2019/09/28/wordpress/">
