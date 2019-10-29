@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>DRF修改权限、用户认证方式</title>
+      <link href="/2019/10/29/drf-permission/"/>
+      <url>/2019/10/29/drf-permission/</url>
+      
+        <content type="html"><![CDATA[<h3 id="修改权限、用户认证方式"><a href="#修改权限、用户认证方式" class="headerlink" title="修改权限、用户认证方式"></a><b>修改权限、用户认证方式</b></h3><ul><li>在settings中全局配置</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">'DEFAULT_AUTHENTICATION_CLASSES'</span>: [</span><br><span class="line">        <span class="string">'rest_framework.authentication.BasicAuthentication'</span>,</span><br><span class="line">        <span class="string">'rest_framework.authentication.SessionAuthentication'</span>,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>基于每个视图集进行配置</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.authentication <span class="keyword">import</span> SessionAuthentication, BasicAuthentication</span><br><span class="line"><span class="keyword">from</span> rest_framework.permissions <span class="keyword">import</span> IsAuthenticated</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    authentication_classes = [SessionAuthentication, BasicAuthentication]</span><br><span class="line">    permission_classes = [IsAuthenticated]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, format=None)</span>:</span></span><br><span class="line">        content = &#123;</span><br><span class="line">            <span class="string">'user'</span>: unicode(request.user),  <span class="comment"># `django.contrib.auth.User` instance.</span></span><br><span class="line">            <span class="string">'auth'</span>: unicode(request.auth),  <span class="comment"># None</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response(content)</span><br></pre></td></tr></table></figure><ul><li>配合<code>@api_view</code>装饰器基于函数一起使用</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.decorators <span class="keyword">import</span> permission_classes, authentication_classes</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleView</span><span class="params">(APIView)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @api_view(['GET'])</span></span><br><span class="line"><span class="meta">    @authentication_classes([SessionAuthentication, BasicAuthentication])</span></span><br><span class="line"><span class="meta">    @permission_classes([IsAuthenticated])</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">example_view</span><span class="params">(request, format=None)</span>:</span></span><br><span class="line">        content = &#123;</span><br><span class="line">            <span class="string">'user'</span>: unicode(request.user),  <span class="comment"># `django.contrib.auth.User` instance.</span></span><br><span class="line">            <span class="string">'auth'</span>: unicode(request.auth),  <span class="comment"># None</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response(content)</span><br></pre></td></tr></table></figure><ul><li>配合<code>@action</code>装饰器基于函数一起使用</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleView</span><span class="params">(APIView)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @action(methods=['get'], detail=False, url_path='url', url_name='url', permission_classes=(IsAuthenticated,), authentication_classes=(SessionAuthentication, BasicAuthentication))</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">example_view</span><span class="params">(request, format=None)</span>:</span></span><br><span class="line">        content = &#123;</span><br><span class="line">            <span class="string">'user'</span>: unicode(request.user),  <span class="comment"># `django.contrib.auth.User` instance.</span></span><br><span class="line">            <span class="string">'auth'</span>: unicode(request.auth),  <span class="comment"># None</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response(content)</span><br></pre></td></tr></table></figure><p>参考链接：<a href="https://www.django-rest-framework.org/api-guide/authentication/" rel="external nofollow noopener noreferrer" target="_blank">django-rest-framework</a></p><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> Django </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>django filter筛选月份没有数据</title>
       <link href="/2019/10/14/django-filter-month/"/>
       <url>/2019/10/14/django-filter-month/</url>
@@ -902,33 +929,6 @@
     
     
     <entry>
-      <title>Python写入InfluxDB</title>
-      <link href="/2019/06/04/influxdb/"/>
-      <url>/2019/06/04/influxdb/</url>
-      
-        <content type="html"><![CDATA[<blockquote><p>InfluxDB是一个开源的时序数据库，使用GO语言开发，特别适合用于处理和分析资源监控数据这种时序相关数据。而InfluxDB自带的各种特殊函数如求标准差，随机取样数据，统计数据变化比等，使数据统计和实时分析变得十分方便。</p></blockquote><hr><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><b>安装</b></h2><ul><li>数据库安装<br>根据不同的系统安装方式不太一样, 具体参考<a href="https://docs.influxdata.com/influxdb/v1.7/introduction/installation/" rel="external nofollow noopener noreferrer" target="_blank">官网</a>, 这个官网提供的挺详细的。<br><b>如果有指定版本的requests, 注意一下requests版本, influxdb不支持旧版的requests库, 版本不支持安装时会有提示。</b></li><li>Python安装操作库</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install influxdb</span><br><span class="line"></span><br><span class="line">pip install --upgrade influxdb             # 升级</span><br><span class="line">pip uninstall influxdb       # 卸载</span><br></pre></td></tr></table></figure><hr><h2 id="使用准备"><a href="#使用准备" class="headerlink" title="使用准备"></a><b>使用准备</b></h2><ul><li>操作准备<br>需要先创建数据库，可以使用命令行进行创建</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database database_name;</span><br></pre></td></tr></table></figure><p>也可以使用python命令直接创建</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line"><span class="comment"># 首先连接influxdb</span></span><br><span class="line">client = InfluxDBClient(host=<span class="string">'服务器IP'</span>, port=<span class="number">8086</span>, username=<span class="string">'myuser'</span>, password=<span class="string">'mypass'</span> ssl=<span class="literal">True</span>, verify_ssl=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 创建数据库</span></span><br><span class="line">client.create_database(<span class="string">'database_name'</span>)   </span><br><span class="line"><span class="comment"># 查询数据库</span></span><br><span class="line">client.get_list_database()</span><br></pre></td></tr></table></figure><hr><h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a><b>操作</b></h2><ul><li>连接数据库</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line">client = InfluxDBClient(<span class="string">'服务器IP'</span>, <span class="string">'8086'</span>, <span class="string">'myuser'</span>, <span class="string">'mypass'</span>, <span class="string">'database_name'</span>)</span><br></pre></td></tr></table></figure><ul><li>写入数据<br>InfluxDB的每条数据可以看成一个json数据（其实写入的时候就是个json数据），每条数据中包含了’measurement’，’time’，’tags’，’fields’</li></ul><table><thead><tr><th>属性</th><th>含义</th></tr></thead><tbody><tr><td>measurement</td><td>相当于数据库中的表</td></tr><tr><td>time</td><td>数据的记录时间，是数据的主索引</td></tr><tr><td>tags</td><td>一个有索引的值</td></tr><tr><td>fields</td><td>没有索引的值</td></tr></tbody></table><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">w_json = [&#123;</span><br><span class="line">    <span class="string">"measurement"</span>: <span class="string">'table_name'</span>,</span><br><span class="line">    <span class="string">"time"</span>: now_time,</span><br><span class="line">    <span class="string">"tags"</span>: &#123;</span><br><span class="line">        <span class="string">'name'</span>: <span class="string">'名字'</span>,</span><br><span class="line">        <span class="string">'categories'</span>: <span class="string">'类型'</span></span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">"fields"</span>: &#123;</span><br><span class="line">        <span class="string">'price'</span>: <span class="string">"价格"</span>,</span><br><span class="line">        <span class="string">'unit'</span>: <span class="string">"单位"</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">写入数据库</span><br><span class="line">client.write_points(w_json)</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Python </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> python </tag>
-            
-            <tag> InfluxDB </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>from lxml import etree</title>
       <link href="/2019/06/04/ElementTree-tostring/"/>
       <url>/2019/06/04/ElementTree-tostring/</url>
@@ -948,6 +948,33 @@
             <tag> python </tag>
             
             <tag> 爬虫 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Python写入InfluxDB</title>
+      <link href="/2019/06/04/influxdb/"/>
+      <url>/2019/06/04/influxdb/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>InfluxDB是一个开源的时序数据库，使用GO语言开发，特别适合用于处理和分析资源监控数据这种时序相关数据。而InfluxDB自带的各种特殊函数如求标准差，随机取样数据，统计数据变化比等，使数据统计和实时分析变得十分方便。</p></blockquote><hr><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><b>安装</b></h2><ul><li>数据库安装<br>根据不同的系统安装方式不太一样, 具体参考<a href="https://docs.influxdata.com/influxdb/v1.7/introduction/installation/" rel="external nofollow noopener noreferrer" target="_blank">官网</a>, 这个官网提供的挺详细的。<br><b>如果有指定版本的requests, 注意一下requests版本, influxdb不支持旧版的requests库, 版本不支持安装时会有提示。</b></li><li>Python安装操作库</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install influxdb</span><br><span class="line"></span><br><span class="line">pip install --upgrade influxdb             # 升级</span><br><span class="line">pip uninstall influxdb       # 卸载</span><br></pre></td></tr></table></figure><hr><h2 id="使用准备"><a href="#使用准备" class="headerlink" title="使用准备"></a><b>使用准备</b></h2><ul><li>操作准备<br>需要先创建数据库，可以使用命令行进行创建</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database database_name;</span><br></pre></td></tr></table></figure><p>也可以使用python命令直接创建</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line"><span class="comment"># 首先连接influxdb</span></span><br><span class="line">client = InfluxDBClient(host=<span class="string">'服务器IP'</span>, port=<span class="number">8086</span>, username=<span class="string">'myuser'</span>, password=<span class="string">'mypass'</span> ssl=<span class="literal">True</span>, verify_ssl=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 创建数据库</span></span><br><span class="line">client.create_database(<span class="string">'database_name'</span>)   </span><br><span class="line"><span class="comment"># 查询数据库</span></span><br><span class="line">client.get_list_database()</span><br></pre></td></tr></table></figure><hr><h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a><b>操作</b></h2><ul><li>连接数据库</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line">client = InfluxDBClient(<span class="string">'服务器IP'</span>, <span class="string">'8086'</span>, <span class="string">'myuser'</span>, <span class="string">'mypass'</span>, <span class="string">'database_name'</span>)</span><br></pre></td></tr></table></figure><ul><li>写入数据<br>InfluxDB的每条数据可以看成一个json数据（其实写入的时候就是个json数据），每条数据中包含了’measurement’，’time’，’tags’，’fields’</li></ul><table><thead><tr><th>属性</th><th>含义</th></tr></thead><tbody><tr><td>measurement</td><td>相当于数据库中的表</td></tr><tr><td>time</td><td>数据的记录时间，是数据的主索引</td></tr><tr><td>tags</td><td>一个有索引的值</td></tr><tr><td>fields</td><td>没有索引的值</td></tr></tbody></table><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">w_json = [&#123;</span><br><span class="line">    <span class="string">"measurement"</span>: <span class="string">'table_name'</span>,</span><br><span class="line">    <span class="string">"time"</span>: now_time,</span><br><span class="line">    <span class="string">"tags"</span>: &#123;</span><br><span class="line">        <span class="string">'name'</span>: <span class="string">'名字'</span>,</span><br><span class="line">        <span class="string">'categories'</span>: <span class="string">'类型'</span></span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">"fields"</span>: &#123;</span><br><span class="line">        <span class="string">'price'</span>: <span class="string">"价格"</span>,</span><br><span class="line">        <span class="string">'unit'</span>: <span class="string">"单位"</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">写入数据库</span><br><span class="line">client.write_points(w_json)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> InfluxDB </tag>
             
         </tags>
       
@@ -1359,9 +1386,9 @@
             
             <tag> python </tag>
             
-            <tag> Django </tag>
-            
             <tag> 项目部署 </tag>
+            
+            <tag> Django </tag>
             
         </tags>
       
@@ -1737,9 +1764,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>分类</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -1748,9 +1775,9 @@
     
     
     <entry>
-      <title>分类</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       

@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="http浏览器总是会提醒不安全，升级一下，加上https"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/2019/06/06/https-config/">
+<meta name="description" content="django-rest-framework修改权限和用户认证的几种方式"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/10/29/drf-permission/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,7 +114,7 @@
       Display();
     }
 </script>
-    <title>nginx配置https - 时光不写博客</title>
+    <title>DRF修改权限、用户认证方式 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -182,26 +182,42 @@
         <div class="content-wrapper">
           <div id="content" class="content"><article class="post">
     <header class="post-header">
-      <h1 class="post-title">nginx配置https
+      <h1 class="post-title">DRF修改权限、用户认证方式
         </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2019-06-06
+          2019-10-29
         </span><span class="post-category">
-            <a href="/categories/项目部署/">项目部署</a>
+            <a href="/categories/Python/">Python</a>
             </span>
         </div>
     </header>
 
-    <div class="post-content"><ul>
-<li>首先修改原来的nginx配置，<b>nginx配置不会的看&gt;&gt;<a href="https://www.wxy.email/2019/01/26/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/">这里</a></b></li>
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#修改权限、用户认证方式"><span class="toc-text">修改权限、用户认证方式</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><h3 id="修改权限、用户认证方式"><a href="#修改权限、用户认证方式" class="headerlink" title="修改权限、用户认证方式"></a><b>修改权限、用户认证方式</b></h3><ul>
+<li>在settings中全局配置</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">     # listen 80;</span><br><span class="line">     # 添加</span><br><span class="line">     listen 443 ssl;</span><br><span class="line">     server_name www.wxy.email wxy.email;</span><br><span class="line">     </span><br><span class="line">     # 添加ssl证书配置</span><br><span class="line">     # ssl on;</span><br><span class="line">     ssl_certificate /home/lls/wxy.email.crt; </span><br><span class="line">     ssl_certificate_key /home/lls/wxy.email.key;</span><br><span class="line">     ssl_session_timeout 5m;</span><br><span class="line">     </span><br><span class="line">     </span><br><span class="line">     charset utf-8;</span><br><span class="line">     location / &#123;</span><br><span class="line">             root /home/blog/blog;</span><br><span class="line">             index index.html;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">REST_FRAMEWORK = &#123;</span><br><span class="line">    <span class="string">'DEFAULT_AUTHENTICATION_CLASSES'</span>: [</span><br><span class="line">        <span class="string">'rest_framework.authentication.BasicAuthentication'</span>,</span><br><span class="line">        <span class="string">'rest_framework.authentication.SessionAuthentication'</span>,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>kill杀死nginx进程，重启</li>
+<li>基于每个视图集进行配置</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kill -9 pid</span><br><span class="line">service nginx start</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.authentication <span class="keyword">import</span> SessionAuthentication, BasicAuthentication</span><br><span class="line"><span class="keyword">from</span> rest_framework.permissions <span class="keyword">import</span> IsAuthenticated</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleView</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    authentication_classes = [SessionAuthentication, BasicAuthentication]</span><br><span class="line">    permission_classes = [IsAuthenticated]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, format=None)</span>:</span></span><br><span class="line">        content = &#123;</span><br><span class="line">            <span class="string">'user'</span>: unicode(request.user),  <span class="comment"># `django.contrib.auth.User` instance.</span></span><br><span class="line">            <span class="string">'auth'</span>: unicode(request.auth),  <span class="comment"># None</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response(content)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配合<code>@api_view</code>装饰器基于函数一起使用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.decorators <span class="keyword">import</span> permission_classes, authentication_classes</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleView</span><span class="params">(APIView)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @api_view(['GET'])</span></span><br><span class="line"><span class="meta">    @authentication_classes([SessionAuthentication, BasicAuthentication])</span></span><br><span class="line"><span class="meta">    @permission_classes([IsAuthenticated])</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">example_view</span><span class="params">(request, format=None)</span>:</span></span><br><span class="line">        content = &#123;</span><br><span class="line">            <span class="string">'user'</span>: unicode(request.user),  <span class="comment"># `django.contrib.auth.User` instance.</span></span><br><span class="line">            <span class="string">'auth'</span>: unicode(request.auth),  <span class="comment"># None</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response(content)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配合<code>@action</code>装饰器基于函数一起使用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleView</span><span class="params">(APIView)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @action(methods=['get'], detail=False, url_path='url', url_name='url', permission_classes=(IsAuthenticated,), authentication_classes=(SessionAuthentication, BasicAuthentication))</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">example_view</span><span class="params">(request, format=None)</span>:</span></span><br><span class="line">        content = &#123;</span><br><span class="line">            <span class="string">'user'</span>: unicode(request.user),  <span class="comment"># `django.contrib.auth.User` instance.</span></span><br><span class="line">            <span class="string">'auth'</span>: unicode(request.auth),  <span class="comment"># None</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Response(content)</span><br></pre></td></tr></table></figure>
+<p>参考链接：<a href="https://www.django-rest-framework.org/api-guide/authentication/" rel="external nofollow noopener noreferrer" target="_blank">django-rest-framework</a></p>
+<hr>
+
       </div>
       
       <div class="post-reward">
@@ -218,16 +234,12 @@
       </div>
   </div><footer class="post-footer">
         <div class="post-tags">
-            <a href="/tags/项目部署/">项目部署</a>
+            <a href="/tags/python/">python</a>
+            <a href="/tags/Django/">Django</a>
             </div>
         
-        <nav class="post-nav"><a class="prev" href="/2019/06/18/bytetostring/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">\xe5\x8d\xa0\xe7\x94\xa8\xe3\x80\x82，16进制乱码转化为可读字符</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
-    <a class="next" href="/2019/06/04/ElementTree-tostring/">
-        <span class="next-text nav-default">from lxml import etree</span>
+        <nav class="post-nav"><a class="next" href="/2019/10/14/django-filter-month/">
+        <span class="next-text nav-default">django filter筛选月份没有数据</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
