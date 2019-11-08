@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.wxy.email/2019/11/08/python-excel/</loc>
+    <lastmod>2019-11-08</lastmod>
+  </url>  <url>
     <loc>https://www.wxy.email/2019/10/29/drf-permission/</loc>
     <lastmod>2019-10-29</lastmod>
   </url>  <url>
@@ -25,7 +28,7 @@
     <loc>https://www.wxy.email/2019/07/19/ubuntu-messy-code/</loc>
     <lastmod>2019-09-30</lastmod>
   </url>  <url>
-    <loc>https://www.wxy.email/2019/09/28/Linux-LNMP/</loc>
+    <loc>https://www.wxy.email/2019/09/28/wordpress/</loc>
     <lastmod>2019-09-30</lastmod>
   </url>  <url>
     <loc>https://www.wxy.email/2018/06/19/hello-world/</loc>
@@ -34,7 +37,7 @@
     <loc>https://www.wxy.email/2018/06/29/hexo%E9%83%A8%E7%BD%B2/</loc>
     <lastmod>2019-09-30</lastmod>
   </url>  <url>
-    <loc>https://www.wxy.email/2019/09/28/wordpress/</loc>
+    <loc>https://www.wxy.email/2019/09/28/Linux-LNMP/</loc>
     <lastmod>2019-09-30</lastmod>
   </url>  <url>
     <loc>https://www.wxy.email/2019/01/26/nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</loc>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="default">
+  <head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="nt7ofDlUEAj-G2sNFlh0wBJYoWH1hdvum_-V5zOgHzg">
+<meta name="baidu-site-verification" content="XG5Sc98jMI">
+<meta name="wlhlauth" content="8d884ffcaa79c5165f113cd2349b52d7">
+<meta name="360-site-verification" content="577ecf1c5f95d421bb0482d93c7faa1e">
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="python使用xlwt、xlsxwriter生成Excel"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/11/08/python-excel/">
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":"","toc":true,"fancybox":true,"pjax":true,"latex":false};
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2911390145109533",
+    enable_page_level_ads: true
+  });
+</script>
+
+<script>
+  // 搜索框
+    function search(){
+        $.ajax({
+            url:'../../search.xml',
+            type: 'GET',
+            dataType: 'xml',
+            timeout: 1000,
+            cache:false,
+            error: function(xml){
+                console.log('加载XML文档出错');
+            },
+            success: function(xml){
+                //建立一个代码片段
+                var root_xml=xml.documentElement;
+                var data=$('#search').val();
+                var entry=root_xml.getElementsByTagName("entry");
+                var frag=$("<ul/>");
+                for (var i = 0; i <= entry.length - 1; i++) {
+                    var content = entry[i];
+                    if (content.textContent.search(data) != -1) {
+                        frag.append("<a style='color:blanchedalmond; text-decoration: underline;' href='http://www.wxy.email"+content.getElementsByTagName('url')[0].textContent
+                            + "'><b>" + content.getElementsByTagName('title')[0].textContent + "</b></a><br>");
+                    }
+                }
+                //最后得到的frag添加进HTML文档中
+                $('#DisplayBox').empty();
+                Display();
+                frag.appendTo("#DisplayBox");
+                // alert(frag)
+            }
+        });
+    }
+    function RealTimeSearch(){
+        var input = document.getElementById('search').value;
+        if (input === "") {
+            $('#DisplayBox').empty();
+            return
+        }
+        search();
+    }
+    function disblock(){
+        document.getElementById('pop_up').style.display='none';
+    }
+    function enter_search() {
+        let event = window.event;
+        // console.log(event.keyCode);
+        // alert(event.KeyCode);
+        if (event.keyCode === 13) {
+            console.log(event.keyCode);
+            search();
+        }
+    }
+    function Display(){
+        setTimeout(() => {
+            document.getElementById('pop_up').style.width = document.body.clientWidth + 'px';
+            document.getElementById('pop_up').style.height = $(window).height() + 'px';
+            document.getElementById('pop_up').style.display='block';
+            document.getElementById('mobile-panel').style.transform='none';
+            document.getElementById('mobile-navbar').className = 'mobile-navbar';
+            // event.stopPropagation();
+        },1);
+    }
+    function TriggerSearch(){
+      Display();
+    }
+</script>
+    <title>python生成Excel的两种方式 - 时光不写博客</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">时光不写博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><li class="mobile-menu-item"><a href="/">
+                        首页
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/archives/">
+                        归档
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/tags/">
+                        标签
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/categories/">
+                        分类
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><span></span>
+        </li></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">时光不写博客</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+            <a class="menu-item-link" href="/">
+                      首页
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/archives/">
+                      归档
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/tags/">
+                      标签
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/categories/">
+                      分类
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <span></span>
+                </li></ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">python生成Excel的两种方式
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-11-08
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用xlwt"><span class="toc-text">使用xlwt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用xlsxwriter"><span class="toc-text">使用xlsxwriter</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><h2 id="使用xlwt"><a href="#使用xlwt" class="headerlink" title="使用xlwt"></a><span style="color:black"><b>使用xlwt</b></span></h2><ul>
+<li>示例</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">excel_</span><span class="params">(headers, result, file_name, horizontal=True)</span>:</span></span><br><span class="line">    f = xlwt.Workbook()</span><br><span class="line">    default_easyxf = xlwt.easyxf(num_format_str=<span class="string">'0.00'</span>)</span><br><span class="line">    sheet1 = f.add_sheet(<span class="string">'sheet1'</span>)</span><br><span class="line">    <span class="comment"># 标红加粗</span></span><br><span class="line">    <span class="comment"># style = "font:colour_index 10, bold False"</span></span><br><span class="line">    <span class="comment"># style = xlwt.easyxf(style)</span></span><br><span class="line">    <span class="keyword">if</span> horizontal:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(headers)):</span><br><span class="line">            <span class="keyword">if</span> isinstance(headers[i], tuple):</span><br><span class="line">                sheet1.write(<span class="number">0</span>, i, headers[i][<span class="number">0</span>], xlwt.easyxf(headers[i][<span class="number">1</span>]))</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            sheet1.write(<span class="number">0</span>, i, headers[i])</span><br><span class="line">        row_index = <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        r = []</span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> zip(headers, result):</span><br><span class="line">            r.append([k, v])</span><br><span class="line">        result = r</span><br><span class="line">        row_index = <span class="number">-1</span></span><br><span class="line">    <span class="keyword">for</span> rows <span class="keyword">in</span> result:</span><br><span class="line">        row_index += <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, len(rows)):</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> rows[j]:</span><br><span class="line">                    r = <span class="string">''</span></span><br><span class="line">                <span class="keyword">elif</span> <span class="string">'.'</span> <span class="keyword">in</span> str(rows[j]):</span><br><span class="line">                    r = float(rows[j])</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    r = int(rows[j])</span><br><span class="line">            <span class="keyword">except</span> ValueError:</span><br><span class="line">                r = rows[j]</span><br><span class="line">            <span class="keyword">if</span> isinstance(r, (int, float)):</span><br><span class="line">                <span class="comment"># 数值格式</span></span><br><span class="line">                <span class="keyword">if</span> r &lt; <span class="number">10000000000</span>:</span><br><span class="line">                    sheet1.write(row_index, j, r, default_easyxf)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    sheet1.write(row_index, j, str(r))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                sheet1.write(row_index, j, str(r))</span><br><span class="line">    <span class="comment"># 保存到本地</span></span><br><span class="line">    <span class="comment"># f.save("/User/name/&#123;&#125;".format(file_name))</span></span><br><span class="line">    excel_stream = io.BytesIO()</span><br><span class="line">    <span class="comment"># BytesIO流（在内存中读写）</span></span><br><span class="line">    f.save(excel_stream)</span><br><span class="line">    res = excel_stream.getvalue()</span><br><span class="line">    excel_stream.close()</span><br><span class="line">    response = HttpResponse(content_type=<span class="string">'application/vnd.ms-excel'</span>)</span><br><span class="line">    <span class="keyword">from</span> urllib <span class="keyword">import</span> parse</span><br><span class="line">    response[<span class="string">'Content-Disposition'</span>] = <span class="string">'attachment;filename='</span> + parse.quote(file_name)</span><br><span class="line">    response.write(res)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line">headers = [<span class="string">"姓名"</span>, (<span class="string">"手机号"</span>, <span class="string">"font:colour_index 10, bold False"</span>)]</span><br><span class="line">results = [[<span class="string">"李白"</span>, <span class="string">"1888888888"</span>], [<span class="string">"杜甫"</span>, <span class="string">"19999999999"</span>]]</span><br><span class="line">file_name = <span class="string">"test.xlsx"</span></span><br><span class="line">excel_(headers, results, file_name)</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="使用xlsxwriter"><a href="#使用xlsxwriter" class="headerlink" title="使用xlsxwriter"></a><span style="color:black"><b>使用xlsxwriter</b></span></h2><ul>
+<li>示例</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># excel下拉列表导出,数据校验</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">xlsx_excel</span><span class="params">(headers, results, filename)</span>:</span></span><br><span class="line">    excel_stream = io.BytesIO()</span><br><span class="line">    workbook = xlsxwriter.Workbook(excel_stream)</span><br><span class="line">    worksheet = workbook.add_worksheet()</span><br><span class="line">    <span class="comment"># 数字格式</span></span><br><span class="line">    header_format = workbook.add_format(&#123;</span><br><span class="line">        <span class="string">'num_format'</span>: <span class="string">'@'</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment"># 下拉列表校验格式</span></span><br><span class="line">    data_validate = &#123;<span class="string">'validate'</span>: <span class="string">'list'</span>, <span class="string">'source'</span>: [<span class="string">'是'</span>, <span class="string">'否'</span>]&#125;</span><br><span class="line">    data_validate1 = &#123;<span class="string">'validate'</span>: <span class="string">'list'</span>, <span class="string">'source'</span>: [<span class="string">'有'</span>, <span class="string">'无'</span>]&#125;</span><br><span class="line">    <span class="comment"># 日期格式校验</span></span><br><span class="line">    date_validate = &#123;<span class="string">'validate'</span>: <span class="string">'date'</span>,</span><br><span class="line">                     <span class="string">'criteria'</span>: <span class="string">'between'</span>,</span><br><span class="line">                     <span class="string">'minimum'</span>: date(<span class="number">2018</span>, <span class="number">1</span>, <span class="number">1</span>),</span><br><span class="line">                     <span class="string">'maximum'</span>: date(<span class="number">9999</span>, <span class="number">12</span>, <span class="number">12</span>)&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(headers)):</span><br><span class="line">        <span class="comment"># 写入校验规则</span></span><br><span class="line">        <span class="keyword">if</span> isinstance(headers[i], tuple):</span><br><span class="line">            <span class="comment"># 写入计算公式</span></span><br><span class="line">            <span class="keyword">if</span> <span class="string">"自动计算"</span> <span class="keyword">in</span> headers[i][<span class="number">0</span>]:</span><br><span class="line">                worksheet.write(<span class="number">0</span>, i, headers[i][<span class="number">0</span>])</span><br><span class="line">                worksheet.write_formula(<span class="number">1</span>, i, headers[i][<span class="number">1</span>], header_format)</span><br><span class="line">            <span class="comment"># 使用之前定义的header_format数字格式</span></span><br><span class="line">            <span class="keyword">elif</span> <span class="string">"text"</span> <span class="keyword">in</span> headers[i][<span class="number">1</span>]:</span><br><span class="line">                r = headers[i][<span class="number">1</span>].replace(<span class="string">'text'</span>, <span class="string">''</span>)</span><br><span class="line">                worksheet.write(<span class="number">0</span>, i, headers[i][<span class="number">0</span>], workbook.add_format(&#123;<span class="string">'font_color'</span>: <span class="string">'red'</span>&#125;))</span><br><span class="line">                worksheet.set_column(<span class="string">"&#123;&#125;:&#123;&#125;"</span>.format(r, r), <span class="literal">None</span>, header_format)</span><br><span class="line">            <span class="comment"># 使用之前定义的date_validate日期格式</span></span><br><span class="line">            <span class="keyword">elif</span> <span class="string">"date"</span> <span class="keyword">in</span> headers[i][<span class="number">1</span>]:</span><br><span class="line">                r = headers[i][<span class="number">1</span>].replace(<span class="string">'date'</span>, <span class="string">''</span>)</span><br><span class="line">                worksheet.write(<span class="number">0</span>, i, headers[i][<span class="number">0</span>], workbook.add_format(&#123;<span class="string">'font_color'</span>: <span class="string">'red'</span>&#125;))</span><br><span class="line">                worksheet.data_validation(<span class="string">'&#123;&#125;2:&#123;&#125;1048576'</span>.format(r, r), date_validate)</span><br><span class="line">            <span class="comment"># 使用之前定义的data_validate下拉规则</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                worksheet.write(<span class="number">0</span>, i, headers[i][<span class="number">0</span>], workbook.add_format(&#123;<span class="string">'font_color'</span>: <span class="string">'red'</span>&#125;))</span><br><span class="line">                worksheet.data_validation(<span class="string">'&#123;&#125;2:&#123;&#125;1048576'</span>.format(headers[i][<span class="number">1</span>], headers[i][<span class="number">1</span>]), data_validate)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            worksheet.write(<span class="number">0</span>, i, headers[i], workbook.add_format(&#123;<span class="string">'font_color'</span>: <span class="string">'red'</span>&#125;))</span><br><span class="line">    <span class="comment"># 整行写入数据</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(len(results)):</span><br><span class="line">        worksheet.write_row(<span class="string">"A&#123;&#125;"</span>.format(x + <span class="number">2</span>), results[x])</span><br><span class="line">    workbook.close()</span><br><span class="line">    xlsx_data = excel_stream.getvalue()</span><br><span class="line">    response = HttpResponse(content_type=<span class="string">'application/ms-excel'</span>)</span><br><span class="line">    response[<span class="string">'Content-Disposition'</span>] = <span class="string">'attachment; filename=%s.xlsx'</span> % filename</span><br><span class="line">    response.write(xlsx_data)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">headers = [(<span class="string">"日期"</span>, <span class="string">'dateA'</span>), <span class="string">"姓名"</span>, (<span class="string">"手机号"</span>, <span class="string">"textC"</span>), <span class="string">"数字一"</span>, <span class="string">"数字二"</span>,</span><br><span class="line">           (<span class="string">"合计（自动计算）"</span>, <span class="string">"=D2+E2"</span>)]</span><br><span class="line">results = [[<span class="string">"2019/1/1"</span>, <span class="string">"张三"</span>, <span class="string">"18888888888"</span>, <span class="string">"1000"</span>, <span class="number">1000</span>]]</span><br><span class="line">filename = <span class="string">"test_excel"</span></span><br><span class="line">xlsx_excel(headers, results, filename)</span><br></pre></td></tr></table></figure>
+<hr>
+
+      </div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/python/">python</a>
+            <a href="/tags/Django/">Django</a>
+            <a href="/tags/Excel/">Excel</a>
+            </div>
+        
+        <nav class="post-nav"><a class="next" href="/2019/10/29/drf-permission/">
+        <span class="next-text nav-default">DRF修改权限、用户认证方式</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">
+  <span class="power-by">
+    联系方式
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+  wxy148616@163.com
+  </span><span class="copyright-year">&copy;2018 - 2019<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">时光不写代码</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+<div style="position: fixed; left: 0px; bottom: 10px;"><a href="http://background.wxy.email" rel="external nofollow noopener noreferrer" target="_blank">@Tab页</a></div>
+  </body>
+</html>
