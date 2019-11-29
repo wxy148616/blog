@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="个人博客，持续更新自己遇到的各种问题和解决方法，包括python，html等个人开发笔记"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/archives/2019/page/6/">
+<meta name="description" content="sublime text3使用MarkdownPreview+LiveReload实现Markdown文件预览"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/11/28/sublime-use-markdown/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,8 +114,7 @@
       Display();
     }
 </script>
-    <title>归档 - 时光不写博客
-  </title>
+    <title>sublime text3实现Markdown文件预览 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -181,118 +180,77 @@
 
       <main id="main" class="main">
         <div class="content-wrapper">
-          <div id="content" class="content"><section id="archive" class="archive"><div class="collection-title">
-            <h2 class="archive-year">2019</h2>
-          </div>
-        <div class="archive-post">
-        <span class="archive-post-time">
-          05-14
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/14/解决No-space-left-on-device/" class="archive-post-link">
-            解决:Failed to add /run/systemd/ask-password to directory watch:No space left on device
-          </a>
-        </span>
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">sublime text3实现Markdown文件预览
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-11-28
+        </span><span class="post-category">
+            <a href="/categories/工具/">工具</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Markdown-Preview"><span class="toc-text">安装Markdown Preview</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#描述："><span class="toc-text">描述：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装配置"><span class="toc-text">安装配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义快捷键"><span class="toc-text">自定义快捷键</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装LiveReload"><span class="toc-text">安装LiveReload</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#描述：-1"><span class="toc-text">描述：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装配置-1"><span class="toc-text">安装配置</span></a></li></ol></li></ol>
+    </div>
+  </div><div class="post-content"><h2 id="安装Markdown-Preview"><a href="#安装Markdown-Preview" class="headerlink" title="安装Markdown Preview"></a><span style="color:black"><b>安装Markdown Preview</b></span></h2><h3 id="描述："><a href="#描述：" class="headerlink" title="描述："></a><b>描述：<b></b></b></h3><ul>
+<li>支持在浏览器中预览markdown文件  <h3 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a><b>安装配置<b></b></b></h3></li>
+<li><code>Ctrl+Shift+p</code>, 输入 <code>Install Package</code>，输入<code>Markdown Preview</code>, 安装。</li>
+<li>安装成功后，打开配置文件 <code>Preferences -&gt; Package Settings -&gt; Markdown Preview -&gt; Settings</code>，设置左侧<code>enable_autoreload</code>为<code>true</code>。<h3 id="自定义快捷键"><a href="#自定义快捷键" class="headerlink" title="自定义快捷键"></a><b>自定义快捷键<b></b></b></h3></li>
+<li>在<code>Preferences -&gt; Key Bindings</code>打开的文件的右侧栏的中括号中添加：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="string">"keys"</span>: [<span class="string">"alt+m"</span>], <span class="string">"command"</span>: <span class="string">"markdown_preview"</span>, <span class="string">"args"</span>: &#123;<span class="string">"target"</span>: <span class="string">"browser"</span>, <span class="string">"parser"</span>:<span class="string">"markdown"</span>&#125;  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>keys</code> 自己设置的按键。</li>
+<li><code>parser</code>: Markdown文件的浏览方式, “github”: 使用Github在线API解析markdown; “markdown”: 使用浏览器本地打开。</li>
+</ul>
+<hr>
+<h2 id="安装LiveReload"><a href="#安装LiveReload" class="headerlink" title="安装LiveReload"></a><span style="color:black"><b>安装LiveReload</b></span></h2><h3 id="描述：-1"><a href="#描述：-1" class="headerlink" title="描述："></a><b>描述：<b></b></b></h3><ul>
+<li>LiveReload是一个可实时刷新的插件，可用于Markdown，HTML等。<h3 id="安装配置-1"><a href="#安装配置-1" class="headerlink" title="安装配置"></a><b>安装配置<b></b></b></h3></li>
+<li><code>Ctrl+Shift+p</code>, 输入 <code>Install Package</code>，输入<code>LiveReload</code>, 安装。</li>
+<li>安装成功后, 再次<code>Ctrl+shift+p</code>, 输入<code>LiveReload: Enable/disable plug-ins</code> –&gt; 选择 <code>Simple Reload</code></li>
+<li><b>搞定,每次编辑过.md文件后, 保存, 就会在浏览器自动更新页面。<b></b></b></li>
+</ul>
+<hr>
+
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-13
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/13/python-list元素移动/" class="archive-post-link">
-            Python list元素移动
-          </a>
-        </span>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
       </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-12
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/12/python四舍五入/" class="archive-post-link">
-            Python四舍五入保留两位小数
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-11
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/11/终端ssh登录/" class="archive-post-link">
-            终端配置ssh秘钥登录
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-10
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/10/django-日志/" class="archive-post-link">
-            Django-日志
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-09
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/09/django-部署/" class="archive-post-link">
-            Django项目部署
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-08
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/08/git钩子/" class="archive-post-link">
-            git钩子自动更新服务器代码
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-07
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/07/ab压力测试-入门/" class="archive-post-link">
-            ab压力测试(入门)
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-06
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/06/python处理合并单元格/" class="archive-post-link">
-            Python处理excel合并单元格
-          </a>
-        </span>
-      </div>
-    <div class="archive-post">
-        <span class="archive-post-time">
-          05-05
-          </span>
-        <span class="archive-post-title">
-          <a href="/2019/05/05/Linux部署图片/" class="archive-post-link">
-            Linux服务器Nginx部署图片
-          </a>
-        </span>
-      </div>
-    </section><nav class="pagination"><a class="prev" href="/archives/2019/page/5/">
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/开发工具/">开发工具</a>
+            <a href="/tags/工具/">工具</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2019/11/29/drf-dynamic-fields/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
+        <span class="prev-text nav-default">Django Rest Framework 动态获取字段</span>
+        <span class="prev-text nav-mobile">上一篇</span>
       </a>
-    <a class="next" href="/archives/2019/page/7/">
-        <span class="next-text">下一页</span>
+    <a class="next" href="/2019/11/08/python-excel/">
+        <span class="next-text nav-default">python生成Excel的两种方式</span>
+        <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
-    </nav></div></div>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
       </main>
 
       <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">

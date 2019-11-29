@@ -31,6 +31,33 @@
     
     
     <entry>
+      <title>sublime text3实现Markdown文件预览</title>
+      <link href="/2019/11/28/sublime-use-markdown/"/>
+      <url>/2019/11/28/sublime-use-markdown/</url>
+      
+        <content type="html"><![CDATA[<h2 id="安装Markdown-Preview"><a href="#安装Markdown-Preview" class="headerlink" title="安装Markdown Preview"></a><span style="color:black"><b>安装Markdown Preview</b></span></h2><h3 id="描述："><a href="#描述：" class="headerlink" title="描述："></a><b>描述：<b></b></b></h3><ul><li>支持在浏览器中预览markdown文件  <h3 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a><b>安装配置<b></b></b></h3></li><li><code>Ctrl+Shift+p</code>, 输入 <code>Install Package</code>，输入<code>Markdown Preview</code>, 安装。</li><li>安装成功后，打开配置文件 <code>Preferences -&gt; Package Settings -&gt; Markdown Preview -&gt; Settings</code>，设置左侧<code>enable_autoreload</code>为<code>true</code>。<h3 id="自定义快捷键"><a href="#自定义快捷键" class="headerlink" title="自定义快捷键"></a><b>自定义快捷键<b></b></b></h3></li><li>在<code>Preferences -&gt; Key Bindings</code>打开的文件的右侧栏的中括号中添加：</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="string">"keys"</span>: [<span class="string">"alt+m"</span>], <span class="string">"command"</span>: <span class="string">"markdown_preview"</span>, <span class="string">"args"</span>: &#123;<span class="string">"target"</span>: <span class="string">"browser"</span>, <span class="string">"parser"</span>:<span class="string">"markdown"</span>&#125;  &#125;</span><br></pre></td></tr></table></figure><ul><li><code>keys</code> 自己设置的按键。</li><li><code>parser</code>: Markdown文件的浏览方式, “github”: 使用Github在线API解析markdown; “markdown”: 使用浏览器本地打开。</li></ul><hr><h2 id="安装LiveReload"><a href="#安装LiveReload" class="headerlink" title="安装LiveReload"></a><span style="color:black"><b>安装LiveReload</b></span></h2><h3 id="描述：-1"><a href="#描述：-1" class="headerlink" title="描述："></a><b>描述：<b></b></b></h3><ul><li>LiveReload是一个可实时刷新的插件，可用于Markdown，HTML等。<h3 id="安装配置-1"><a href="#安装配置-1" class="headerlink" title="安装配置"></a><b>安装配置<b></b></b></h3></li><li><code>Ctrl+Shift+p</code>, 输入 <code>Install Package</code>，输入<code>LiveReload</code>, 安装。</li><li>安装成功后, 再次<code>Ctrl+shift+p</code>, 输入<code>LiveReload: Enable/disable plug-ins</code> –&gt; 选择 <code>Simple Reload</code></li><li><b>搞定,每次编辑过.md文件后, 保存, 就会在浏览器自动更新页面。<b></b></b></li></ul><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工具 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 开发工具 </tag>
+            
+            <tag> 工具 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>python生成Excel的两种方式</title>
       <link href="/2019/11/08/python-excel/"/>
       <url>/2019/11/08/python-excel/</url>
@@ -985,33 +1012,6 @@
     
     
     <entry>
-      <title>from lxml import etree</title>
-      <link href="/2019/06/04/ElementTree-tostring/"/>
-      <url>/2019/06/04/ElementTree-tostring/</url>
-      
-        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><hr><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><hr><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><hr><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Python </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> python </tag>
-            
-            <tag> 爬虫 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Python写入InfluxDB</title>
       <link href="/2019/06/04/influxdb/"/>
       <url>/2019/06/04/influxdb/</url>
@@ -1031,6 +1031,33 @@
             <tag> python </tag>
             
             <tag> InfluxDB </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>from lxml import etree</title>
+      <link href="/2019/06/04/ElementTree-tostring/"/>
+      <url>/2019/06/04/ElementTree-tostring/</url>
+      
+        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><hr><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><hr><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><hr><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> 爬虫 </tag>
             
         </tags>
       
