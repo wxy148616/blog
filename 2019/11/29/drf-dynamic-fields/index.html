@@ -16,8 +16,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="时序数据库"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
-<link rel="canonical" href="https://www.wxy.email/2019/06/04/influxdb/">
+<meta name="description" content="Django Rest Framework 使用drf-dynamic-fields实现动态配置返回字段的效果。"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光不写博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2019/11/29/drf-dynamic-fields/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
@@ -114,7 +114,7 @@
       Display();
     }
 </script>
-    <title>Python写入InfluxDB - 时光不写博客</title>
+    <title>Django Rest Framework 动态获取字段 - 时光不写博客</title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -182,12 +182,12 @@
         <div class="content-wrapper">
           <div id="content" class="content"><article class="post">
     <header class="post-header">
-      <h1 class="post-title">Python写入InfluxDB
+      <h1 class="post-title">Django Rest Framework 动态获取字段
         </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2019-06-04
+          2019-11-29
         </span><span class="post-category">
             <a href="/categories/Python/">Python</a>
             </span>
@@ -197,59 +197,46 @@
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用准备"><span class="toc-text">使用准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作"><span class="toc-text">操作</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#项目名称"><span class="toc-text">项目名称</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目描述"><span class="toc-text">项目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a></li></ol>
     </div>
-  </div><div class="post-content"><blockquote>
-<p>InfluxDB是一个开源的时序数据库，使用GO语言开发，特别适合用于处理和分析资源监控数据这种时序相关数据。而InfluxDB自带的各种特殊函数如求标准差，随机取样数据，统计数据变化比等，使数据统计和实时分析变得十分方便。</p>
-</blockquote>
-<hr>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><b>安装</b></h2><ul>
-<li>数据库安装<br>根据不同的系统安装方式不太一样, 具体参考<a href="https://docs.influxdata.com/influxdb/v1.7/introduction/installation/" rel="external nofollow noopener noreferrer" target="_blank">官网</a>, 这个官网提供的挺详细的。<br><b>如果有指定版本的requests, 注意一下requests版本, influxdb不支持旧版的requests库, 版本不支持安装时会有提示。</b></li>
-<li>Python安装操作库</li>
+  </div><div class="post-content"><h2 id="项目名称"><a href="#项目名称" class="headerlink" title="项目名称"></a><span style="color:black"><b>项目名称</b></span></h2><ul>
+<li><strong>drf-dynamic-fields</strong></li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install influxdb</span><br><span class="line"></span><br><span class="line">pip install --upgrade influxdb             # 升级</span><br><span class="line">pip uninstall influxdb       # 卸载</span><br></pre></td></tr></table></figure>
 <hr>
-<h2 id="使用准备"><a href="#使用准备" class="headerlink" title="使用准备"></a><b>使用准备</b></h2><ul>
-<li>操作准备<br>需要先创建数据库，可以使用命令行进行创建</li>
+<h2 id="项目描述"><a href="#项目描述" class="headerlink" title="项目描述"></a><span style="color:black"><b>项目描述</b></span></h2><ul>
+<li><strong>提供了一个mixin，用于serializer，实现动态配置返回字段的效果。在获取数据的API的时候，在URL中加入一个查询字段fields，用来过滤返回数据的字段，减少网络传输的数据。</strong></li>
+<li><strong>github地址：<a href="https://github.com/dbrgn/drf-dynamic-fields" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/dbrgn/drf-dynamic-fields</a></strong></li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database database_name;</span><br></pre></td></tr></table></figure>
-<p>也可以使用python命令直接创建</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line"><span class="comment"># 首先连接influxdb</span></span><br><span class="line">client = InfluxDBClient(host=<span class="string">'服务器IP'</span>, port=<span class="number">8086</span>, username=<span class="string">'myuser'</span>, password=<span class="string">'mypass'</span> ssl=<span class="literal">True</span>, verify_ssl=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># 创建数据库</span></span><br><span class="line">client.create_database(<span class="string">'database_name'</span>)   </span><br><span class="line"><span class="comment"># 查询数据库</span></span><br><span class="line">client.get_list_database()</span><br></pre></td></tr></table></figure>
 <hr>
-<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a><b>操作</b></h2><ul>
-<li>连接数据库</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> influxdb <span class="keyword">import</span> InfluxDBClient</span><br><span class="line">client = InfluxDBClient(<span class="string">'服务器IP'</span>, <span class="string">'8086'</span>, <span class="string">'myuser'</span>, <span class="string">'mypass'</span>, <span class="string">'database_name'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><span style="color:black"><b>安装</b></span></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install drf-dynamic-fields</span><br></pre></td></tr></table></figure>
 <ul>
-<li>写入数据<br>InfluxDB的每条数据可以看成一个json数据（其实写入的时候就是个json数据），每条数据中包含了’measurement’，’time’，’tags’，’fields’</li>
+<li>如果不想在项目中多加一个库，也可以直接将项目中drf_dynamic_fields目录下的init.py文件中的类直接复制出来到自己的项目中。 直接下载init文件 –&gt;<a href="https://raw.githubusercontent.com/dbrgn/drf-dynamic-fields/master/drf_dynamic_fields/__init__.py" rel="external nofollow noopener noreferrer" target="_blank">点这里</a>。</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>measurement</td>
-<td>相当于数据库中的表</td>
-</tr>
-<tr>
-<td>time</td>
-<td>数据的记录时间，是数据的主索引</td>
-</tr>
-<tr>
-<td>tags</td>
-<td>一个有索引的值</td>
-</tr>
-<tr>
-<td>fields</td>
-<td>没有索引的值</td>
-</tr>
-</tbody>
-</table>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">w_json = [&#123;</span><br><span class="line">    <span class="string">"measurement"</span>: <span class="string">'table_name'</span>,</span><br><span class="line">    <span class="string">"time"</span>: now_time,</span><br><span class="line">    <span class="string">"tags"</span>: &#123;</span><br><span class="line">        <span class="string">'name'</span>: <span class="string">'名字'</span>,</span><br><span class="line">        <span class="string">'categories'</span>: <span class="string">'类型'</span></span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">"fields"</span>: &#123;</span><br><span class="line">        <span class="string">'price'</span>: <span class="string">"价格"</span>,</span><br><span class="line">        <span class="string">'unit'</span>: <span class="string">"单位"</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">写入数据库</span><br><span class="line">client.write_points(w_json)</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a><span style="color:black"><b>配置</b></span></h2><ul>
+<li>在创建serializer的时候，把DynamicFieldsMixin这个mixin加上即可。</li>
+<li>下面的代码是一个示例，我们创建了一个BookSerializer，加入了DynamicFieldsMixin。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</span><br><span class="line"><span class="keyword">from</span> drf_dynamic_fields <span class="keyword">import</span> DynamicFieldsMixin</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Book</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookSerializer</span><span class="params">(DynamicFieldsMixin, serializers.ModelSerializer)</span>:</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = Book</span><br><span class="line">        fields = <span class="string">'__all__'</span></span><br></pre></td></tr></table></figure>
+<p>然后，就可以直接用了~</p>
+<hr>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a><span style="color:black"><b>使用</b></span></h2><ul>
+<li>我们可以在url中使用fields来指定要返回的字段，例如我们在查询中仅需要获取图书的书名(name)和作者(author),那么URL可以写成这个样子，多个字段间使用逗号分隔即可：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET https://knktc.com/book/?fields=name,author</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对于获取单条信息的查询也同样好使：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET https://knktc.com/book/666/?fields=name,author</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果我们仅仅需要某些字段不显示，则可以使用omit参数省略一些字段，例如我们在查询中其他的信息都要，但是图书描述信息字段(description)不要，那么我们可以把URL写成这个样子：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET https://knktc.com/book/?omit=description</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参考信息: 作者在github项目中实际上说到为了保持项目的简单，实际上已经不再接受新需求的添加了。</li>
+<li>如果需要更强大的字段动态获取功能，则可以参考这个项目<a href="https://github.com/rsinger86/drf-flex-fields。" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/rsinger86/drf-flex-fields。</a></li>
+<li><strong>本文转载自：<a href="https://knktc.com/2018/06/05/django-rest-framework-dynamic-fields/" rel="external nofollow noopener noreferrer" target="_blank">knktc</a></strong></li>
+</ul>
 
       </div>
       
@@ -268,16 +255,11 @@
   </div><footer class="post-footer">
         <div class="post-tags">
             <a href="/tags/python/">python</a>
-            <a href="/tags/InfluxDB/">InfluxDB</a>
+            <a href="/tags/Django/">Django</a>
             </div>
         
-        <nav class="post-nav"><a class="prev" href="/2019/06/06/https-config/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">nginx配置https</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
-    <a class="next" href="/2019/06/04/ElementTree-tostring/">
-        <span class="next-text nav-default">from lxml import etree</span>
+        <nav class="post-nav"><a class="next" href="/2019/11/08/python-excel/">
+        <span class="next-text nav-default">python生成Excel的两种方式</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>

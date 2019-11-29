@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Django Rest Framework 动态获取字段</title>
+      <link href="/2019/11/29/drf-dynamic-fields/"/>
+      <url>/2019/11/29/drf-dynamic-fields/</url>
+      
+        <content type="html"><![CDATA[<h2 id="项目名称"><a href="#项目名称" class="headerlink" title="项目名称"></a><span style="color:black"><b>项目名称</b></span></h2><ul><li><strong>drf-dynamic-fields</strong></li></ul><hr><h2 id="项目描述"><a href="#项目描述" class="headerlink" title="项目描述"></a><span style="color:black"><b>项目描述</b></span></h2><ul><li><strong>提供了一个mixin，用于serializer，实现动态配置返回字段的效果。在获取数据的API的时候，在URL中加入一个查询字段fields，用来过滤返回数据的字段，减少网络传输的数据。</strong></li><li><strong>github地址：<a href="https://github.com/dbrgn/drf-dynamic-fields" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/dbrgn/drf-dynamic-fields</a></strong></li></ul><hr><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><span style="color:black"><b>安装</b></span></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install drf-dynamic-fields</span><br></pre></td></tr></table></figure><ul><li>如果不想在项目中多加一个库，也可以直接将项目中drf_dynamic_fields目录下的init.py文件中的类直接复制出来到自己的项目中。 直接下载init文件 –&gt;<a href="https://raw.githubusercontent.com/dbrgn/drf-dynamic-fields/master/drf_dynamic_fields/__init__.py" rel="external nofollow noopener noreferrer" target="_blank">点这里</a>。</li></ul><hr><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a><span style="color:black"><b>配置</b></span></h2><ul><li>在创建serializer的时候，把DynamicFieldsMixin这个mixin加上即可。</li><li>下面的代码是一个示例，我们创建了一个BookSerializer，加入了DynamicFieldsMixin。</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> serializers</span><br><span class="line"><span class="keyword">from</span> drf_dynamic_fields <span class="keyword">import</span> DynamicFieldsMixin</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Book</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookSerializer</span><span class="params">(DynamicFieldsMixin, serializers.ModelSerializer)</span>:</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        model = Book</span><br><span class="line">        fields = <span class="string">'__all__'</span></span><br></pre></td></tr></table></figure><p>然后，就可以直接用了~</p><hr><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a><span style="color:black"><b>使用</b></span></h2><ul><li>我们可以在url中使用fields来指定要返回的字段，例如我们在查询中仅需要获取图书的书名(name)和作者(author),那么URL可以写成这个样子，多个字段间使用逗号分隔即可：</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET https://knktc.com/book/?fields=name,author</span><br></pre></td></tr></table></figure><ul><li>对于获取单条信息的查询也同样好使：</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET https://knktc.com/book/666/?fields=name,author</span><br></pre></td></tr></table></figure><ul><li>如果我们仅仅需要某些字段不显示，则可以使用omit参数省略一些字段，例如我们在查询中其他的信息都要，但是图书描述信息字段(description)不要，那么我们可以把URL写成这个样子：</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET https://knktc.com/book/?omit=description</span><br></pre></td></tr></table></figure><ul><li>参考信息: 作者在github项目中实际上说到为了保持项目的简单，实际上已经不再接受新需求的添加了。</li><li>如果需要更强大的字段动态获取功能，则可以参考这个项目<a href="https://github.com/rsinger86/drf-flex-fields。" rel="external nofollow noopener noreferrer" target="_blank">https://github.com/rsinger86/drf-flex-fields。</a></li><li><strong>本文转载自：<a href="https://knktc.com/2018/06/05/django-rest-framework-dynamic-fields/" rel="external nofollow noopener noreferrer" target="_blank">knktc</a></strong></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> Django </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>python生成Excel的两种方式</title>
       <link href="/2019/11/08/python-excel/"/>
       <url>/2019/11/08/python-excel/</url>
