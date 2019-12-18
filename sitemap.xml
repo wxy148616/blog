@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.wxy.email/2019/12/16/python-celery-group/</loc>
+    
+    <lastmod>2019-12-18T13:31:22.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2019/12/11/mac-launchpad/</loc>
     
-    <lastmod>2019-12-11T06:50:04.000Z</lastmod>
+    <lastmod>2019-12-11T07:00:04.000Z</lastmod>
     
   </url>
   
@@ -72,7 +79,7 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2018/06/29/hexo%E9%83%A8%E7%BD%B2/</loc>
+    <loc>https://www.wxy.email/2018/06/19/hello-world/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
@@ -86,14 +93,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2018/06/19/hello-world/</loc>
+    <loc>https://www.wxy.email/2019/09/26/bbr/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/09/26/bbr/</loc>
+    <loc>https://www.wxy.email/2018/06/29/hexo%E9%83%A8%E7%BD%B2/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
