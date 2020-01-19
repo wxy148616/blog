@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.wxy.email/2020/01/19/dajngo-models-json/</loc>
+    
+    <lastmod>2020-01-19T08:50:37.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2019/12/30/drf-validation/</loc>
     
     <lastmod>2020-01-15T06:29:34.000Z</lastmod>
@@ -86,14 +93,7 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2018/06/19/hello-world/</loc>
-    
-    <lastmod>2019-09-30T11:00:35.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.wxy.email/2019/07/19/ubuntu-messy-code/</loc>
+    <loc>https://www.wxy.email/2019/05/05/Linux%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
@@ -101,6 +101,13 @@
   
   <url>
     <loc>https://www.wxy.email/2019/09/26/bbr/</loc>
+    
+    <lastmod>2019-09-30T11:00:35.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.wxy.email/2018/06/19/hello-world/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
@@ -128,14 +135,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/05/05/Linux%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/</loc>
+    <loc>https://www.wxy.email/2019/09/28/Linux-LNMP/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/09/28/Linux-LNMP/</loc>
+    <loc>https://www.wxy.email/2019/07/19/ubuntu-messy-code/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
@@ -282,14 +289,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
+    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
     
     <lastmod>2019-08-29T11:32:10.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
+    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
     
     <lastmod>2019-08-29T11:32:10.000Z</lastmod>
     
