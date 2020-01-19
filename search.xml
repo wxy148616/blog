@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Django makemigrations：&#39;NoneType&#39; object has no attribute &#39;is_relation&#39;，报错原因定位</title>
+      <link href="/2020/01/19/django-makemigrations-error/"/>
+      <url>/2020/01/19/django-makemigrations-error/</url>
+      
+        <content type="html"><![CDATA[<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a><b>问题</b></h3><ul><li>平时在生成migrate文件时，如果出现问题，一般都会显示失败的原因，造成失败的是哪个字段，但是也有可能会出现这种情况：</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  File <span class="string">"/venv/lib/python3.5/site-packages/django/db/migrations/operations/fields.py"</span>, line <span class="number">148</span>, <span class="keyword">in</span> state_forwards</span><br><span class="line">    delay = <span class="keyword">not</span> old_field.is_relation</span><br><span class="line">AttributeError: <span class="string">'NoneType'</span> object has no attribute <span class="string">'is_relation'</span></span><br></pre></td></tr></table></figure><ul><li>这样仅仅看报错的信息就没办法准确的定位自己失败的原因了。</li></ul><hr><h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a><b>解决方法</b></h3><ul><li>修改文件<code>环境路径 + /lib/python3.5/site-packages/django/db/migrations/operations/fields.py</code>。<br><img src="/2020/01/19/django-makemigrations-error/2.png" alt="tututu"></li><li>打开文件，根据报错提示，找到第148行，在<code>state_forwards</code>方法中加入以下代码：</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(app_label + <span class="string">" "</span> + self.model_name_lower + <span class="string">" "</span> + self.name)</span><br></pre></td></tr></table></figure><ul><li>再次执行makemigrations。就会打印出执行时makemigrations走到了哪一个字段。</li><li>然后就可以根据报错前打印的字段名，定位到问题字段，这样就可以更快的查到错误原因了。</li></ul><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> Django </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Django models存储json格式的数据</title>
       <link href="/2020/01/19/dajngo-models-json/"/>
       <url>/2020/01/19/dajngo-models-json/</url>
