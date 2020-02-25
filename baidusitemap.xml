@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.wxy.email/2020/02/25/mac-oh-my-zsh/</loc>
+    <lastmod>2020-02-25</lastmod>
+  </url>  <url>
     <loc>https://www.wxy.email/2020/01/19/django-makemigrations-error/</loc>
     <lastmod>2020-01-19</lastmod>
   </url>  <url>
@@ -124,10 +127,10 @@
     <loc>https://www.wxy.email/2019/05/06/python%E5%A4%84%E7%90%86%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC/</loc>
     <lastmod>2019-08-29</lastmod>
   </url>  <url>
-    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
+    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
     <lastmod>2019-08-29</lastmod>
   </url>  <url>
-    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
+    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
     <lastmod>2019-08-29</lastmod>
   </url>  <url>
     <loc>https://www.wxy.email/2019/08/21/python-zip/</loc>

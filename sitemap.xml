@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.wxy.email/2020/02/25/mac-oh-my-zsh/</loc>
+    
+    <lastmod>2020-02-25T10:21:08.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2020/01/19/django-makemigrations-error/</loc>
     
     <lastmod>2020-01-19T11:35:56.000Z</lastmod>
@@ -296,14 +303,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
+    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
     
     <lastmod>2019-08-29T11:32:10.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
+    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
     
     <lastmod>2019-08-29T11:32:10.000Z</lastmod>
     
