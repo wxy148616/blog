@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>celery 常用执行命令</title>
+      <link href="/2020/04/29/celery/"/>
+      <url>/2020/04/29/celery/</url>
+      
+        <content type="html"><![CDATA[<h2 id="celery-常用执行命令详解"><a href="#celery-常用执行命令详解" class="headerlink" title="celery 常用执行命令详解"></a><span style="color:black"><b>celery 常用执行命令详解</b></span></h2><h3 id="执行命令"><a href="#执行命令" class="headerlink" title="执行命令"></a><b>执行命令</b></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">celery -A test-1.celery worker -n name-1 --loglevel=info --max-tasks-per-child 500 --autoscale=4,1 -Q q-1</span><br></pre></td></tr></table></figure><h3 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a><b>常用参数</b></h3><table><thead><tr><th>参数</th><th>说明</th></tr></thead><tbody><tr><td>-A / –app</td><td>要使用的应用程序实例</td></tr><tr><td>-n / –hostname</td><td>设置自定义主机名</td></tr><tr><td>-Q / –queues</td><td>指定一个消息队列，该进程只接受此队列的任务</td></tr><tr><td>–max-tasks-per-child</td><td>配置工作单元子进程在被一个新进程取代之前可以执行的最大任务数量</td></tr><tr><td>–max-memory-per-child</td><td>设置工作单元子进程被替换之前可以使用的最大内存</td></tr><tr><td>-l / –loglevel</td><td>定义打印log的等级 DEBUG, INFO, WARNING, ERROR, CRITICAL, FATAL</td></tr><tr><td>–autoscale</td><td>池的进程的最大数量和最小数量</td></tr><tr><td>-c / –concurrency</td><td>同时处理任务的工作进程数量，默认值是系统上可用的cpu数量</td></tr><tr><td>-B / –beat</td><td>定义运行celery打周期任务调度程序</td></tr><tr><td>-h / –help</td><td>help！help！help！</td></tr></tbody></table><h3 id="n-–hostname-参数变量扩展"><a href="#n-–hostname-参数变量扩展" class="headerlink" title="-n / –hostname 参数变量扩展"></a><b>-n / –hostname 参数变量扩展</b></h3><ul><li>%h: 主机名，包含域名</li><li>%n: 主机名</li><li>%d: 域名</li></ul><h3 id="如果当前主机名是-test-ubuntu-com，那么会扩展如下"><a href="#如果当前主机名是-test-ubuntu-com，那么会扩展如下" class="headerlink" title="如果当前主机名是 test.ubuntu.com，那么会扩展如下"></a><b>如果当前主机名是 test.ubuntu.com，那么会扩展如下</b></h3><table><thead><tr><th>命令</th><th>输出值</th></tr></thead><tbody><tr><td>ttt_%h</td><td>ttt_test.ubuntu.com</td></tr><tr><td>ttt_%n</td><td>ttt_ubuntu</td></tr><tr><td>ttt_%d</td><td>ttt_ubuntu.com</td></tr></tbody></table><hr><h2 id="Celery的生产者和消费者"><a href="#Celery的生产者和消费者" class="headerlink" title="Celery的生产者和消费者"></a><span style="color:black"><b>Celery的生产者和消费者</b></span></h2><ul><li><strong>Celery Worker</strong>: 执行任务的消费者</li><li><strong>Producer</strong>: 任务生产者. 调用 Celery API , 函数或者装饰器, 而产生任务并交给任务队列处理的都是任务生产者</li><li><strong>Celery Beat</strong>: 任务调度器. Beat 进程会读取配置文件的内容, 周期性的将配置中到期需要执行的任务发送给任务队列</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> celery </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> celery </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Mac终端使用oh-my-zsh中文乱码</title>
       <link href="/2020/02/25/mac-oh-my-zsh/"/>
       <url>/2020/02/25/mac-oh-my-zsh/</url>
