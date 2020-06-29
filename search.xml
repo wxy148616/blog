@@ -1172,33 +1172,6 @@
     
     
     <entry>
-      <title>from lxml import etree</title>
-      <link href="/2019/06/04/ElementTree-tostring/"/>
-      <url>/2019/06/04/ElementTree-tostring/</url>
-      
-        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><hr><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><hr><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><hr><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Python </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> python </tag>
-            
-            <tag> 爬虫 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Python写入InfluxDB</title>
       <link href="/2019/06/04/influxdb/"/>
       <url>/2019/06/04/influxdb/</url>
@@ -1218,6 +1191,33 @@
             <tag> python </tag>
             
             <tag> InfluxDB </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>from lxml import etree</title>
+      <link href="/2019/06/04/ElementTree-tostring/"/>
+      <url>/2019/06/04/ElementTree-tostring/</url>
+      
+        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><hr><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><hr><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><hr><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> 爬虫 </tag>
             
         </tags>
       
@@ -1644,7 +1644,7 @@
       <link href="/2019/05/08/git%E9%92%A9%E5%AD%90/"/>
       <url>/2019/05/08/git%E9%92%A9%E5%AD%90/</url>
       
-        <content type="html"><![CDATA[<p>手动提交好累的，自动部署才是王道</p><a id="more"></a><hr><h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a><b>服务器端</b></h3><ul><li><strong>创建一个裸仓库</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pwd   # /home/www/</span><br><span class="line">git init --bare  project_xxx.git</span><br><span class="line">cd project_xxx.git/hooks/</span><br><span class="line">cp post-update.sample post-update</span><br></pre></td></tr></table></figure><ul><li><strong>创建一个普通的仓库</strong> ，这一步就是为了明确表示一下仓库其实是有两个的，这个仓库才是代码的存储位置</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwd   # /home/www/</span><br><span class="line">mkdir blog</span><br></pre></td></tr></table></figure><ul><li><strong>更改post-update中的内容为:</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/sh</span><br><span class="line">unset GIT_DIR </span><br><span class="line">DIR_ONE=/home/www/blog／  # 更新后的代码会存储在这个文件夹中，文件夹需要存在 </span><br><span class="line">cd $DIR_ONE</span><br><span class="line">git init</span><br><span class="line">git remote add gitee https://gitee.com/project.git  # 码云/GitHub代码仓库地址，如果不需要推到远程仓库，可以把这一步和最后的push去掉</span><br><span class="line">git remote add origin /home/www/project_xxx.git  # 路径指向裸仓库</span><br><span class="line">git reset --hard   # git clean -df</span><br><span class="line">git pull origin master</span><br><span class="line">git push gitee master # 把代码推到远程仓库</span><br></pre></td></tr></table></figure><ul><li><strong>配置git</strong>，因为用的是服务器，没有配置公钥，直接偷懒配置一下git的全局配置，<strong>不需要推到远程仓库可以省略这一步</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "name"</span><br><span class="line">git config --global user.email "email"</span><br><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure><p>然后使用git推一次代码，记录一下远程仓库的密码，脚本在推代码的时候就不需要再验证了</p><h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a><b>客户端</b></h3><ul><li><strong>进入项目目录</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin 服务器地址:/home/project_xxx.git   # 服务端创建的裸仓库的地址</span><br></pre></td></tr></table></figure><p>然后就可以在客户端进行操作了</p><p>参考: git book: <a href="https://git-scm.com/book/zh/v2/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git-%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%90%AD%E5%BB%BA-Git" rel="external nofollow noopener noreferrer" target="_blank">服务器上的-Git-在服务器上搭建-Git</a><br><a href="a&gt;https://aotu.io/notes/2017/04/10/githooks/index.html">用 Git 钩子进行简单自动部署</a></p>]]></content>
+        <content type="html"><![CDATA[<p>手动提交好累的，自动部署才是王道</p><a id="more"></a><hr><h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a><b>服务器端</b></h3><ul><li><strong>创建一个裸仓库</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pwd   # /home/www/</span><br><span class="line">git init --bare  project_xxx.git</span><br><span class="line">cd project_xxx.git/hooks/</span><br><span class="line">cp post-update.sample post-update</span><br></pre></td></tr></table></figure><ul><li><strong>创建一个普通的仓库</strong> ，这一步就是为了明确表示一下仓库其实是有两个的，这个仓库才是代码的存储位置</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home/www/</span><br><span class="line">pwd   # /home/www/</span><br><span class="line">mkdir blog</span><br></pre></td></tr></table></figure><ul><li><strong>更改post-update中的内容为:</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/sh</span><br><span class="line">unset GIT_DIR </span><br><span class="line">DIR_ONE=/home/www/blog／  # 更新后的代码会存储在这个文件夹中，文件夹需要存在 </span><br><span class="line">cd $DIR_ONE</span><br><span class="line">git init</span><br><span class="line">git remote add gitee https://gitee.com/project.git  # 码云/GitHub代码仓库地址，如果不需要推到远程仓库，可以把这一步和最后的push去掉</span><br><span class="line">git remote add origin /home/www/project_xxx.git  # 路径指向裸仓库</span><br><span class="line">git reset --hard   # git clean -df</span><br><span class="line">git pull origin master</span><br><span class="line">git push gitee master # 把代码推到远程仓库</span><br></pre></td></tr></table></figure><ul><li><strong>配置git</strong>，因为用的是服务器，没有配置公钥，直接偷懒配置一下git的全局配置，<strong>不需要推到远程仓库可以省略这一步</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "name"</span><br><span class="line">git config --global user.email "email"</span><br><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure><p>然后使用git推一次代码，记录一下远程仓库的密码，脚本在推代码的时候就不需要再验证了</p><h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a><b>客户端</b></h3><ul><li><strong>进入项目目录</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin 服务器地址:/home/project_xxx.git   # 服务端创建的裸仓库的地址</span><br></pre></td></tr></table></figure><p>然后就可以在客户端进行操作了</p><p>参考: git book: <a href="https://git-scm.com/book/zh/v2/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git-%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%90%AD%E5%BB%BA-Git" rel="external nofollow noopener noreferrer" target="_blank">服务器上的-Git-在服务器上搭建-Git</a><br><a href="a&gt;https://aotu.io/notes/2017/04/10/githooks/index.html">用 Git 钩子进行简单自动部署</a></p>]]></content>
       
       
       <categories>
