@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.wxy.email/2020/06/27/python3-md5/</loc>
+    
+    <lastmod>2020-07-27T06:07:38.992Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2020/04/29/celery/</loc>
     
     <lastmod>2020-06-29T11:08:57.251Z</lastmod>
@@ -135,14 +142,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/07/19/ubuntu-messy-code/</loc>
+    <loc>https://www.wxy.email/2019/09/26/bbr/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/09/28/Linux-LNMP/</loc>
+    <loc>https://www.wxy.email/2019/07/19/ubuntu-messy-code/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
@@ -156,7 +163,7 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/09/26/bbr/</loc>
+    <loc>https://www.wxy.email/2019/09/28/Linux-LNMP/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
@@ -184,14 +191,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/07/07/alfred/</loc>
+    <loc>https://www.wxy.email/2019/09/22/sublime/</loc>
     
     <lastmod>2019-09-23T10:02:27.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/09/22/sublime/</loc>
+    <loc>https://www.wxy.email/2019/07/07/alfred/</loc>
     
     <lastmod>2019-09-23T10:02:27.000Z</lastmod>
     
@@ -247,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
+    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
     
     <lastmod>2019-08-29T11:32:10.000Z</lastmod>
     
@@ -296,7 +303,7 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/06/04/ElementTree-tostring/</loc>
+    <loc>https://www.wxy.email/2019/06/04/influxdb/</loc>
     
     <lastmod>2019-08-29T11:32:10.000Z</lastmod>
     
