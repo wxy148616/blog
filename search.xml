@@ -4,6 +4,133 @@
   
     
     <entry>
+      <title>MySQL的数据类型</title>
+      <link href="/2020/07/10/mysql-datatype/"/>
+      <url>/2020/07/10/mysql-datatype/</url>
+      
+        <content type="html"><![CDATA[<p>按照官方的<a href="https://dev.mysql.com/doc/refman/8.0/en/data-types.html" rel="external nofollow noopener noreferrer" target="_blank">文档（8.0）</a> 分析，MySQL的数据类型大概可以分为五类：数值数据类型、日期和时间数据类型、字符串数据类型、空间数据类型、JSON数据类型</p><h2 id="1、数值数据类型"><a href="#1、数值数据类型" class="headerlink" title="1、数值数据类型"></a><span style="color:black"><b>1、数值数据类型</b></span></h2><h3 id="1-1、整数"><a href="#1-1、整数" class="headerlink" title="1.1、整数"></a><b>1.1、整数</b></h3><ul><li>MySQL支持SQL表中整数<code>intege</code>r(int)和<code>smallint</code>。作为一个可扩展标准，MySQL也支持整数<code>tinyint</code>、<code>mediumint</code>和<code>bigint</code>。</li><li>MySQL支持的整数存储空间和范围</li></ul><table><thead><tr><th>类型</th><th>存储空间(bytes)</th><th>有符号范围</th><th>无符号范围</th></tr></thead><tbody><tr><td>tinyint</td><td>1</td><td>[-128, 127]</td><td>[0, 255]</td></tr><tr><td>smallint</td><td>2</td><td>[-32768, 32767]</td><td>[0, 65535]</td></tr><tr><td>mediumint</td><td>3</td><td>[-8388608, 8388607]</td><td>[0, 16777215]</td></tr><tr><td>int</td><td>4</td><td>[-2147483648, 2147483647]</td><td>[0, 4294967295]</td></tr><tr><td>bigint</td><td>8</td><td>[-2<sup>63</sup>, 2<sup>63</sup>-1]</td><td>[0, 2<sup>64</sup>-1]</td></tr></tbody></table><h3 id="1-2、定点数"><a href="#1-2、定点数" class="headerlink" title="1.2、定点数"></a><b>1.2、定点数</b></h3><p><a href="https://dev.mysql.com/doc/refman/8.0/en/precision-math-decimal-characteristics.html" rel="external nofollow noopener noreferrer" target="_blank">定点数</a> 自变量的值范围可以表示为：<code>DECIMAL(M,D)</code></p><ul><li><code>m</code>是最大位数（精度）。范围是1到65。默认值为10</li><li><code>d</code>是小数点右边的位数（小数位数）。范围是0到30，并且不能大于<code>m</code>。默认值为0</li></ul><p><code>decimal</code>的值使用二进制格式存储，该格式将9个十进制数字打包为4个字节。每个值的整数和小数部分的存储要求分别确定。九个数字的每个倍数需要4个字节，其余的剩余数字则需要4个字节的一部分。</p><table><thead><tr><th>剩余数字</th><th>所需字节数</th></tr></thead><tbody><tr><td>0</td><td>0</td></tr><tr><td>1–2</td><td>1</td></tr><tr><td>3–4</td><td>2</td></tr><tr><td>5–6</td><td>3</td></tr><tr><td>7–9</td><td>4</td></tr></tbody></table><ul><li>当<code>decimal(65, 0)</code>时，支持最大范围[-10<sup>65</sup>-1, 10<sup>65</sup>-1]</li></ul><h3 id="1-3、浮点数"><a href="#1-3、浮点数" class="headerlink" title="1.3、浮点数"></a><b>1.3、浮点数</b></h3><p>浮点数有<code>float</code>(单精度)和<code>double</code>(双精度)</p><table><thead><tr><th>类型</th><th>精度值</th><th>所需字节字节</th></tr></thead><tbody><tr><td>float</td><td>0~23</td><td>4</td></tr><tr><td>double</td><td>24~53</td><td>8</td></tr></tbody></table><p>浮点数可以和<a href="#1-2、定点数">定点数</a>一样指定<code>m</code>和<code>d</code>，但是为了保证最大可能的可移植性，需要使用浮点数存储的代码应使用<code>float</code>或<code>double precision</code>，不规定精度或位数。</p><h3 id="1-4、位类型"><a href="#1-4、位类型" class="headerlink" title="1.4、位类型"></a><b>1.4、位类型</b></h3><ul><li>位类型（<code>bit</code>），它是用来存放二进制数据的，<code>bit(1)</code>表示存储长度为1位的二进制数据。超出存储长度会被直接截取。取值范围[bit(1), bit(64)]</li></ul><hr><h2 id="2、日期和时间数据类型"><a href="#2、日期和时间数据类型" class="headerlink" title="2、日期和时间数据类型"></a><span style="color:black"><b>2、日期和时间数据类型</b></span></h2><ul><li>日期和时间数据类型用于表示时间值<code>date</code>、<code>time</code>、<code>datetime</code>、<code>timestamp</code>和<code>year</code>。</li><li><code>timestamp</code>自动设置为最新修改的日期和时间，定义一个字段为<code>timestamp</code>，这个字段里的时间数据会随其他字段修改的时候自动刷新，存放这条记录最后被修改的时间</li><li>每个时间类型有一个有效值范围和一个”零”值。</li></ul><table><thead><tr><th>类型</th><th>字节数</th><th>取值范围</th><th>零值</th></tr></thead><tbody><tr><td>year</td><td>1</td><td>1901~2155</td><td>0000</td></tr><tr><td>date</td><td>4</td><td>1000-01-01~9999-12-31</td><td>0000:00:00</td></tr><tr><td>time</td><td>3</td><td>-838:59:59~838:59:59</td><td>00:00:00</td></tr><tr><td>datetime</td><td>8</td><td>1000-01-01 00:00:00~9999-12-31 23:59:59</td><td>0000-00-00 00:00:00</td></tr><tr><td>timestamp</td><td>4</td><td>1970-01-01 08:00:01~2038-01-19 11:14:07</td><td>00000000000000</td></tr></tbody></table><hr><h2 id="3、字符串类型"><a href="#3、字符串类型" class="headerlink" title="3、字符串类型"></a><span style="color:black"><b>3、字符串类型</b></span></h2><p>字符串数据类型<code>char</code>、<code>varchar</code>、<code>binary</code>、<code>varbinary</code>、<code>blob</code>、<code>text</code>、<code>enum</code>和<code>set</code>。</p><table><thead><tr><th>类型</th><th>最大长度(bytes)</th><th>说明</th></tr></thead><tbody><tr><td>char</td><td>255</td><td>定长字符串</td></tr><tr><td>varchar</td><td>65535</td><td>变长字符串</td></tr><tr><td>binary</td><td>255</td><td>二进制定长字符串</td></tr><tr><td>varbinary</td><td>65535</td><td>二进制变长字符串</td></tr><tr><td>tinytext</td><td>255</td><td>短文本字符串</td></tr><tr><td>text</td><td>65535</td><td>长文本数据</td></tr><tr><td>mediumtext</td><td>2<sup>24</sup>-1</td><td>中等长度文本数据</td></tr><tr><td>longtext</td><td>2<sup>32</sup>-1</td><td>极大文本数据</td></tr><tr><td>tinyblob</td><td>255</td><td>二进制短文本字符串</td></tr><tr><td>blob</td><td>65535</td><td>二进制长文本数据</td></tr><tr><td>mediumblob</td><td>2<sup>24</sup>-1</td><td>二进制中等长度文本数据</td></tr><tr><td>longblob</td><td>2<sup>32</sup>-1</td><td>二进制极大文本数据</td></tr></tbody></table><h3 id="3-1、char和varchar"><a href="#3-1、char和varchar" class="headerlink" title="3.1、char和varchar"></a><b>3.1、char和varchar</b></h3><ul><li><code>char(n)</code>若存入字符数小于n，默认在后面补充空格，查询的时候再将空格去掉。所以<code>char</code>类型存储的字符串末尾不能有空格。  </li><li><code>varchar</code>的值是可变长度的字符串。长度可以指定为0到65535之间的值。<a href="https://dev.mysql.com/doc/refman/8.0/en/column-count-limit.html" rel="external nofollow noopener noreferrer" target="_blank">有效最大长度</a> 取决于最大行大小和所使用的字符集。<br>官方示例：</li></ul><table><thead><tr><th>值</th><th>char(4)</th><th>需要存储</th><th>varchar(4)</th><th>需要存储</th></tr></thead><tbody><tr><td>‘’</td><td>‘&nbsp;&nbsp;&nbsp;&nbsp;’</td><td>4字节</td><td>‘’</td><td>1个字节</td></tr><tr><td>‘ab’</td><td>‘ab&nbsp;&nbsp;’</td><td>4字节</td><td>‘ab’</td><td>3个字节</td></tr><tr><td>‘abcd’</td><td>‘abcd’</td><td>4字节</td><td>‘abcd’</td><td>5字节</td></tr><tr><td>‘abcdefgh’</td><td>‘abcd’</td><td>4字节</td><td>‘abcd’</td><td>5字节</td></tr></tbody></table><ul><li>显示在表最后一行中的值仅在不使用严格的<a href="https://dev.mysql.com/doc/refman/8.0/en/sql-mode.html" rel="external nofollow noopener noreferrer" target="_blank">SQL模式</a> 时才适用，如果启用了严格模式，则会报错。</li></ul><h3 id="3-2、binary和varbinary"><a href="#3-2、binary和varbinary" class="headerlink" title="3.2、binary和varbinary"></a><b>3.2、binary和varbinary</b></h3><p>(<code>binary</code>、<code>varbinary</code>)和(<code>char</code>、<code>varchar</code>)类似，不同的是它们存储二进制字节字符串而不是字符串。</p><ul><li><code>binary(n)</code> 若存入字符数小于<code>n</code>，默认在后面补充<code>0x00</code>，查询的时候再去掉。</li></ul><h3 id="3-3、text和blob"><a href="#3-3、text和blob" class="headerlink" title="3.3、text和blob"></a><b>3.3、text和blob</b></h3><ul><li><code>blob</code>是一个二进制大对象，可以容纳可变数量的数据。<code>tinyblob</code>、<code>blob</code>、<code>mediumblob</code>和<code>longblob</code>这四个<code>blob</code>类型。仅在它们可以保存的值的最大长度上有所不同。</li><li><code>text</code>的四个类型<code>tinytext</code>、<code>text</code>、<code>mediumtext</code>和<code>longtext</code>和<code>blob</code>的四种类型相对应。</li><li><code>blob</code>值被视为二进制字符串（字节字符串）。它们具有<code>binary</code>字符集和排序规则，并且比较和排序基于列值中字节的数字值。</li><li><code>text</code>值被视为非二进制字符串（字符字符串）。它们具有<code>binary</code>以外的字符集，并且根据字符集的排序规则对值进行排序和比较。</li></ul><h3 id="3-3、enum"><a href="#3-3、enum" class="headerlink" title="3.3、enum"></a><b>3.3、enum</b></h3><p><code>enum</code>是一个字符串对象，值是从允许输入的列表中选择的，这些值在表创建时在列规范中定义。</p><ul><li><code>enum</code>列表的最大数量为65535，每个值末尾的空格都会被删除。</li><li><code>enum</code>列表有<code>not null</code>属性，其默认值为取值列表的第一个元素。</li><li><code>enum</code>列表没有<code>not null</code>，则enum类型将允许插入<code>null</code>，并且<code>null</code>为默认值。</li><li><code>enum</code>列表中的每个值独有一个顺序排列的编号，MySQL会存入这个编号而不是对应的值。</li></ul><h3 id="3-4、set"><a href="#3-4、set" class="headerlink" title="3.4、set"></a><b>3.4、set</b></h3><p><code>set</code>是可以具有零个或多个值的字符串对象，这些值在表创建时在列规范中定义。</p><ul><li><code>set</code>的最大数量为64，每个值末尾的空格都会被删除。</li><li>取多个元素时，不同元素用逗号隔开。</li><li>大概可以理解为<code>enum</code>的多选版。</li></ul><h2 id="4、json数据类型"><a href="#4、json数据类型" class="headerlink" title="4、json数据类型"></a><span style="color:black"><b>4、json数据类型</b></span></h2><p>MySQL支持json定义的数据类型，该类型可有效访问json（JavaScript对象表示法）文档中的数据。</p><ul><li>自动验证存储在json列中的json文档。无效的文档会产生错误。</li><li>查询性能的提升：查询不需要遍历所有字符串才能找到数据。</li><li>json存储的数据不能是null,只能是json格式的数据</li></ul><h2 id="5、空间数据类型"><a href="#5、空间数据类型" class="headerlink" title="5、空间数据类型"></a><span style="color:black"><b>5、空间数据类型</b></span></h2><p>注：没有理解，拷贝部分官方的介绍。<br>空间数据类型有下面几种：</p><ul><li><code>GEOMETRY</code>: 是层次结构的根类。可以存储任何类型的几何值。其他单值类型（POINT， LINESTRING和POLYGON）将其值限制为特定的几何类型。</li><li><code>Point</code>:（点）指的是代表坐标空间中单个位置的几何类。</li><li><code>Curve</code>: （曲线）是一种1维几何对象，通常由一系列点表示。Curve的特殊子类定义了点之间的内插类型。Curve是一种非实例化类。</li><li><code>LineString</code>: 是具有点之间线性内插特性的<code>Curve</code>。</li><li><code>Surface</code>: 是一种2维几何对象。它是一种非实例化类。其唯一的可实例化子类是Polygon。</li><li><code>Polygon</code>: 是代表多边几何对象的平面<code>Surface</code>。它由单个外部边界以及0或多个内部边界定义，其中，每个内部边界定义为<code>Polygon</code>中的1个孔。</li><li><code>GeometryCollection</code>: 是由1个或多个任意类几何对象构成的几何对象。</li><li><code>MultiPoint</code>: 是一种由<code>Point</code>元素构成的几何对象集合。这些点未以任何方式连接或排序。</li><li><code>MultiCurve</code>: 是一种由<code>Curve</code>元素构成的几何对象集合。<code>MultiCurve</code>是一种非实例化类。</li><li><code>MultiLineString</code>: 是一种由<code>LineString</code>元素构成的几何对象集合。</li><li><code>MultiSurface</code>: 是一种由<code>Surface</code>元素构成的几何对象集合。<code>MultiSurface</code>是一种非实例化类。其唯一的可实例化子类是<code>MultiPolygon</code>。</li><li><code>MultiPolygon</code>: 是一种由<code>Polygon</code>元素构成的几何对象集合。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MySQL数据库的创建和删除</title>
+      <link href="/2020/07/07/mysql-database/"/>
+      <url>/2020/07/07/mysql-database/</url>
+      
+        <content type="html"><![CDATA[<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a><b>创建数据库</b></h3><ul><li>直接创建</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database 数据库名;</span><br></pre></td></tr></table></figure><ul><li>进阶1：创建前判断是否存在，存在则不创建</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database if not exists 数据库名;</span><br></pre></td></tr></table></figure><ul><li>进阶2：创建指定编码集为utf8的数据库</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database if not exists 数据库名 default charset utf8 collate utf8_general_ci;</span><br></pre></td></tr></table></figure><hr><h3 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a><b>删除数据库</b></h3><ul><li>drop命令删除数据库。<span style="color:red">删库有风险，<a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;tn=baidu&amp;wd=%E8%AF%AF%E5%88%A0%E6%95%B0%E6%8D%AE%E5%BA%93" rel="external nofollow noopener noreferrer" target="_blank">操作需谨慎！！！</a></span></li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop database 数据库名;</span><br></pre></td></tr></table></figure><ul><li>进阶1：删除前判断是否存在，不存在则不删除</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop database if exists 数据库名;</span><br></pre></td></tr></table></figure><ul><li>注意：MySQL安装后，系统会自动创建名为information_schema和mysql的两个系统数据库，里面存放一些和数据库相关的信息，如果删除了这两个数据库，mMySQL会挂掉。</li></ul><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MySQL常用show命令</title>
+      <link href="/2020/07/06/mysql-ccommands/"/>
+      <url>/2020/07/06/mysql-ccommands/</url>
+      
+        <content type="html"><![CDATA[<h3 id="MySQL常用show命令"><a href="#MySQL常用show命令" class="headerlink" title="MySQL常用show命令"></a><b>MySQL常用show命令</b></h3><h2 id="1-show-databases"><a href="#1-show-databases" class="headerlink" title="1. show databases;"></a>1. <code>show databases;</code></h2><p>列出数据库管理系统中的所有数据库列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| test               |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">+--------------------+</span><br></pre></td></tr></table></figure></p><h2 id="2-show-tables"><a href="#2-show-tables" class="headerlink" title="2. show tables;"></a>2. <code>show tables;</code></h2><p>显示指定数据库的所有表，使用该命令前需要使用 <code>use 数据库名</code> 命令来选择要操作的数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----------------------------+</span><br><span class="line">| Tables_in_sms              |</span><br><span class="line">+----------------------------+</span><br><span class="line">| test_group                 |</span><br><span class="line">| test_user                  |</span><br><span class="line">+----------------------------+</span><br></pre></td></tr></table></figure></p><h2 id="3-show-columns-from-数据表"><a href="#3-show-columns-from-数据表" class="headerlink" title="3. show columns from 数据表;"></a>3. <code>show columns from 数据表;</code></h2><p>显示数据表每一列的属性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+-------------+-------------+------+-----+---------+----------------+</span><br><span class="line">| Field       | Type        | Null | Key | Default | Extra          |</span><br><span class="line">+-------------+-------------+------+-----+---------+----------------+</span><br><span class="line">| id          | int(11)     | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| create_at   | datetime(6) | NO   |     | NULL    |                |</span><br><span class="line">| modify_at   | datetime(6) | NO   |     | NULL    |                |</span><br><span class="line">| phone       | varchar(11) | NO   | UNI | NULL    |                |</span><br><span class="line">| status      | int(11)     | NO   |     | NULL    |                |</span><br><span class="line">+-------------+-------------+------+-----+---------+----------------+</span><br></pre></td></tr></table></figure></p><h2 id="4-show-index-from-数据表"><a href="#4-show-index-from-数据表" class="headerlink" title="4. show index from 数据表;"></a>4. <code>show index from 数据表;</code></h2><p>显示数据表的详细索引信息，包括主键。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+------------+------------+-------------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+</span><br><span class="line">| Table      | Non_unique | Key_name                      | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible |</span><br><span class="line">+------------+------------+-------------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+</span><br><span class="line">| test_phone |          0 | PRIMARY                       |            1 | id          | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     |</span><br><span class="line">| test_phone |          0 | test_phone_phone_041a5a8f_uniq |            1 | phone       | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     |</span><br><span class="line">+------------+------------+-------------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+</span><br></pre></td></tr></table></figure></p><h2 id="5-show-table-status-from-数据库名-like-39-数据表名-39-G"><a href="#5-show-table-status-from-数据库名-like-39-数据表名-39-G" class="headerlink" title="5. show table status from 数据库名 like &#39;数据表名&#39;\G;"></a>5. <code>show table status from 数据库名 like &#39;数据表名&#39;\G;</code></h2><p>输出MySQL数据库管理系统的性能及统计信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">*************************** 1. row ***************************</span><br><span class="line">           Name: test_phone</span><br><span class="line">         Engine: InnoDB</span><br><span class="line">        Version: 10</span><br><span class="line">     Row_format: Dynamic</span><br><span class="line">           Rows: 1</span><br><span class="line"> Avg_row_length: 16384</span><br><span class="line">    Data_length: 16384</span><br><span class="line">Max_data_length: 0</span><br><span class="line">   Index_length: 0</span><br><span class="line">      Data_free: 0</span><br><span class="line"> Auto_increment: 2</span><br><span class="line">    Create_time: 2020-07-29 16:07:26</span><br><span class="line">    Update_time: 2020-07-29 16:16:59</span><br><span class="line">     Check_time: NULL</span><br><span class="line">      Collation: utf8mb4_bin</span><br><span class="line">       Checksum: NULL</span><br><span class="line"> Create_options:</span><br><span class="line">        Comment:</span><br></pre></td></tr></table></figure></p><h2 id="6-show-create-database-数据库名"><a href="#6-show-create-database-数据库名" class="headerlink" title="6. show create database 数据库名;"></a>6. <code>show create database 数据库名;</code></h2><p>查看数据库使用的字符集</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+----------+-------------------------------------------------------------------------------------+</span><br><span class="line">| Database | Create Database                                                                     |</span><br><span class="line">+----------+-------------------------------------------------------------------------------------+</span><br><span class="line">| test      | CREATE DATABASE `test` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin */ |</span><br><span class="line">+----------+-------------------------------------------------------------------------------------+</span><br></pre></td></tr></table></figure><h2 id="7-show-create-table-数据表名"><a href="#7-show-create-table-数据表名" class="headerlink" title="7. show create table 数据表名;"></a>7. <code>show create table 数据表名;</code></h2><p>查看数据表使用的字符集，也可以使用<a href="#5-show-table-status-from-数据库名-like-39-数据表名-39-G">方法5</a>查看</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">+-----------+------------------------------------------------------------------+</span><br><span class="line">| Table     | Create Table                                                     |</span><br><span class="line">+-----------+------------------------------------------------------------------+</span><br><span class="line">| test_phone | CREATE TABLE `test_phone` (</span><br><span class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `create_at` datetime(6) NOT NULL,</span><br><span class="line">  `modify_at` datetime(6) NOT NULL,</span><br><span class="line">  `phone` varchar(11) COLLATE utf8mb4_bin NOT NULL,</span><br><span class="line">  `status` int(11) NOT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  UNIQUE KEY `test_phone_phone_041a5a8f_uniq` (`phone`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin |</span><br><span class="line">+-----------+------------------------------------------------------------------+</span><br></pre></td></tr></table></figure><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MySQL新增用户</title>
+      <link href="/2020/07/03/mysql-user/"/>
+      <url>/2020/07/03/mysql-user/</url>
+      
+        <content type="html"><![CDATA[<h3 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a><b>添加用户</b></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br><span class="line">insert into user </span><br><span class="line">    (host, user, authentication_string, select_priv, insert_priv, update_priv) </span><br><span class="line">    values(&apos;localhost&apos;, &apos;guest&apos;, md5(&apos;password123&apos;), &apos;Y&apos;, &apos;Y&apos;, &apos;Y&apos;);</span><br></pre></td></tr></table></figure><ul><li>得到报错信息：<code>ERROR 1364 (HY000): Field &#39;ssl_cipher&#39; doesn&#39;t have a default value</code></li><li>该报错是因为MySQL默认配置了严格模式，该模式禁止通过<code>insert</code>的方式直接修改mysql库中的user表进行添加新用户，需要使用<code>grant</code>语句。</li></ul><ol><li><p>新增用户，’guest’为用户名 ，’localhost’为host，’password123’为密码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create user &apos;guest&apos;@&apos;localhost&apos; identified by &apos;password123&apos;;</span><br></pre></td></tr></table></figure></li><li><p>赋予权限 select, insert, update, delete, create, drop</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grant usage on *.* to &apos;guest&apos;@&apos;localhost&apos; with grant option;</span><br><span class="line">grant select, insert, update, delete, create, drop on *.* to &apos;guest&apos;@&apos;localhost&apos; with grant option;</span><br></pre></td></tr></table></figure></li><li><p>重新载入授权表</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges</span><br></pre></td></tr></table></figure></li></ol><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Ubuntu18.04更改apt-get的下载源</title>
+      <link href="/2020/06/30/ubuntu-apt-get/"/>
+      <url>/2020/06/30/ubuntu-apt-get/</url>
+      
+        <content type="html"><![CDATA[<p>前些天<a href="https://activity.huaweicloud.com/2020_618_promotion/index.html?fromacct=c4b873b3-dcad-4abf-b268-fd5920a93ec1&amp;utm_source=d3d3X3d4eV9lbWFpbA==&amp;utm_medium=cps&amp;utm_campaign=201905" rel="external nofollow noopener noreferrer" target="_blank">华为云活动</a>，<strong>256</strong>抢了一个3年1核2G 100%性能的服务器，今天抽时间配置一下，发现使用apt-get安装东西的时候总是会失败，提示需要apt-get update，但是执行后又会报错“W: Some index files failed to download. They have been ignored, or old ones used instead.”，想了想应该是源的问题，于是查了一下Ubuntu更改下载源的方法，记录一下。</p><h3 id="首先系统自带的apt-get源配置文件在这里"><a href="#首先系统自带的apt-get源配置文件在这里" class="headerlink" title="首先系统自带的apt-get源配置文件在这里"></a><b>首先系统自带的apt-get源配置文件在这里</b></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/apt/sources.list</span><br></pre></td></tr></table></figure><h3 id="以防万一备份一下"><a href="#以防万一备份一下" class="headerlink" title="以防万一备份一下"></a><b>以防万一备份一下</b></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br></pre></td></tr></table></figure><h3 id="查看自己的系统Codename"><a href="#查看自己的系统Codename" class="headerlink" title="查看自己的系统Codename"></a><b>查看自己的系统Codename</b></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsb_release -c</span><br><span class="line"><span class="meta">&gt;</span> Codename:bionic</span><br></pre></td></tr></table></figure><table><thead><tr><th></th><th>系统</th><th>对应Codename</th></tr></thead><tbody><tr><td></td><td>12.04</td><td>precise</td><td></td></tr><tr><td></td><td>14.04</td><td>trusty</td><td></td></tr><tr><td></td><td>15.04</td><td>vivid</td><td></td></tr><tr><td></td><td>15.10</td><td>wily</td><td></td></tr><tr><td></td><td>16.04</td><td>xenial</td><td></td></tr><tr><td></td><td>18.04</td><td>bionic</td><td></td></tr><tr><td></td><td>20.04</td><td>focal</td><td></td></tr></tbody></table><h3 id="根据自己的Codename配置对应的源地址，阿里云镜像站"><a href="#根据自己的Codename配置对应的源地址，阿里云镜像站" class="headerlink" title="根据自己的Codename配置对应的源地址，阿里云镜像站"></a><b>根据自己的Codename配置对应的源地址，<a href="https://developer.aliyun.com/mirror/?spm=a2c6h.13651104.0.d1002.199f94ddmFrrye" rel="external nofollow noopener noreferrer" target="_blank">阿里云镜像站</a></b></h3><h3 id="最后编辑-etc-apt-sources-list源文件，改为以下内容"><a href="#最后编辑-etc-apt-sources-list源文件，改为以下内容" class="headerlink" title="最后编辑/etc/apt/sources.list源文件，改为以下内容"></a><b>最后编辑<code>/etc/apt/sources.list</code>源文件，改为以下内容</b></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure><h3 id="或者清华大学源"><a href="#或者清华大学源" class="headerlink" title="或者清华大学源"></a><b>或者<a href="https://mirrors.tuna.tsinghua.edu.cn/" rel="external nofollow noopener noreferrer" target="_blank">清华大学源</a></b></h3><h3 id="重新试一下，OK"><a href="#重新试一下，OK" class="headerlink" title="重新试一下，OK"></a><b>重新试一下，OK</b></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure><hr><p>最后自发的打个广告：<a href="https://activity.huaweicloud.com/2020_618_promotion/index.html?fromacct=c4b873b3-dcad-4abf-b268-fd5920a93ec1&amp;utm_source=d3d3X3d4eV9lbWFpbA==&amp;utm_medium=cps&amp;utm_campaign=201905" rel="external nofollow noopener noreferrer" target="_blank">华为云活动</a>不得不说优惠力度挺大的，需要的可以先注册个账号占个坑。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 项目部署 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 项目部署 </tag>
+            
+            <tag> ubuntu </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>python3数据MD5加密</title>
       <link href="/2020/06/27/python3-md5/"/>
       <url>/2020/06/27/python3-md5/</url>
@@ -1222,33 +1349,6 @@
     
     
     <entry>
-      <title>from lxml import etree</title>
-      <link href="/2019/06/04/ElementTree-tostring/"/>
-      <url>/2019/06/04/ElementTree-tostring/</url>
-      
-        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><hr><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><hr><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><hr><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> Python </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> python </tag>
-            
-            <tag> 爬虫 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Python写入InfluxDB</title>
       <link href="/2019/06/04/influxdb/"/>
       <url>/2019/06/04/influxdb/</url>
@@ -1268,6 +1368,33 @@
             <tag> python </tag>
             
             <tag> InfluxDB </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>from lxml import etree</title>
+      <link href="/2019/06/04/ElementTree-tostring/"/>
+      <url>/2019/06/04/ElementTree-tostring/</url>
+      
+        <content type="html"><![CDATA[<p>写一个小型的爬虫懒得用scrapy(主要是scrapy不太好装…)，直接使用了requests请求，但是要解析数据，那么问题来了</p><hr><h2 id="问题1："><a href="#问题1：" class="headerlink" title="问题1："></a><b>问题1：</b></h2><ul><li>使用的是python3.7的环境，解析数据要用xpath，系统是mac</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure><p>一分钟后。。。下载成功</p><ul><li>开始写代码，</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><p>挂了…，lxml中竟然没有etree模块  </p><ul><li>换个方法  </li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br></pre></td></tr></table></figure><p>依然挂了…</p><hr><h2 id="解决："><a href="#解决：" class="headerlink" title="解决："></a><b>解决：</b></h2><ul><li>开始找解决办法<br>百度中。。。，找了一堆的方法，全部失败<br>google中。。。，又找了一堆的方法，全部失败<br>即将放弃，准备切换python版本，开始水群。。。，群里大佬给了个<a href="https://mirrors.aliyun.com/pypi/simple/" rel="external nofollow noopener noreferrer" target="_blank">阿里源</a>的地址，恍然大悟！！！</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://mirrors.aliyun.com/pypi/simple/ lxml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line">et = html.etree</span><br><span class="line">print(et.HTML(response.content))</span><br></pre></td></tr></table></figure><p>终于突破了这个问题</p><hr><h2 id="问题2："><a href="#问题2：" class="headerlink" title="问题2："></a><b>问题2：</b></h2><ul><li>解析过后发现有些需要整个代码块转为字符串</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line">print(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>))</span><br></pre></td></tr></table></figure><ul><li>数据是有了，但是不太对，中文出来的是十六进制的数据，没法继续了啊<br>百度/Google，我又来了。。。</li></ul><hr><h2 id="解决：-1"><a href="#解决：-1" class="headerlink" title="解决："></a><b>解决：</b></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(str(ET.tostring(dom代码块, encoding=<span class="string">'utf8'</span>), <span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> 爬虫 </tag>
             
         </tags>
       
@@ -1691,10 +1818,10 @@
     
     <entry>
       <title>git钩子自动更新服务器代码</title>
-      <link href="/2019/05/08/git%E9%92%A9%E5%AD%90/"/>
-      <url>/2019/05/08/git%E9%92%A9%E5%AD%90/</url>
+      <link href="/2019/05/08/git-hook/"/>
+      <url>/2019/05/08/git-hook/</url>
       
-        <content type="html"><![CDATA[<p>手动提交好累的，自动部署才是王道</p><a id="more"></a><hr><h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a><b>服务器端</b></h3><ul><li><strong>创建一个裸仓库</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pwd   # /home/www/</span><br><span class="line">git init --bare  project_xxx.git</span><br><span class="line">cd project_xxx.git/hooks/</span><br><span class="line">cp post-update.sample post-update</span><br></pre></td></tr></table></figure><ul><li><strong>创建一个普通的仓库</strong> ，这一步就是为了明确表示一下仓库其实是有两个的，这个仓库才是代码的存储位置</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home/www/</span><br><span class="line">pwd   # /home/www/</span><br><span class="line">mkdir blog</span><br></pre></td></tr></table></figure><ul><li><strong>更改post-update中的内容为:</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/sh</span><br><span class="line">unset GIT_DIR </span><br><span class="line">DIR_ONE=/home/www/blog／  # 更新后的代码会存储在这个文件夹中，文件夹需要存在 </span><br><span class="line">cd $DIR_ONE</span><br><span class="line">git init</span><br><span class="line">git remote add gitee https://gitee.com/project.git  # 码云/GitHub代码仓库地址，如果不需要推到远程仓库，可以把这一步和最后的push去掉</span><br><span class="line">git remote add origin /home/www/project_xxx.git  # 路径指向裸仓库</span><br><span class="line">git reset --hard   # git clean -df</span><br><span class="line">git pull origin master</span><br><span class="line">git push gitee master # 把代码推到远程仓库</span><br></pre></td></tr></table></figure><ul><li><strong>配置git</strong>，因为用的是服务器，没有配置公钥，直接偷懒配置一下git的全局配置，<strong>不需要推到远程仓库可以省略这一步</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "name"</span><br><span class="line">git config --global user.email "email"</span><br><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure><p>然后使用git推一次代码，记录一下远程仓库的密码，脚本在推代码的时候就不需要再验证了</p><h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a><b>客户端</b></h3><ul><li><strong>进入项目目录</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin 服务器地址:/home/project_xxx.git   # 服务端创建的裸仓库的地址</span><br></pre></td></tr></table></figure><p>然后就可以在客户端进行操作了</p><p>参考: git book: <a href="https://git-scm.com/book/zh/v2/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git-%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%90%AD%E5%BB%BA-Git" rel="external nofollow noopener noreferrer" target="_blank">服务器上的-Git-在服务器上搭建-Git</a><br><a href="a&gt;https://aotu.io/notes/2017/04/10/githooks/index.html">用 Git 钩子进行简单自动部署</a></p>]]></content>
+        <content type="html"><![CDATA[<p>手动提交好累的，自动部署才是王道</p><a id="more"></a><hr><h3 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a><b>服务器端</b></h3><ul><li><strong>创建一个裸仓库</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pwd   # /home/www/</span><br><span class="line">git init --bare  project_xxx.git</span><br><span class="line">cd project_xxx.git/hooks/</span><br><span class="line">cp post-update.sample post-update</span><br></pre></td></tr></table></figure><ul><li><strong>创建一个普通的仓库</strong> ，这一步就是为了明确表示一下仓库其实是有两个的，这个仓库才是代码的存储位置</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /home/www/</span><br><span class="line">mkdir blog</span><br></pre></td></tr></table></figure><ul><li><strong>更改post-update中的内容为:</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/sh</span><br><span class="line">unset GIT_DIR </span><br><span class="line">DIR_ONE=/home/www/blog／  # 更新后的代码会存储在这个文件夹中，文件夹需要存在 </span><br><span class="line">cd $DIR_ONE</span><br><span class="line">git init</span><br><span class="line">git remote add gitee https://gitee.com/project.git  # 码云/GitHub代码仓库地址，如果不需要推到远程仓库，可以把这一步和最后的push去掉</span><br><span class="line">git remote add origin /home/www/project_xxx.git  # 路径指向裸仓库</span><br><span class="line">git reset --hard   # git clean -df</span><br><span class="line"><span class="meta">#</span> git pull origin master</span><br><span class="line"><span class="meta">#</span> git pull origin master --allow-unrelated-histories #  把两段不相干的分支 进行强行合并</span><br><span class="line"><span class="meta">#</span> 强制pull覆盖本地代码</span><br><span class="line">git fetch --all</span><br><span class="line">git reset --hard origin/master</span><br><span class="line">git pull</span><br><span class="line">git push gitee master # 把代码推到远程仓库</span><br></pre></td></tr></table></figure><ul><li><strong>配置git</strong>，因为用的是服务器，没有配置公钥，直接偷懒配置一下git的全局配置，<strong>不需要推到远程仓库可以省略这一步</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "name"</span><br><span class="line">git config --global user.email "email"</span><br><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure><p>然后使用git推一次代码，记录一下远程仓库的密码，脚本在推代码的时候就不需要再验证了</p><h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a><b>客户端</b></h3><ul><li><strong>进入项目目录</strong></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin 服务器地址:/home/project_xxx.git   # 服务端创建的裸仓库的地址</span><br></pre></td></tr></table></figure><p>然后就可以在客户端进行操作了</p><p>参考: </p><ul><li><a href="https://git-scm.com/book/zh/v2/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84-Git-%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%90%AD%E5%BB%BA-Git" rel="external nofollow noopener noreferrer" target="_blank">服务器上的-Git-在服务器上搭建-Git</a></li><li><a href="a&gt;https://aotu.io/notes/2017/04/10/githooks/index.html">用 Git 钩子进行简单自动部署</a></li></ul>]]></content>
       
       
       <categories>
@@ -2057,9 +2184,9 @@
     
     
     <entry>
-      <title>分类</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -2068,9 +2195,9 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>分类</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       

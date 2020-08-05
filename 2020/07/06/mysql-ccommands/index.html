@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="default">
+  <head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="nt7ofDlUEAj-G2sNFlh0wBJYoWH1hdvum_-V5zOgHzg">
+<meta name="baidu-site-verification" content="XG5Sc98jMI">
+<meta name="wlhlauth" content="8d884ffcaa79c5165f113cd2349b52d7">
+<meta name="360-site-verification" content="577ecf1c5f95d421bb0482d93c7faa1e">
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="复习MySQL--几个show命令"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2020/07/06/mysql-ccommands/">
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":"","toc":true,"fancybox":true,"pjax":true,"latex":false};
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2911390145109533",
+    enable_page_level_ads: true
+  });
+</script>
+
+<script>
+  // 搜索框
+    function search(){
+        $.ajax({
+            url:'../../search.xml',
+            type: 'GET',
+            dataType: 'xml',
+            timeout: 1000,
+            cache:false,
+            error: function(xml){
+                console.log('加载XML文档出错');
+            },
+            success: function(xml){
+                //建立一个代码片段
+                var root_xml=xml.documentElement;
+                var data=$('#search').val();
+                var entry=root_xml.getElementsByTagName("entry");
+                var frag=$("<ul/>");
+                for (var i = 0; i <= entry.length - 1; i++) {
+                    var content = entry[i];
+                    if (content.textContent.search(data) != -1) {
+                        frag.append("<a style='color:blanchedalmond; text-decoration: underline;' href='http://www.wxy.email"+content.getElementsByTagName('url')[0].textContent
+                            + "'><b>" + content.getElementsByTagName('title')[0].textContent + "</b></a><br>");
+                    }
+                }
+                //最后得到的frag添加进HTML文档中
+                $('#DisplayBox').empty();
+                Display();
+                frag.appendTo("#DisplayBox");
+                // alert(frag)
+            }
+        });
+    }
+    function RealTimeSearch(){
+        var input = document.getElementById('search').value;
+        if (input === "") {
+            $('#DisplayBox').empty();
+            return
+        }
+        search();
+    }
+    function disblock(){
+        document.getElementById('pop_up').style.display='none';
+    }
+    function enter_search() {
+        let event = window.event;
+        // console.log(event.keyCode);
+        // alert(event.KeyCode);
+        if (event.keyCode === 13) {
+            console.log(event.keyCode);
+            search();
+        }
+    }
+    function Display(){
+        setTimeout(() => {
+            document.getElementById('pop_up').style.width = document.body.clientWidth + 'px';
+            document.getElementById('pop_up').style.height = $(window).height() + 'px';
+            document.getElementById('pop_up').style.display='block';
+            document.getElementById('mobile-panel').style.transform='none';
+            document.getElementById('mobile-navbar').className = 'mobile-navbar';
+            // event.stopPropagation();
+        },1);
+    }
+    function TriggerSearch(){
+      Display();
+    }
+</script>
+    <title>MySQL常用show命令 - 时光博客</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">时光博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><li class="mobile-menu-item"><a href="/">
+                        首页
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/archives/">
+                        归档
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/tags/">
+                        标签
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/categories/">
+                        分类
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><span></span>
+        </li></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">时光博客</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+            <a class="menu-item-link" href="/">
+                      首页
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/archives/">
+                      归档
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/tags/">
+                      标签
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/categories/">
+                      分类
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <span></span>
+                </li></ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">MySQL常用show命令
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-07-06
+        </span><span class="post-category">
+            <a href="/categories/MySQL/">MySQL</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL常用show命令"><span class="toc-text">MySQL常用show命令</span></a></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#1-show-databases"><span class="toc-text">1. show databases;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-show-tables"><span class="toc-text">2. show tables;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-show-columns-from-数据表"><span class="toc-text">3. show columns from 数据表;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-show-index-from-数据表"><span class="toc-text">4. show index from 数据表;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-show-table-status-from-数据库名-like-39-数据表名-39-G"><span class="toc-text">5. show table status from 数据库名 like &#39;数据表名&#39;\G;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-show-create-database-数据库名"><span class="toc-text">6. show create database 数据库名;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-show-create-table-数据表名"><span class="toc-text">7. show create table 数据表名;</span></a>
+    </li></div>
+  </div><div class="post-content"><h3 id="MySQL常用show命令"><a href="#MySQL常用show命令" class="headerlink" title="MySQL常用show命令"></a><b>MySQL常用show命令</b></h3><h2 id="1-show-databases"><a href="#1-show-databases" class="headerlink" title="1. show databases;"></a>1. <code>show databases;</code></h2><p>列出数据库管理系统中的所有数据库列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| test               |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">+--------------------+</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-show-tables"><a href="#2-show-tables" class="headerlink" title="2. show tables;"></a>2. <code>show tables;</code></h2><p>显示指定数据库的所有表，使用该命令前需要使用 <code>use 数据库名</code> 命令来选择要操作的数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+----------------------------+</span><br><span class="line">| Tables_in_sms              |</span><br><span class="line">+----------------------------+</span><br><span class="line">| test_group                 |</span><br><span class="line">| test_user                  |</span><br><span class="line">+----------------------------+</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-show-columns-from-数据表"><a href="#3-show-columns-from-数据表" class="headerlink" title="3. show columns from 数据表;"></a>3. <code>show columns from 数据表;</code></h2><p>显示数据表每一列的属性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+-------------+-------------+------+-----+---------+----------------+</span><br><span class="line">| Field       | Type        | Null | Key | Default | Extra          |</span><br><span class="line">+-------------+-------------+------+-----+---------+----------------+</span><br><span class="line">| id          | int(11)     | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| create_at   | datetime(6) | NO   |     | NULL    |                |</span><br><span class="line">| modify_at   | datetime(6) | NO   |     | NULL    |                |</span><br><span class="line">| phone       | varchar(11) | NO   | UNI | NULL    |                |</span><br><span class="line">| status      | int(11)     | NO   |     | NULL    |                |</span><br><span class="line">+-------------+-------------+------+-----+---------+----------------+</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-show-index-from-数据表"><a href="#4-show-index-from-数据表" class="headerlink" title="4. show index from 数据表;"></a>4. <code>show index from 数据表;</code></h2><p>显示数据表的详细索引信息，包括主键。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">+------------+------------+-------------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+</span><br><span class="line">| Table      | Non_unique | Key_name                      | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible |</span><br><span class="line">+------------+------------+-------------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+</span><br><span class="line">| test_phone |          0 | PRIMARY                       |            1 | id          | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     |</span><br><span class="line">| test_phone |          0 | test_phone_phone_041a5a8f_uniq |            1 | phone       | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     |</span><br><span class="line">+------------+------------+-------------------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+</span><br></pre></td></tr></table></figure></p>
+<h2 id="5-show-table-status-from-数据库名-like-39-数据表名-39-G"><a href="#5-show-table-status-from-数据库名-like-39-数据表名-39-G" class="headerlink" title="5. show table status from 数据库名 like &#39;数据表名&#39;\G;"></a>5. <code>show table status from 数据库名 like &#39;数据表名&#39;\G;</code></h2><p>输出MySQL数据库管理系统的性能及统计信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">*************************** 1. row ***************************</span><br><span class="line">           Name: test_phone</span><br><span class="line">         Engine: InnoDB</span><br><span class="line">        Version: 10</span><br><span class="line">     Row_format: Dynamic</span><br><span class="line">           Rows: 1</span><br><span class="line"> Avg_row_length: 16384</span><br><span class="line">    Data_length: 16384</span><br><span class="line">Max_data_length: 0</span><br><span class="line">   Index_length: 0</span><br><span class="line">      Data_free: 0</span><br><span class="line"> Auto_increment: 2</span><br><span class="line">    Create_time: 2020-07-29 16:07:26</span><br><span class="line">    Update_time: 2020-07-29 16:16:59</span><br><span class="line">     Check_time: NULL</span><br><span class="line">      Collation: utf8mb4_bin</span><br><span class="line">       Checksum: NULL</span><br><span class="line"> Create_options:</span><br><span class="line">        Comment:</span><br></pre></td></tr></table></figure></p>
+<h2 id="6-show-create-database-数据库名"><a href="#6-show-create-database-数据库名" class="headerlink" title="6. show create database 数据库名;"></a>6. <code>show create database 数据库名;</code></h2><p>查看数据库使用的字符集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+----------+-------------------------------------------------------------------------------------+</span><br><span class="line">| Database | Create Database                                                                     |</span><br><span class="line">+----------+-------------------------------------------------------------------------------------+</span><br><span class="line">| test      | CREATE DATABASE `test` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin */ |</span><br><span class="line">+----------+-------------------------------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+<h2 id="7-show-create-table-数据表名"><a href="#7-show-create-table-数据表名" class="headerlink" title="7. show create table 数据表名;"></a>7. <code>show create table 数据表名;</code></h2><p>查看数据表使用的字符集，也可以使用<a href="#5-show-table-status-from-数据库名-like-39-数据表名-39-G">方法5</a>查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">+-----------+------------------------------------------------------------------+</span><br><span class="line">| Table     | Create Table                                                     |</span><br><span class="line">+-----------+------------------------------------------------------------------+</span><br><span class="line">| test_phone | CREATE TABLE `test_phone` (</span><br><span class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `create_at` datetime(6) NOT NULL,</span><br><span class="line">  `modify_at` datetime(6) NOT NULL,</span><br><span class="line">  `phone` varchar(11) COLLATE utf8mb4_bin NOT NULL,</span><br><span class="line">  `status` int(11) NOT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  UNIQUE KEY `test_phone_phone_041a5a8f_uniq` (`phone`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin |</span><br><span class="line">+-----------+------------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+<hr>
+
+      </div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/MySQL/">MySQL</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2020/07/07/mysql-database/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">MySQL数据库的创建和删除</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2020/07/03/mysql-user/">
+        <span class="next-text nav-default">MySQL新增用户</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">
+  <span class="power-by">
+    联系方式
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+  wxy148616@163.com
+  </span><span class="copyright-year">
+    豫ICP备20019463号&nbsp;&nbsp;&nbsp;&nbsp;&copy;2018 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">时光不写代码</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+<div style="position: fixed; left: 0px; bottom: 10px;"><a href="http://background.wxy.email" rel="external nofollow noopener noreferrer" target="_blank">@Tab页</a></div>
+  </body>
+</html>

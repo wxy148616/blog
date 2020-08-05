@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="default">
+  <head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="nt7ofDlUEAj-G2sNFlh0wBJYoWH1hdvum_-V5zOgHzg">
+<meta name="baidu-site-verification" content="XG5Sc98jMI">
+<meta name="wlhlauth" content="8d884ffcaa79c5165f113cd2349b52d7">
+<meta name="360-site-verification" content="577ecf1c5f95d421bb0482d93c7faa1e">
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="description" content="前些天华为云活动，256抢了一个3年1核2G 100%性能的服务器，今天抽时间配置一下，发现使用apt-get安装东西的时候总是会失败，提示需要apt-get update，但是执行后又会报错“W: Some index files failed to download. They have been ignored, or old ones used instead.”，想了想应该是源的问题，于是查了一下Ubuntu更改下载源的方法，记录一下。"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<link rel="canonical" href="https://www.wxy.email/2020/06/30/ubuntu-apt-get/">
+
+<link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.11.0">
+
+<script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>
+  window.config = {"leancloud":"","toc":true,"fancybox":true,"pjax":true,"latex":false};
+</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-2911390145109533",
+    enable_page_level_ads: true
+  });
+</script>
+
+<script>
+  // 搜索框
+    function search(){
+        $.ajax({
+            url:'../../search.xml',
+            type: 'GET',
+            dataType: 'xml',
+            timeout: 1000,
+            cache:false,
+            error: function(xml){
+                console.log('加载XML文档出错');
+            },
+            success: function(xml){
+                //建立一个代码片段
+                var root_xml=xml.documentElement;
+                var data=$('#search').val();
+                var entry=root_xml.getElementsByTagName("entry");
+                var frag=$("<ul/>");
+                for (var i = 0; i <= entry.length - 1; i++) {
+                    var content = entry[i];
+                    if (content.textContent.search(data) != -1) {
+                        frag.append("<a style='color:blanchedalmond; text-decoration: underline;' href='http://www.wxy.email"+content.getElementsByTagName('url')[0].textContent
+                            + "'><b>" + content.getElementsByTagName('title')[0].textContent + "</b></a><br>");
+                    }
+                }
+                //最后得到的frag添加进HTML文档中
+                $('#DisplayBox').empty();
+                Display();
+                frag.appendTo("#DisplayBox");
+                // alert(frag)
+            }
+        });
+    }
+    function RealTimeSearch(){
+        var input = document.getElementById('search').value;
+        if (input === "") {
+            $('#DisplayBox').empty();
+            return
+        }
+        search();
+    }
+    function disblock(){
+        document.getElementById('pop_up').style.display='none';
+    }
+    function enter_search() {
+        let event = window.event;
+        // console.log(event.keyCode);
+        // alert(event.KeyCode);
+        if (event.keyCode === 13) {
+            console.log(event.keyCode);
+            search();
+        }
+    }
+    function Display(){
+        setTimeout(() => {
+            document.getElementById('pop_up').style.width = document.body.clientWidth + 'px';
+            document.getElementById('pop_up').style.height = $(window).height() + 'px';
+            document.getElementById('pop_up').style.display='block';
+            document.getElementById('mobile-panel').style.transform='none';
+            document.getElementById('mobile-navbar').className = 'mobile-navbar';
+            // event.stopPropagation();
+        },1);
+    }
+    function TriggerSearch(){
+      Display();
+    }
+</script>
+    <title>Ubuntu18.04更改apt-get的下载源 - 时光博客</title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">时光博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list"><li class="mobile-menu-item"><a href="/">
+                        首页
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/archives/">
+                        归档
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/tags/">
+                        标签
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><a href="/categories/">
+                        分类
+                        </a>
+                      </li>
+        <li class="mobile-menu-item"><span></span>
+        </li></ul>
+</nav>
+<div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">时光博客</a>
+</div>
+
+<nav class="site-navbar"><ul id="menu" class="menu"><li class="menu-item">
+            <a class="menu-item-link" href="/">
+                      首页
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/archives/">
+                      归档
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/tags/">
+                      标签
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <a class="menu-item-link" href="/categories/">
+                      分类
+                      </a>
+                  </li>
+                <li class="menu-item">
+            <span></span>
+                </li></ul></nav>
+</header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content"><article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Ubuntu18.04更改apt-get的下载源
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2020-06-30
+        </span><span class="post-category">
+            <a href="/categories/项目部署/">项目部署</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先系统自带的apt-get源配置文件在这里"><span class="toc-text">首先系统自带的apt-get源配置文件在这里</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以防万一备份一下"><span class="toc-text">以防万一备份一下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看自己的系统Codename"><span class="toc-text">查看自己的系统Codename</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#根据自己的Codename配置对应的源地址，阿里云镜像站"><span class="toc-text">根据自己的Codename配置对应的源地址，阿里云镜像站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后编辑-etc-apt-sources-list源文件，改为以下内容"><span class="toc-text">最后编辑/etc/apt/sources.list源文件，改为以下内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#或者清华大学源"><span class="toc-text">或者清华大学源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重新试一下，OK"><span class="toc-text">重新试一下，OK</span></a></li></ol>
+    </div>
+  </div><div class="post-content"><p>前些天<a href="https://activity.huaweicloud.com/2020_618_promotion/index.html?fromacct=c4b873b3-dcad-4abf-b268-fd5920a93ec1&amp;utm_source=d3d3X3d4eV9lbWFpbA==&amp;utm_medium=cps&amp;utm_campaign=201905" rel="external nofollow noopener noreferrer" target="_blank">华为云活动</a>，<strong>256</strong>抢了一个3年1核2G 100%性能的服务器，今天抽时间配置一下，发现使用apt-get安装东西的时候总是会失败，提示需要apt-get update，但是执行后又会报错“W: Some index files failed to download. They have been ignored, or old ones used instead.”，想了想应该是源的问题，于是查了一下Ubuntu更改下载源的方法，记录一下。</p>
+<h3 id="首先系统自带的apt-get源配置文件在这里"><a href="#首先系统自带的apt-get源配置文件在这里" class="headerlink" title="首先系统自带的apt-get源配置文件在这里"></a><b>首先系统自带的apt-get源配置文件在这里</b></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+<h3 id="以防万一备份一下"><a href="#以防万一备份一下" class="headerlink" title="以防万一备份一下"></a><b>以防万一备份一下</b></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br></pre></td></tr></table></figure>
+<h3 id="查看自己的系统Codename"><a href="#查看自己的系统Codename" class="headerlink" title="查看自己的系统Codename"></a><b>查看自己的系统Codename</b></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsb_release -c</span><br><span class="line"><span class="meta">&gt;</span> Codename:	bionic</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>系统</th>
+<th>对应Codename</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>12.04</td>
+<td>precise</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>14.04</td>
+<td>trusty</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>15.04</td>
+<td>vivid</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>15.10</td>
+<td>wily</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>16.04</td>
+<td>xenial</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>18.04</td>
+<td>bionic</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>20.04</td>
+<td>focal</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="根据自己的Codename配置对应的源地址，阿里云镜像站"><a href="#根据自己的Codename配置对应的源地址，阿里云镜像站" class="headerlink" title="根据自己的Codename配置对应的源地址，阿里云镜像站"></a><b>根据自己的Codename配置对应的源地址，<a href="https://developer.aliyun.com/mirror/?spm=a2c6h.13651104.0.d1002.199f94ddmFrrye" rel="external nofollow noopener noreferrer" target="_blank">阿里云镜像站</a></b></h3><h3 id="最后编辑-etc-apt-sources-list源文件，改为以下内容"><a href="#最后编辑-etc-apt-sources-list源文件，改为以下内容" class="headerlink" title="最后编辑/etc/apt/sources.list源文件，改为以下内容"></a><b>最后编辑<code>/etc/apt/sources.list</code>源文件，改为以下内容</b></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+<h3 id="或者清华大学源"><a href="#或者清华大学源" class="headerlink" title="或者清华大学源"></a><b>或者<a href="https://mirrors.tuna.tsinghua.edu.cn/" rel="external nofollow noopener noreferrer" target="_blank">清华大学源</a></b></h3><h3 id="重新试一下，OK"><a href="#重新试一下，OK" class="headerlink" title="重新试一下，OK"></a><b>重新试一下，OK</b></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+<hr>
+<p>最后自发的打个广告：<a href="https://activity.huaweicloud.com/2020_618_promotion/index.html?fromacct=c4b873b3-dcad-4abf-b268-fd5920a93ec1&amp;utm_source=d3d3X3d4eV9lbWFpbA==&amp;utm_medium=cps&amp;utm_campaign=201905" rel="external nofollow noopener noreferrer" target="_blank">华为云活动</a>不得不说优惠力度挺大的，需要的可以先注册个账号占个坑。</p>
+
+      </div>
+      
+      <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden>
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code"><label class="qr-code-image" for="reward">
+          <span>微信</span>
+          <img class="image" src="/wx.png" title="wechat">
+        </label>
+      <label class="qr-code-image" for="reward">
+          <img class="image" src="/alp.png" title="alipay">
+          <span>支付宝</span>
+        </label>
+      </div>
+  </div><footer class="post-footer">
+        <div class="post-tags">
+            <a href="/tags/项目部署/">项目部署</a>
+            <a href="/tags/ubuntu/">ubuntu</a>
+            </div>
+        
+        <nav class="post-nav"><a class="prev" href="/2020/07/03/mysql-user/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">MySQL新增用户</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2020/06/27/python3-md5/">
+        <span class="next-text nav-default">python3数据MD5加密</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    </nav></footer>
+    </article></div><div class="comments" id="comments"></div></div>
+      </main>
+
+      <footer id="footer" class="footer"><div class="social-links"></div><div class="copyright">
+  <span class="power-by">
+    联系方式
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+  wxy148616@163.com
+  </span><span class="copyright-year">
+    豫ICP备20019463号&nbsp;&nbsp;&nbsp;&nbsp;&copy;2018 - 2020<span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">时光不写代码</span>
+  </span>
+</div>
+</footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div><script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  <script type="text/javascript" src="/js/src/even.js?v=2.11.0"></script>
+<div style="position: fixed; left: 0px; bottom: 10px;"><a href="http://background.wxy.email" rel="external nofollow noopener noreferrer" target="_blank">@Tab页</a></div>
+  </body>
+</html>
