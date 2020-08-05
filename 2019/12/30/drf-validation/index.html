@@ -54,7 +54,7 @@
             url:'../../search.xml',
             type: 'GET',
             dataType: 'xml',
-            timeout: 1000,
+            timeout: 5000,
             cache:false,
             error: function(xml){
                 console.log('加载XML文档出错');
@@ -270,9 +270,9 @@
             <a href="/tags/Django/">Django</a>
             </div>
         
-        <nav class="post-nav"><a class="prev" href="/2020/01/19/dajngo-models-json/">
+        <nav class="post-nav"><a class="prev" href="/2020/01/19/django-makemigrations-error/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">Django models存储json格式的数据</span>
+        <span class="prev-text nav-default">Django makemigrations：'NoneType' object has no attribute 'is_relation'，报错原因定位</span>
         <span class="prev-text nav-mobile">上一篇</span>
       </a>
     <a class="next" href="/2019/12/16/python-celery-group/">
