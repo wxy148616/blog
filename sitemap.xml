@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.wxy.email/2020/07/06/mysql-ccommands/</loc>
+    
+    <lastmod>2020-08-06T09:37:14.881Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.wxy.email/2018/06/19/hello-world/</loc>
     
     <lastmod>2020-08-05T12:03:27.558Z</lastmod>
@@ -40,13 +47,6 @@
     <loc>https://www.wxy.email/2020/07/07/mysql-database/</loc>
     
     <lastmod>2020-08-03T09:46:10.921Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.wxy.email/2020/07/06/mysql-ccommands/</loc>
-    
-    <lastmod>2020-08-03T09:46:10.919Z</lastmod>
     
   </url>
   
@@ -191,14 +191,14 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/07/19/ubuntu-messy-code/</loc>
+    <loc>https://www.wxy.email/2019/09/28/Linux-LNMP/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/09/26/bbr/</loc>
+    <loc>https://www.wxy.email/2019/07/19/ubuntu-messy-code/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     
@@ -219,7 +219,7 @@
   </url>
   
   <url>
-    <loc>https://www.wxy.email/2019/09/28/Linux-LNMP/</loc>
+    <loc>https://www.wxy.email/2019/09/26/bbr/</loc>
     
     <lastmod>2019-09-30T11:00:35.000Z</lastmod>
     

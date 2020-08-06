@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.wxy.email/2020/07/06/mysql-ccommands/</loc>
+    <lastmod>2020-08-06</lastmod>
+  </url>  <url>
     <loc>https://www.wxy.email/2018/06/19/hello-world/</loc>
     <lastmod>2020-08-05</lastmod>
   </url>  <url>
@@ -17,9 +20,6 @@
     <lastmod>2020-08-03</lastmod>
   </url>  <url>
     <loc>https://www.wxy.email/2020/07/07/mysql-database/</loc>
-    <lastmod>2020-08-03</lastmod>
-  </url>  <url>
-    <loc>https://www.wxy.email/2020/07/06/mysql-ccommands/</loc>
     <lastmod>2020-08-03</lastmod>
   </url>  <url>
     <loc>https://www.wxy.email/2019/05/08/git-hook/</loc>
