@@ -39,6 +39,7 @@
 <script>
   window.config = {"leancloud":"","toc":true,"fancybox":true,"pjax":true,"latex":false};
 </script>
+// Google ADS
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
@@ -81,6 +82,7 @@
         });
     }
     function RealTimeSearch(){
+    // 事实监控input内容的变动，触发搜索
         var input = document.getElementById('search').value;
         if (input === "") {
             $('#DisplayBox').empty();
@@ -89,9 +91,21 @@
         search();
     }
     function disblock(){
+    // 关闭搜索框
         document.getElementById('pop_up').style.display='none';
     }
+    function dis_search() {
+    // 按键触发关闭搜索框
+        let event = window.event;
+        // console.log(event.keyCode);
+        // alert(event.KeyCode);
+        if (event.keyCode === 27) {
+            console.log(event.keyCode);
+            disblock();
+        }
+    }
     function enter_search() {
+    // 按键触发搜索
         let event = window.event;
         // console.log(event.keyCode);
         // alert(event.KeyCode);
@@ -271,13 +285,13 @@
             <a href="/tags/InfluxDB/">InfluxDB</a>
             </div>
         
-        <nav class="post-nav"><a class="prev" href="/2019/06/04/ElementTree-tostring/">
+        <nav class="post-nav"><a class="prev" href="/2019/06/06/https-config/">
         <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">from lxml import etree</span>
+        <span class="prev-text nav-default">nginx配置https</span>
         <span class="prev-text nav-mobile">上一篇</span>
       </a>
-    <a class="next" href="/2019/06/02/JetBrains/">
-        <span class="next-text nav-default">JetBrains系列汉化补丁</span>
+    <a class="next" href="/2019/06/04/ElementTree-tostring/">
+        <span class="next-text nav-default">from lxml import etree</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>

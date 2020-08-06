@@ -39,6 +39,7 @@
 <script>
   window.config = {"leancloud":"","toc":true,"fancybox":true,"pjax":true,"latex":false};
 </script>
+// Google ADS
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
@@ -81,6 +82,7 @@
         });
     }
     function RealTimeSearch(){
+    // 事实监控input内容的变动，触发搜索
         var input = document.getElementById('search').value;
         if (input === "") {
             $('#DisplayBox').empty();
@@ -89,9 +91,21 @@
         search();
     }
     function disblock(){
+    // 关闭搜索框
         document.getElementById('pop_up').style.display='none';
     }
+    function dis_search() {
+    // 按键触发关闭搜索框
+        let event = window.event;
+        // console.log(event.keyCode);
+        // alert(event.KeyCode);
+        if (event.keyCode === 27) {
+            console.log(event.keyCode);
+            disblock();
+        }
+    }
     function enter_search() {
+    // 按键触发搜索
         let event = window.event;
         // console.log(event.keyCode);
         // alert(event.KeyCode);
@@ -117,12 +131,14 @@
     <title>时光博客</title>
   </head>
 
-  <body><div id="pop_up" style="border-radius: 10px; position:fixed; display: none; z-index: 9999;
-  text-align: center; background-color: #0000009e; overflow: auto;">
+  <body>
+  <div id="pop_up" style="border-radius: 10px; position:fixed; display: none; z-index: 9999;
+  text-align: center; background-color: #0000009e; overflow: auto;" onkeydown="dis_search()">
   <button onclick="disblock()" style="background-color: #f0f8ff69; border: none; float: left; font-size: larger;
   color: bisque;"><span>取消</span></button>
+  
   <input style="border-radius: 3px; margin-top: 3em; height: 2em; width: 10em; background-color: #ffffff8a;
-  border: none; color: black;" id="search" oninput="RealTimeSearch()" onkeydown="enter_search()">
+  border: none; color: black;" id="search" onkeydown="enter_search()">
   <div id="DisplayBox" style="text-align: center;"></div>
   </div><div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
@@ -205,13 +221,13 @@
                            white-space:nowrap;
                            text-overflow:ellipsis;
                            cursor: pointer;">
-                <a href="/2019/06/04/ElementTree-tostring/">from lxml import etree</a>
+                <a href="/2019/06/04/influxdb/">Python写入InfluxDB</a>
                 </li>
                 <li style="text-align: -webkit-match-parent; padding: 3px; width:185px; overflow:hidden;
                            white-space:nowrap;
                            text-overflow:ellipsis;
                            cursor: pointer;">
-                <a href="/2019/06/04/influxdb/">Python写入InfluxDB</a>
+                <a href="/2019/06/04/ElementTree-tostring/">from lxml import etree</a>
                 </li>
                 <li style="text-align: -webkit-match-parent; padding: 3px; width:185px; overflow:hidden;
                            white-space:nowrap;
@@ -280,25 +296,6 @@
         </div></article>
       <article class="post">
     <header class="post-header">
-      <h1 class="post-title"><a class="post-link" href="/2019/06/04/ElementTree-tostring/">from lxml import etree</a>
-        </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2019-06-04
-        </span><span class="post-category">
-            <a href="/categories/Python/">Python</a>
-            </span>
-        </div>
-    </header>
-
-    <div class="post-content"><p>python3.7的环境lxml安装问题</p>
-          <div class="read-more">
-            <a href="/2019/06/04/ElementTree-tostring/" class="read-more-link">...阅读更多</a>
-          </div>
-        </div></article>
-      <article class="post">
-    <header class="post-header">
       <h1 class="post-title"><a class="post-link" href="/2019/06/04/influxdb/">Python写入InfluxDB</a>
         </h1>
 
@@ -314,6 +311,25 @@
     <div class="post-content"><p>时序数据库</p>
           <div class="read-more">
             <a href="/2019/06/04/influxdb/" class="read-more-link">...阅读更多</a>
+          </div>
+        </div></article>
+      <article class="post">
+    <header class="post-header">
+      <h1 class="post-title"><a class="post-link" href="/2019/06/04/ElementTree-tostring/">from lxml import etree</a>
+        </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-06-04
+        </span><span class="post-category">
+            <a href="/categories/Python/">Python</a>
+            </span>
+        </div>
+    </header>
+
+    <div class="post-content"><p>python3.7的环境lxml安装问题</p>
+          <div class="read-more">
+            <a href="/2019/06/04/ElementTree-tostring/" class="read-more-link">...阅读更多</a>
           </div>
         </div></article>
       <article class="post">

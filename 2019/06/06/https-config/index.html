@@ -39,6 +39,7 @@
 <script>
   window.config = {"leancloud":"","toc":true,"fancybox":true,"pjax":true,"latex":false};
 </script>
+// Google ADS
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
@@ -81,6 +82,7 @@
         });
     }
     function RealTimeSearch(){
+    // 事实监控input内容的变动，触发搜索
         var input = document.getElementById('search').value;
         if (input === "") {
             $('#DisplayBox').empty();
@@ -89,9 +91,21 @@
         search();
     }
     function disblock(){
+    // 关闭搜索框
         document.getElementById('pop_up').style.display='none';
     }
+    function dis_search() {
+    // 按键触发关闭搜索框
+        let event = window.event;
+        // console.log(event.keyCode);
+        // alert(event.KeyCode);
+        if (event.keyCode === 27) {
+            console.log(event.keyCode);
+            disblock();
+        }
+    }
     function enter_search() {
+    // 按键触发搜索
         let event = window.event;
         // console.log(event.keyCode);
         // alert(event.KeyCode);
@@ -226,8 +240,8 @@
         <span class="prev-text nav-default">\xe5\x8d\xa0\xe7\x94\xa8\xe3\x80\x82，16进制乱码转化为可读字符</span>
         <span class="prev-text nav-mobile">上一篇</span>
       </a>
-    <a class="next" href="/2019/06/04/ElementTree-tostring/">
-        <span class="next-text nav-default">from lxml import etree</span>
+    <a class="next" href="/2019/06/04/influxdb/">
+        <span class="next-text nav-default">Python写入InfluxDB</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
