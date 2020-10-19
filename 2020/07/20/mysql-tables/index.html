@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
-<meta name="description" content="MySQL复习--数据表的操作"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
+<meta name="description" content="复习MySQL--数据表的操作"><meta name="keywords" content="Python,建站,数据处理,LeetCode"><link rel="alternate" href="/atom.xml" title="时光博客"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.11.0">
 <link rel="canonical" href="https://www.wxy.email/2020/07/20/mysql-tables/">
 
 <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css"><link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
@@ -211,7 +211,7 @@
     <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#新增数据表"><span class="toc-text">新增数据表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看数据表"><span class="toc-text">查看数据表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看表结构"><span class="toc-text">查看表结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看创建表时的sql语句"><span class="toc-text">查看创建表时的sql语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改数据表"><span class="toc-text">修改数据表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修改表名"><span class="toc-text">修改表名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改表字符集"><span class="toc-text">修改表字符集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改表的字段名"><span class="toc-text">修改表的字段名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改字段数据类型"><span class="toc-text">修改字段数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加字段"><span class="toc-text">添加字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除字段"><span class="toc-text">删除字段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除数据表"><span class="toc-text">删除数据表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#删除当前表"><span class="toc-text">删除当前表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#清空表数据"><span class="toc-text">清空表数据</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#新增数据表"><span class="toc-text">新增数据表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看数据表"><span class="toc-text">查看数据表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看表结构"><span class="toc-text">查看表结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看创建表时的sql语句"><span class="toc-text">查看创建表时的sql语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改数据表"><span class="toc-text">修改数据表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修改表名"><span class="toc-text">修改表名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改表字符集"><span class="toc-text">修改表字符集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改表的字段名"><span class="toc-text">修改表的字段名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改字段数据类型"><span class="toc-text">修改字段数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加字段"><span class="toc-text">添加字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除字段"><span class="toc-text">删除字段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除数据表"><span class="toc-text">删除数据表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#删除当前表"><span class="toc-text">删除当前表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#清空表数据"><span class="toc-text">清空表数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解除外键约束"><span class="toc-text">解除外键约束</span></a></li></ol></li></ol>
     </div>
   </div><div class="post-content"><h2 id="新增数据表"><a href="#新增数据表" class="headerlink" title="新增数据表"></a><b>新增数据表</b></h2><ul>
 <li>新增一个数据表，表名t1，整数字段k, 字符串字段name，浮点数字段salary。 </li>
@@ -279,6 +279,11 @@
 <li><code>truncate</code>不激活trigger(触发器)，但是会重置Identity(自增字段)，相当于自增列会被置为初始值，又重新从1开始记录，而不是接着原来的ID数。而<code>delete</code>删除以后，identity依旧是接着被删除的最近的那一条记录ID加1后进行记录。</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show tables;</span><br><span class="line">+------------------+</span><br><span class="line">| Tables_in_testdb |</span><br><span class="line">+------------------+</span><br><span class="line">| t1               |</span><br><span class="line">+------------------+</span><br><span class="line">1 row in set (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from t1;</span><br><span class="line">+--------+--------+------+</span><br><span class="line">| name   | salary | k_id |</span><br><span class="line">+--------+--------+------+</span><br><span class="line">| 你好   |   1000 | NULL |</span><br><span class="line">+--------+--------+------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; truncate table t1;</span><br><span class="line">Query OK, 0 rows affected (0.06 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from t1;</span><br><span class="line">Empty set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<h3 id="解除外键约束"><a href="#解除外键约束" class="headerlink" title="解除外键约束"></a><b>解除外键约束</b></h3><ul>
+<li><code>alter table 表名 drop foreign key 外键字段</code></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; alter table t1 drop foreign key fk_t2_id;</span><br></pre></td></tr></table></figure>
+
       </div>
       
       <div class="post-reward">
@@ -298,7 +303,12 @@
             <a href="/tags/MySQL/">MySQL</a>
             </div>
         
-        <nav class="post-nav"><a class="next" href="/2020/07/15/mysqldump-error1/">
+        <nav class="post-nav"><a class="prev" href="/2020/07/26/mysql-yx/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">MySQL约束的概念及使用</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    <a class="next" href="/2020/07/15/mysqldump-error1/">
         <span class="next-text nav-default">MySQL备份恢复报错MySQL server has gone away处理</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
